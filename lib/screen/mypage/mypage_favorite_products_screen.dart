@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CommunityDetailScreen extends StatelessWidget {
-  const CommunityDetailScreen({super.key});
+class MyPageFavoriteProductsScreen extends StatelessWidget {
+  const MyPageFavoriteProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,16 +10,16 @@ class CommunityDetailScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('글 상세 페이지'),
+            Text('관심 상품 페이지'),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("뒤로 가기"),
-            ),
+              child: Text("뒤로 가기")
+            )
           ],
         ),
-      ),
+      )
     );
   }
 }

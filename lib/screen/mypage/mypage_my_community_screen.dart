@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CommunityDetailScreen extends StatelessWidget {
-  const CommunityDetailScreen({super.key});
+class MyPageMyCommunityScreen extends StatelessWidget {
+  const MyPageMyCommunityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class CommunityDetailScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('글 상세 페이지'),
+            Text('커뮤니티 관리 페이지'),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);

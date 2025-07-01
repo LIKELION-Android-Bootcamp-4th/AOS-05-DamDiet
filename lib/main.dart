@@ -1,4 +1,16 @@
+import 'package:damdiet/routes/app_routes.dart';
+import 'package:damdiet/screen/community/community_detail_screen.dart';
+import 'package:damdiet/screen/community/community_write_screen.dart';
+import 'package:damdiet/screen/community/kcal_calculator_screen.dart';
 import 'package:damdiet/screen/home_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_favorite_products_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_my_review_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_profile_edit_screen.dart';
+import 'package:damdiet/screen/payment_screen.dart';
+import 'package:damdiet/screen/search/product_detail_screen.dart';
+import 'package:damdiet/screen/search/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +46,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen()
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppRoutes.home,
+      routes: {
+        AppRoutes.home: (context) => HomeScreen(),
+        AppRoutes.products: (context) => ProductsScreen(),
+        AppRoutes.productDetail: (context) => ProductDetailScreen(),
+        AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
+        AppRoutes.comDetail: (context) => CommunityDetailScreen(),
+        AppRoutes.comWrite: (context) => CommunityWriteScreen(),
+        AppRoutes.profileEdit: (context) => MyPageProfileEditScreen(),
+        AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreen(),
+        AppRoutes.myReview: (context) => MyPageMyReviewScreen(),
+        AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
+        AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
+        AppRoutes.payment: (context) => PaymentScreen()
+      },
     );
     /*return MultiProvider(
       providers: [

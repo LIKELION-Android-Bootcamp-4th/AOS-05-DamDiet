@@ -1,3 +1,4 @@
+import 'package:damdiet/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -9,7 +10,13 @@ class SearchScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('This is Search Screen.')
+          Text('This is Search Screen.'),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.products);
+            },
+            child: Text("검색 결과")
+          )
         ],
       ),
     );
