@@ -4,7 +4,9 @@ import 'package:damdiet/screen/community_home_screen.dart';
 import 'package:damdiet/screen/mypage_screen.dart';
 import 'package:damdiet/screen/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/product_provider.dart';
 import '../routes/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask((){
+      context.read<ProductProvider>().getProducts();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +91,22 @@ class DamDietHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<ProductProvider>();
+
     return Center(
-      child: Column(
+      child: provider.isLoading? CircularProgressIndicator() : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('This is Home Screen.'),
+          Text(
+            provider.products.isNotEmpty
+                ? provider.products[0].name
+                : '데이터 없음',
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'PretendardBold',
+            ),
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.productDetail);
