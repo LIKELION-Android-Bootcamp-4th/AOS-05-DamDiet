@@ -59,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.shopping_cart),
             label: '장바구니',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: '마이페이지'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: '마이페이지'
+          ),
         ],
         currentIndex: _selectedIndex,
         showUnselectedLabels: true,
@@ -85,14 +88,27 @@ class DamDietHomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.productDetail);
             },
-            child: Text("제품 상세"),
+            child: Text(
+              "제품 상세",
+              style: TextStyle(
+                fontFamily: 'PretendardBold',
+                fontSize: 20
+              ),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.products);
             },
-            child: Text("제품 검색"),
+            child: Text(
+              "제품 상세",
+              style: TextStyle(
+                  fontFamily: 'PretendardThin',
+                  fontSize: 20
+              ),
+            ),
           ),
+          Image.asset('assets/images/damdiet_logo_1.png')
         ],
       ),
     );
