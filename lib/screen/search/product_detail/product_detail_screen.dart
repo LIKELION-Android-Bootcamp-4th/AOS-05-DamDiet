@@ -1,5 +1,6 @@
 import 'package:damdiet/screen/search/product_detail/widgets/product_detail_main_info.dart';
 import 'package:damdiet/screen/search/product_detail/widgets/product_image.dart';
+import 'package:damdiet/screen/search/product_detail/widgets/product_quantity_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../routes/app_routes.dart';
@@ -13,6 +14,7 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -24,21 +26,26 @@ class ProductDetailScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ProductImage(),
-            ProductDetailMainInfo(),
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
-            Text('This is Product Detail Screen.'),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("뒤로 가기"),
-            ),
-          ],
+      body: Container(
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProductImage(),
+              ProductDetailMainInfo(),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+              ProductQuantitySelector(),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+              Text('This is Product Detail Screen.'),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("뒤로 가기"),
+              ),
+            ],
+          ),
         ),
       ),
     );
