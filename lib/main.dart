@@ -1,4 +1,6 @@
+import 'package:damdiet/provider/price_range_provider.dart';
 import 'package:damdiet/provider/product_provider.dart';
+import 'package:damdiet/provider/search_provider.dart';
 import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
@@ -20,6 +22,8 @@ void main() {
     MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => ProductProvider()),
+          ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
+          ChangeNotifierProvider(create: (_) => SearchProvider()),
         ],
         child: const DamDietApp()
     )
@@ -71,14 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
         AppRoutes.payment: (context) => PaymentScreen()
       },
     );
-    /*return MultiProvider(
-      providers: [
-
-      ],
-      child: MaterialApp(
-        home: HomeScreen(),
-      ),
-    );*/
   }
 }
 

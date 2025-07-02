@@ -1,6 +1,10 @@
+import 'package:damdiet/provider/price_range_provider.dart';
 import 'package:damdiet/routes/app_routes.dart';
+import 'package:damdiet/widgets/category_outline_button.dart';
+import 'package:damdiet/widgets/search_product_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../util/appcolor.dart';
 
@@ -9,88 +13,75 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var priceRange = Provider.of<PriceRangeProvider>(context);
+    var controller = TextEditingController();
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 12),
-          Container(
-            // margin: EdgeInsets.symmetric(horizontal: 16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey,
-                contentPadding: EdgeInsets.symmetric(vertical: 6.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 12),
+            SearchProductTextField(controller: controller),
+            SizedBox(height: 28),
+            Text(
+              "카테고리 별 상품 보기",
+              style: TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold'),
+            ),
+            SizedBox(height: 18),
+            Row(
+              children: [
+                CategoryOutlineButton(text: "닭가슴살"),
+                SizedBox(width: 12),
+                CategoryOutlineButton(text: '볶음밥/도시락'),
+                SizedBox(width: 12),
+                CategoryOutlineButton(text: "샐러드"),
+              ],
+            ),
+            SizedBox(height: 12),
+            Row(
+              children: [
+                CategoryOutlineButton(text: "간식/음료"),
+                SizedBox(width: 12),
+                CategoryOutlineButton(text: '건강/뷰티'),
+                SizedBox(width: 12),
+                CategoryOutlineButton(text: "운동용품"),
+              ],
+            ),
+
+            SizedBox(height: 26),
+            Text(
+              "가격대 설정",
+              style: TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold'),
+            ),
+            SizedBox(height: 20),
+            SliderTheme(
+              data: SliderThemeData(
+                activeTrackColor: AppColors.primaryColor,
+                thumbColor: AppColors.primaryColor,
+              ),
+              child: RangeSlider(
+                min: 3000,
+                max: 12000,
+                values: priceRange.rangeValues,
+                divisions: 9,
+                labels: RangeLabels(
+                  priceRange.rangeValues.start.toString(),
+                  priceRange.rangeValues.end.toString()
                 ),
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset('assets/icons/ic_search_outline.svg'),
-                ),
+                onChanged: (v) => priceRange.changeRangeValues(v),
               ),
             ),
-          ),
-          SizedBox(height: 28),
-          Text("카테고리 별 상품 보기", style: TextStyle(fontSize: 14)),
-          SizedBox(height: 18),
-          Row(
-              children: [
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.all(12.0)
-                  ),
-                    onPressed: () {},
-                    child: Text("닭가슴살")
-                ),
-                SizedBox(width: 12),
-                OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.all(12.0)
-                    ),
-                    onPressed: () {},
-                    child: Text("볽음밥/도시락")
-                ),
-                SizedBox(width: 12),
-                OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.all(12.0)
-                    ),
-                    onPressed: () {},
-                    child: Text("샐러드")
-                ),
-              ]
-          ),
 
-          SizedBox(height: 12),
-          OutlinedButton(
-            onPressed: () {} ,
-            style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primaryColor,
-                side: BorderSide(color: AppColors.primaryColor)
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.products);
+              },
+              child: Text("검색 결과"),
             ),
-            child: Text("닭가슴살"),
-          ),
-          SizedBox(height: 26),
-          Text("가격대 설정", style: TextStyle(fontSize: 14)),
-          SizedBox(height: 20),
-          RangeSlider(
-              min: 3000,
-              max: 12000,
-              values: RangeValues(5000, 10000),
-              divisions: 6,
-              labels: RangeLabels('5000', '10000'),
-              onChanged: (RangeValues newValues) {}
-          ),
-
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.products);
-            },
-            child: Text("검색 결과"),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
