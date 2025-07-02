@@ -11,7 +11,9 @@ import 'package:damdiet/screen/search_screen.dart';
 import 'package:damdiet/util/appcolor.dart';
 import 'package:damdiet/widgets/underline_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/product_provider.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/bottom_nav_bar.dart';
 
@@ -20,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -31,6 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
     CartScreen(),
     MyPageScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask((){
+      context.read<ProductProvider>().getProducts();
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -93,6 +105,7 @@ class DamDietHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<ProductProvider>();
     return Container(
       color: Colors.white,
       child: SingleChildScrollView(
@@ -109,15 +122,15 @@ class DamDietHomeScreen extends StatelessWidget {
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
-            ProductList(title: "할인율 큰 상품"),
+            ProductList(title: "할인율 큰 상품", productList: provider.products),
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
-            ProductList(title: "다른 고객님들이 많이 구매한 상품"),
+            ProductList(title: "다른 고객님들이 많이 구매한 상품", productList: provider.products),
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
-            ProductList(title: "이런 상품은 어때요?"),
+            ProductList(title: "이런 상품은 어때요?", productList: provider.products),
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
