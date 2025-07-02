@@ -1,3 +1,4 @@
+import 'package:damdiet/provider/product_provider.dart';
 import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
@@ -14,7 +15,14 @@ import 'package:damdiet/screen/search/products_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const DamDietApp());
+  runApp(
+    MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ],
+        child: const DamDietApp()
+    )
+  );
 }
 
 class DamDietApp extends StatelessWidget {
