@@ -1,9 +1,15 @@
 import 'package:animations/animations.dart';
 import 'package:damdiet/screen/cart_screen.dart';
 import 'package:damdiet/screen/community_home_screen.dart';
+import 'package:damdiet/screen/home/widgets/category_list.dart';
+import 'package:damdiet/screen/home/widgets/category_list_item.dart';
+import 'package:damdiet/screen/home/widgets/home_banner.dart';
+import 'package:damdiet/screen/home/widgets/notice_banner.dart';
+import 'package:damdiet/screen/home/widgets/product_list.dart';
 import 'package:damdiet/screen/mypage_screen.dart';
 import 'package:damdiet/screen/search_screen.dart';
 import 'package:damdiet/util/appcolor.dart';
+import 'package:damdiet/widgets/underline_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../routes/app_routes.dart';
@@ -32,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onSearchIconPressed(){
+  void _onSearchIconPressed() {
     setState(() {
       _selectedIndex = 0;
     });
@@ -45,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         //TODO : title Image 정하고 변경
         title: Text(
-            "DamDiet",
+          "DamDiet",
           style: TextStyle(
             fontFamily: 'PretendardExtraBlod',
             fontSize: 24,
@@ -54,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: Colors.white,
         actions: [
-          IconButton(onPressed: _onSearchIconPressed , icon: Icon(Icons.search)),
+          IconButton(onPressed: _onSearchIconPressed, icon: Icon(Icons.search)),
         ],
         elevation: 0,
       ),
@@ -77,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: DamDietBottomNavBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
-      )
+      ),
     );
   }
 }
@@ -89,21 +95,39 @@ class DamDietHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Center(
+      child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('This is Home Screen.'),
+            HomeBanner(),
+
+            NoticeBanner(),
+
+            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+
+            CategoryList(),
+
+            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+
+            ProductList(title: "할인율 큰 상품"),
+
+            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+
+            ProductList(title: "다른 고객님들이 많이 구매한 상품"),
+
+            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+
+            ProductList(title: "이런 상품은 어때요?"),
+
+            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, AppRoutes.productDetail);
               },
               child: Text(
                 "제품 상세",
-                style: TextStyle(
-                  fontFamily: 'PretendardBold',
-                  fontSize: 20
-                ),
+                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
               ),
             ),
             ElevatedButton(
@@ -111,11 +135,8 @@ class DamDietHomeScreen extends StatelessWidget {
                 Navigator.pushNamed(context, AppRoutes.products);
               },
               child: Text(
-                "제품 상세",
-                style: TextStyle(
-                    fontFamily: 'PretendardThin',
-                    fontSize: 20
-                ),
+                "제품 목록?",
+                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
               ),
             ),
           ],

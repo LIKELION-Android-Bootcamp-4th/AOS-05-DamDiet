@@ -13,6 +13,7 @@ import 'package:damdiet/screen/payment_screen.dart';
 import 'package:damdiet/screen/search/product_detail_screen.dart';
 import 'package:damdiet/screen/search/products_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
