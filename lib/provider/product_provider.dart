@@ -17,7 +17,10 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _products = await _service.getProducts();
+      final response = await _service.getProducts();
+
+      final items = response.data['data']['items'] as List;
+      _products = items.map((e) => Product.fromJson(e)).toList();
     } catch (e) {
       print('Error: $e');
     }
