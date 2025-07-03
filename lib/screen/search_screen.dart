@@ -33,9 +33,9 @@ class SearchScreen extends StatelessWidget {
             Row(
               children: [
                 CategoryOutlineButton(text: "닭가슴살"),
-                SizedBox(width: 12),
+                SizedBox(width: 16),
                 CategoryOutlineButton(text: '볶음밥/도시락'),
-                SizedBox(width: 12),
+                SizedBox(width: 16),
                 CategoryOutlineButton(text: "샐러드"),
               ],
             ),
@@ -43,9 +43,9 @@ class SearchScreen extends StatelessWidget {
             Row(
               children: [
                 CategoryOutlineButton(text: "간식/음료"),
-                SizedBox(width: 12),
+                SizedBox(width: 16),
                 CategoryOutlineButton(text: '건강/뷰티'),
-                SizedBox(width: 12),
+                SizedBox(width: 16),
                 CategoryOutlineButton(text: "운동용품"),
               ],
             ),

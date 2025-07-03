@@ -1,4 +1,6 @@
+import 'package:damdiet/provider/search_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../util/appcolor.dart';
 
@@ -16,12 +18,17 @@ class _CategoryOutlineButtonState extends State<CategoryOutlineButton> {
 
   @override
   Widget build(BuildContext context) {
+    var search = Provider.of<SearchProvider>(context);
     return OutlinedButton(
       style: _setButtonState(),
       onPressed: () {
-
         setState(() {
           _selectedState = !_selectedState;
+          if(_selectedState) {
+            search.addCategory(widget.text);
+          } else  {
+            search.removeCategory(widget.text);
+          }
         });
       },
       child: Text(widget.text,
@@ -33,15 +40,18 @@ class _CategoryOutlineButtonState extends State<CategoryOutlineButton> {
   ButtonStyle _setButtonState() {
     if(_selectedState) {
       return OutlinedButton.styleFrom(
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(14.0),
         foregroundColor: AppColors.primaryColor,
         side: BorderSide(color: AppColors.primaryColor),
+        textStyle: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium')
       );
     }
     else {
       return OutlinedButton.styleFrom(
-        padding: EdgeInsets.all(12.0),
-
+        padding: EdgeInsets.all(14.0),
+        foregroundColor: AppColors.textHint,
+        side: BorderSide(color: AppColors.textHint),
+        textStyle: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium')
       );
     }
 

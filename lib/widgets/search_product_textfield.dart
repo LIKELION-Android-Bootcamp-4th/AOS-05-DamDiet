@@ -22,13 +22,14 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.grey[300],
+        fillColor: Colors.grey[200],
         contentPadding: EdgeInsets.symmetric(
           vertical: 6.0,
           horizontal: 18.0,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(32.0),
+          borderSide: BorderSide.none
         ),
         suffixIcon: IconButton(
           onPressed: () {},
