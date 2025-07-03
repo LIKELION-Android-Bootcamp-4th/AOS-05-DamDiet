@@ -152,6 +152,15 @@ class DamDietHomeScreen extends StatelessWidget {
                 style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.signIn);
+              },
+              child: Text(
+                "로그인",
+                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+              ),
+            ),
           ],
         ),
       ),
