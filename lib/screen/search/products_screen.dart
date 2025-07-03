@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../routes/app_routes.dart';
 
@@ -12,6 +13,7 @@ class ProductsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Text('This is Products Screen.'),
             ElevatedButton(
                 onPressed: () {
