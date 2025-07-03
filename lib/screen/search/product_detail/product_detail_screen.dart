@@ -37,7 +37,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                 ),
-                 SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Container(
                     color: Colors.white,
                     child: Column(
@@ -46,25 +46,113 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ProductImage(),
                         ProductDetailMainInfo(),
                         Divider(
-                            height: 6, color: AppColors.gray100, thickness: 6),
+                          height: 6,
+                          color: AppColors.gray100,
+                          thickness: 6,
+                        ),
                         ProductQuantitySelector(),
                         Divider(
-                            height: 6, color: AppColors.gray100, thickness: 6),
+                          height: 6,
+                          color: AppColors.gray100,
+                          thickness: 6,
+                        ),
                       ],
                     ),
                   ),
                 ),
                 SliverPersistentHeader(
-                  pinned: true, delegate: SliverDelegate(),),
+                  pinned: true,
+                  delegate: SliverDelegate(),
+                ),
               ];
             },
             body: TabBarView(
-                children: [
-                  ProductDetailInfo(),
-                  Text("리뷰")
-                ]
+              children: [
+                SingleChildScrollView(child: ProductDetailInfo()),
+                Text("리뷰"),
+              ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                  side: const BorderSide(
+                    color: AppColors.primaryColor, // 테두리 색
+                    width: 1, // 테두리 두께
+                  ),
+                  backgroundColor: Colors.white,
+                  foregroundColor: AppColors.primaryColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/ic_heart_outline.svg',
+                  width: 20,
+                  height: 20,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.primaryColor,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              flex: 2, // 비율 2
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                  backgroundColor: AppColors.primaryColor,
+                  foregroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                ),
+                child: const Text(
+                  '장바구니',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "PretendardSemiBold",
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              flex: 2, // 비율 2
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                  backgroundColor: AppColors.primaryColor,
+                  foregroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                ),
+                child: const Text(
+                  '바로구매',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "PretendardSemiBold",
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -73,9 +161,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
 class SliverDelegate extends SliverPersistentHeaderDelegate {
   @override
-  Widget build(BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent,) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -91,11 +181,19 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
         tabs: [
           Text(
             "상세정보",
-            style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 12, color: AppColors.textSub),
+            style: TextStyle(
+              fontFamily: 'PretendardMedium',
+              fontSize: 12,
+              color: AppColors.textSub,
+            ),
           ),
           Text(
             "리뷰",
-            style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 12, color: AppColors.textSub),
+            style: TextStyle(
+              fontFamily: 'PretendardMedium',
+              fontSize: 12,
+              color: AppColors.textSub,
+            ),
           ),
         ],
       ),

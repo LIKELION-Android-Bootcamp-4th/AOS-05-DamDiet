@@ -7,8 +7,7 @@ class ProductDetailInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
+    return Container(
         color: Colors.white,
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -32,7 +31,6 @@ class ProductDetailInfo extends StatelessWidget {
             _buildRow('지방', '1.7 g'),
           ],
         ),
-      ),
     );
   }
 
