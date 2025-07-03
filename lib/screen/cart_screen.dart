@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../routes/app_routes.dart';
 import '../util/appcolor.dart';
 // class CartScreen extends StatelessWidget {
@@ -210,6 +209,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget _buildCartItemCard(CartItem item) {
     return Container(
+      width: 308,
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -229,25 +229,21 @@ class _CartScreenState extends State<CartScreen> {
             child: Column(
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Checkbox(
-                      value: item.isChecked,
-                      onChanged: (value) => _toggleItemSelection(item, value),
-                      shape: const CircleBorder(),
-                      activeColor: AppColors.primaryColor,
-                    ),
-                    const SizedBox(width: 8,),
+                    const SizedBox(width: 48, ),
                     ClipRRect(
                       child: Container(
                           width: 70, height: 70, color: AppColors.gray100,
-                          child: const Icon(Icons.image, color: AppColors.gray200, size: 55)),
+                          child: const Icon(Icons.image, color: AppColors.gray200, size: 55)
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 8),
                           Text(item.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
                           const SizedBox(height: 8),
                           _buildQuantityControl(
@@ -280,6 +276,7 @@ class _CartScreenState extends State<CartScreen> {
                         icon: const Icon(Icons.add, size: 11),
                         label: const Text('옵션 변경',style: const TextStyle(fontSize: 12, color: AppColors.textSub, fontFamily: 'PretendardMedium')),
                         style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                           foregroundColor: AppColors.textSub,
                           side: const BorderSide(color: AppColors.gray200),
                         ),
@@ -287,6 +284,16 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
               ],
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Checkbox(
+              value: item.isChecked,
+              onChanged: (value) => _toggleItemSelection(item, value),
+              shape: const CircleBorder(),
+              activeColor: AppColors.primaryColor,
             ),
           ),
           Positioned(
@@ -374,11 +381,9 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   const Text('주문금액', style: TextStyle(fontSize: 14, color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
                   const SizedBox(width: 8),
-                  //선택된 상품 건수
                   Text('$_selectedItemCount건', style: const TextStyle(fontSize: 14, color: AppColors.textHint, fontFamily: 'PretendardMedium')),
                 ],
               ),
-              //주문 금액
               Text('$_totalAmount원', style: const TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
             ],
           ),
@@ -421,9 +426,17 @@ void _showOptionChangeSheet(BuildContext context) {
                   child: const Icon(Icons.image, color: AppColors.gray200, size: 30),
                 ),
                 const SizedBox(width: 12,),
-                const Text("담다잇 닭가슴살", style: TextStyle(fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 50),
+                  child: Column(
+                      children: [
+                        const Text("담다잇 닭가슴살", style: TextStyle(fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
+                      ]
+                  ),
+                ),
               ],
             ),
+
             const SizedBox(height: 20),
             DropdownButtonFormField<String>(
               items: const [
