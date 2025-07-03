@@ -35,23 +35,23 @@ class UserSecureStorage {
   }
 
   // refreshToken 저장
-  static Future<void> saveRefreshToken(String accessToken) async {
-    await _storage.write(key: _accessToken, value: accessToken);
-    _debugLog('Access token saved: $accessToken');
+  static Future<void> saveRefreshToken(String refreshToken) async {
+    await _storage.write(key: _refreshToken, value: refreshToken);
+    _debugLog('Refresh token saved: $refreshToken');
   }
 
   // refreshToken 읽기
   static Future<String?> getRefreshToken() async {
-    _debugLog('Access token get: $_accessToken');
-    return await _storage.read(key: _accessToken);
+    _debugLog('Refresh token get: $_refreshToken');
+    return await _storage.read(key: _refreshToken);
   }
 
   // 삭제 - 로그아웃 시
   static Future<void> deleteRefreshToken() async {
-    await _storage.delete(key: _accessToken);
-    _debugLog('Access token deleted');
+    await _storage.delete(key: _refreshToken);
+    _debugLog('Refresh token deleted');
   }
-  
+
   // 둘 다 한 번에 지우는 함수 - 로그아웃 시
   static Future<void> clearTokens() async {
     await _storage.delete(key: _accessToken);

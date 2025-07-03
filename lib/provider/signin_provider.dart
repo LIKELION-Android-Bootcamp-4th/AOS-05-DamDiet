@@ -1,6 +1,7 @@
 import 'package:damdiet/service/product_api/product_api.dart';
 import 'package:flutter/material.dart';
 
+import '../core/secure/user_secure_storage.dart';
 import '../service/product_api/login_service.dart';
 
 class SignInProvider extends ChangeNotifier{
@@ -13,7 +14,6 @@ class SignInProvider extends ChangeNotifier{
   String get errorMessage => _errorMessage;
 
   Future<void> signIn(String email, String password) async {
-
     _isLoading = true;
     notifyListeners();
 
@@ -23,6 +23,17 @@ class SignInProvider extends ChangeNotifier{
       switch(response.statusCode) {
         case 200:
           print('Success: ${response.data}');
+
+          final storedAccessToken = await UserSecureStorage.getAccessToken();
+          final storedRefreshToken = await UserSecureStorage.getRefreshToken();
+
+          if (storedAccessToken == null) {
+            await UserSecureStorage.saveAccessToken(response.data['data']['accessToken']);
+          }
+          if (storedRefreshToken == null) {
+            await UserSecureStorage.saveRefreshToken(response.data['data']['refreshToken']);
+          }
+
           break;
         case 400:
           _errorMessage = '잘못된 요청입니다. 다시 시도해주세요';
