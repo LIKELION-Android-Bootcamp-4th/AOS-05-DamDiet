@@ -5,7 +5,10 @@ import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
 import 'package:damdiet/screen/community/kcal_calculator_screen.dart';
-import 'package:damdiet/screen/home_screen.dart';
+import 'package:damdiet/screen/home/home_screen.dart';
+import 'package:damdiet/screen/login/email_verification_screen.dart';
+import 'package:damdiet/screen/login/login_signin_screen.dart';
+import 'package:damdiet/screen/login/login_signup_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_favorite_products_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
@@ -71,7 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
         AppRoutes.myReview: (context) => MyPageMyReviewScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
-        AppRoutes.payment: (context) => PaymentScreen()
+        AppRoutes.payment: (context) => PaymentScreen(),
+        AppRoutes.signIn: (context) => SignInScreen(),
+        AppRoutes.signUp: (context) => SignUpScreen(),
+        AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
       },
     );
   }

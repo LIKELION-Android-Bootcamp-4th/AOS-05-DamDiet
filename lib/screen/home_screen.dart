@@ -100,7 +100,7 @@ class DamDietHomeScreen extends StatelessWidget {
           Text('This is Home Screen.'),
           Text(
             provider.products.isNotEmpty
-                ? provider.products[0].name
+                ? provider.products[0].name!
                 : '데이터 없음',
             style: TextStyle(
               fontSize: 20,

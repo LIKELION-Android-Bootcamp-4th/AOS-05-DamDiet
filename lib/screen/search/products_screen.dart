@@ -1,9 +1,8 @@
-import 'package:damdiet/models/Product.dart';
 import 'package:damdiet/util/appcolor.dart';
 import 'package:damdiet/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../models/ListProduct.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/category_outline_button.dart';
 import '../../widgets/search_product_textfield.dart';

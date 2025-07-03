@@ -20,7 +20,8 @@ class AppRoutes {
   static const String myOrders = "/myPage/myOrders";
 
   static const String signIn = "/login/signIn";
-  static const String signup = "/login/signUp";
+  static const String signUp = "/login/signUp";
+  static const String emailVerification = "/login/emailVerification";
   static const String setNickname = "/login/setNickname";
 
   static const String payment = "/payment";
