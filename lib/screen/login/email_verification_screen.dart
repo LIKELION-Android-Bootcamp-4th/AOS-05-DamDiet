@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/bottom_cta_button.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class EmailVerificationScreen extends StatelessWidget {
+  const EmailVerificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,33 +18,15 @@ class SignUpScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('This is SignUp Screen.'),
-              CustomTextField(hintText: '이메일', isPassword: false),
 
-              SizedBox(height: 16),
-
-              CustomTextField(hintText: '비밀번호', isPassword: true),
-
-              SizedBox(height: 16),
-
-              CustomTextField(hintText: '비밀번호 확인', isPassword: true),
-
-              SizedBox(height: 16),
-
-              CustomTextField(hintText: '닉네임', isPassword: false),
-
-              SizedBox(height: 32),
-
-              StatusMessage(
-                message: '이미 존재하는 이메일입니다.',
-                isError: true,
-              ),
+              CustomTextField(hintText: '인증번호', isPassword: false),
 
               SizedBox(height: 32),
 
               BottomCTAButton(
-                text: "인증번호 전송",
+                text: "인증번호 확인",
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.emailVerification);
+                  Navigator.pushNamed(context, AppRoutes.home);
                 },
               ),
 
