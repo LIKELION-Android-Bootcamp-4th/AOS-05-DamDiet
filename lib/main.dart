@@ -42,7 +42,6 @@ class DamDietApp extends StatelessWidget {
     return MaterialApp(
       title: 'DamDiet',
       theme: ThemeData(
-        
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(),
