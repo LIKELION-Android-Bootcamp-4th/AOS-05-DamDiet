@@ -1,6 +1,7 @@
 import 'package:damdiet/models/Review.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../../util/appcolor.dart';
 
@@ -16,7 +17,7 @@ class ProductReviewListItem extends StatelessWidget {
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,6 +34,7 @@ class ProductReviewListItem extends StatelessWidget {
                         color: AppColors.textMain,
                       ),
                     ),
+                    SizedBox(width: 8,),
                     Text(
                       date,
                       style: TextStyle(
@@ -42,8 +44,57 @@ class ProductReviewListItem extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                RatingBarIndicator(
+                  rating: 2.7,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 14.0,
+                  direction: Axis.horizontal,
                 )
               ]),
+          Text(
+            review.comment,
+            style: TextStyle(
+              fontFamily: 'PretendardRegular',
+              fontSize: 12,
+              color: AppColors.textMain,
+            ),
+          ),
+          SizedBox(height: 8,),
+          if(review.images != null && review.images!.isNotEmpty)
+          SizedBox(
+            height: 60,
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: review.images!.length,
+              separatorBuilder: (_, __) => SizedBox(width: 10),
+              itemBuilder: (context, index) => ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  review.images![index],  width: 50,
+                  height: 50,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.error);
+                  },),
+              ),
+            ),
+          )else ... [
+            SizedBox(height: 50,)
+          ],
+          SizedBox(height: 16,),
+          Divider(height: 1, color: AppColors.gray100, thickness: 1,),
         ],
       ),
     );

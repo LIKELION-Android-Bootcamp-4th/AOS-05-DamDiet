@@ -21,13 +21,13 @@ class ProductReviewsTab extends StatelessWidget {
 
 
     return Container(
-      padding: EdgeInsets.only(top: 24, left: 16, bottom: 16),
+      padding: EdgeInsets.only(),
       color: Colors.white,
       child: Center(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 16.0),
+              padding: const EdgeInsets.only(top: 24, left: 16, bottom: 16, right: 16.0),
               child: Column(
                 children: [
                   if (reviewList.isEmpty)
@@ -111,10 +111,11 @@ class ProductReviewsTab extends StatelessWidget {
                 ],
               ),
             ),
+
             // TODO: 현재는 리뷰 리스트 엠티 검사를 하는데 ImageList 로 검사해서 else 문도 작성 해야함
             if (reviewList.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
                 child: SizedBox(
                   height: 70,
                   child: ListView.separated(
@@ -136,6 +137,7 @@ class ProductReviewsTab extends StatelessWidget {
                   ),
                 ),
               ),
+            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
             if(reviewList.isNotEmpty)
               ListView.builder(
                   shrinkWrap: true,

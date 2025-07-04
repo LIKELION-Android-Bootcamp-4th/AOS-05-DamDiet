@@ -2,7 +2,7 @@ class Review {
   final String id;
   final String nickname;
   final String comment;
-  final int rating;
+  final double rating;
   final List<String>? images;
   final DateTime createdAt;
 
@@ -20,7 +20,7 @@ class Review {
       id: json['_id'] as String,
       nickname: json['nickname'] as String,
       comment: json['comment'] as String,
-      rating: json['rating'] as int,
+      rating: json['rating'] as double,
       images: json['images'] != null
           ? List<String>.from(json['images'] as List)
           : null,
