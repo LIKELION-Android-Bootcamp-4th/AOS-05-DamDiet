@@ -3,6 +3,7 @@ class Product {
   final String? name;
   //final String image;
   final int? price;
+  final bool? isFavorite;
   //final int discount;
   //final List<String>? options;
   // final String? category;
@@ -16,6 +17,7 @@ class Product {
     required this.id,
     required this.name,
     required this.price,
+    required this.isFavorite,
     //required this.discount,
     //this.options,
     // this.category,
@@ -32,6 +34,7 @@ class Product {
       id: json['_id'] as String?,
       name: json['name'] as String?,
       price: json['price'] as int?,
+      isFavorite: json['isFavorite'] as bool?,
       //discount: json['discount'] as int,
       // options: json['options'] != null
       //     ? List<String>.from(json['options'] as List)
