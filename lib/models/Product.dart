@@ -1,12 +1,12 @@
 class Product {
-  final String id;
-  final String name;
+  final String? id;
+  final String? name;
   //final String image;
-  final int price;
+  final int? price;
   //final int discount;
   //final List<String>? options;
   // final String? category;
-  // final double? rating;
+  //final double? rating;
   // final int? calories;
   // final int? carbs;
   // final int? fat;
@@ -19,18 +19,19 @@ class Product {
     //required this.discount,
     //this.options,
     // this.category,
-    // this.rating,
+    //this.rating,
     // this.calories,
     // this.carbs,
     // this.fat,
     // this.protein,
+    //required this.image
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['_id'] as String,
-      name: json['name'] as String,
-      price: json['price'] as int,
+      id: json['_id'] as String?,
+      name: json['name'] as String?,
+      price: json['price'] as int?,
       //discount: json['discount'] as int,
       // options: json['options'] != null
       //     ? List<String>.from(json['options'] as List)
@@ -41,6 +42,7 @@ class Product {
       // carbs: json['carbs'] as int?,
       // fat: json['fat'] as int?,
       // protein: json['protein'] as int?,
+      //image: json['image'] as String
     );
   }
 }
