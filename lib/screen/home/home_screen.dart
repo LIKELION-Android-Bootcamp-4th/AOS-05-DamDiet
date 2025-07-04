@@ -2,14 +2,18 @@ import 'package:animations/animations.dart';
 import 'package:damdiet/screen/cart_screen.dart';
 import 'package:damdiet/screen/community_home_screen.dart';
 import 'package:damdiet/screen/home/widgets/category_list.dart';
+
 import 'package:damdiet/screen/home/widgets/category_list_item.dart';
+
 import 'package:damdiet/screen/home/widgets/home_banner.dart';
 import 'package:damdiet/screen/home/widgets/notice_banner.dart';
 import 'package:damdiet/screen/home/widgets/product_list.dart';
 import 'package:damdiet/screen/mypage_screen.dart';
 import 'package:damdiet/screen/search_screen.dart';
 import 'package:damdiet/util/appcolor.dart';
+
 import 'package:damdiet/widgets/underline_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+
+        //TODO : 진짜 home 에서만 뜨게 수정
+
         //TODO : title Image 정하고 변경
         title: Text(
           "DamDiet",
@@ -152,6 +159,17 @@ class DamDietHomeScreen extends StatelessWidget {
                 style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
               ),
             ),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.signIn);
+              },
+              child: Text(
+                "로그인",
+                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+              ),
+            ),
+
           ],
         ),
       ),

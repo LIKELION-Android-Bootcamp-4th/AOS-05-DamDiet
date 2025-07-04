@@ -28,7 +28,10 @@ class ProductListItem extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-            product.name,
+
+
+            product.name != null ? product.name! : "담다잇닭가슴살",
+
             style: TextStyle(
               fontFamily: 'PretendardMedium',
               fontSize: 14,
