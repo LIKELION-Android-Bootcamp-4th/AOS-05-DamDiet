@@ -390,7 +390,8 @@ class _CartScreenState extends State<CartScreen> {
           const SizedBox(height: 16,),
           ElevatedButton(
             onPressed: () {
-            },
+               Navigator.pushNamed(context, AppRoutes.payment);
+             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
               minimumSize: const Size(double.infinity, 50),
