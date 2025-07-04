@@ -1,18 +1,18 @@
 import 'Product.dart';
 
-class LikedProduct {
+class FavoriteProduct {
   final String id; // _id
   final Product product;
   final DateTime likedAt;
 
-  LikedProduct({
+  FavoriteProduct({
     required this.id,
     required this.product,
     required this.likedAt,
   });
 
-  factory LikedProduct.fromJson(Map<String, dynamic> json) {
-    return LikedProduct(
+  factory FavoriteProduct.fromJson(Map<String, dynamic> json) {
+    return FavoriteProduct(
       id: json['_id'],
       product: Product.fromJson(json['productId']),
       likedAt: DateTime.parse(json['likedAt']),
