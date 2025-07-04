@@ -30,7 +30,7 @@ class UnderlineText extends StatelessWidget {
           children: [
             // 밑줄 Container
             Positioned(
-              bottom: 0,
+              bottom: 3,
               child: Container(
                 height: 6,
                 width: textWidth + 2,

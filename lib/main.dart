@@ -17,7 +17,7 @@ import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_review_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_profile_edit_screen.dart';
 import 'package:damdiet/screen/payment_screen.dart';
-import 'package:damdiet/screen/search/product_detail_screen.dart';
+import 'package:damdiet/screen/search/product_detail/product_detail_screen.dart';
 import 'package:damdiet/screen/search/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
