@@ -91,13 +91,13 @@ class MyPageScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildSectionTitle('커뮤니티'),
-              _buildListTile('내 커뮤니티 관리', () { /* 페이지 */ }),
-              _buildListTile('칼로리 계산기', () { /* 페이지 */ }),
+              _buildListTile('내 커뮤니티 관리', () { Navigator.pushNamed(context, AppRoutes.myCommunity); }),
+              _buildListTile('칼로리 계산기', () { Navigator.pushNamed(context, AppRoutes.kcalCalculator); }),
               const Divider(indent: 16, endIndent: 16, color: AppColors.gray100,),
               const SizedBox(height: 16),
 
               _buildSectionTitle('내 정보 관리'),
-              _buildListTile('내 정보 수정', () { /* ... */ }),
+              _buildListTile('내 정보 수정', () { Navigator.pushNamed(context, AppRoutes.profileEdit); }),
               const Divider(indent: 16, endIndent: 16, color: AppColors.gray100,),
 
               _buildListTile('로그아웃', () { /* 다이얼로그 */ }),
@@ -117,21 +117,21 @@ class MyPageScreen extends StatelessWidget {
           width: 20,
           height: 20,
           colorFilter: const ColorFilter.mode(AppColors.textMain, BlendMode.srcIn),
-        ), '장바구니', () { /*페이지*/ }),
+        ), '장바구니', () { Navigator.pushNamed(context, AppRoutes.cart); }),
 
         _buildIconMenuItem(SvgPicture.asset(
           'assets/icons/ic_heart_outline.svg',
           width: 20,
           height: 20,
           colorFilter: const ColorFilter.mode(AppColors.textMain, BlendMode.srcIn),
-        ), '찜한상품', () { /*페이지*/ }),
+        ), '찜한상품', () { Navigator.pushNamed(context, AppRoutes.favoriteProduct); }),
 
         _buildIconMenuItem(SvgPicture.asset(
           'assets/icons/ic_edit.svg',
           width: 20,
           height: 20,
           colorFilter: const ColorFilter.mode(AppColors.textMain, BlendMode.srcIn),
-        ), '리뷰목록', () { /*페이지로*/ }),
+        ), '리뷰목록', () { Navigator.pushNamed(context, AppRoutes.myReview); }),
 
       ],
     );
