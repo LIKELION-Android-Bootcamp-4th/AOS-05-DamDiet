@@ -20,6 +20,7 @@ class MyPageScreen extends StatelessWidget {
     );
   }
 
+  
   Widget _buildHeader() {
     return Stack(
       children: [
