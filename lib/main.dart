@@ -3,7 +3,7 @@ import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
 import 'package:damdiet/screen/community/kcal_calculator_screen.dart';
-import 'package:damdiet/screen/home_screen.dart';
+import 'package:damdiet/screen/home/home_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_favorite_products_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
