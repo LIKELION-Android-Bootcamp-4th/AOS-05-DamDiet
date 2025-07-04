@@ -1,6 +1,5 @@
 import 'package:damdiet/routes/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import '../util/appcolor.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
