@@ -2,8 +2,10 @@ import 'package:damdiet/screen/search/product_detail/widgets/product_detail_info
 import 'package:damdiet/screen/search/product_detail/widgets/product_detail_main_info.dart';
 import 'package:damdiet/screen/search/product_detail/widgets/product_image.dart';
 import 'package:damdiet/screen/search/product_detail/widgets/product_quantity_selector.dart';
+import 'package:damdiet/screen/search/product_detail/widgets/product_reviews.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../models/Review.dart';
 import '../../../routes/app_routes.dart';
 import '../../../util/appcolor.dart';
 import '../../../widgets/underline_text.dart';
@@ -16,6 +18,50 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final List<Review> dummyReviews = [
+    Review(
+      id: '1',
+      nickname: '펭귄',
+      comment: '생각보다 맛있어요! 재구매 의사 있습니다.',
+      rating: 5,
+      images: [
+        "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+        "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+      ],
+      createdAt: DateTime.parse('2025-07-01T12:30:00Z'),
+    ),
+    Review(
+      id: '2',
+      nickname: '오리',
+      comment: '양이 조금 적어요. 그래도 괜찮네요.',
+      rating: 4,
+      images: [
+        "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+      ],
+      createdAt: DateTime.parse('2025-07-02T15:45:00Z'),
+    ),
+    Review(
+      id: '3',
+      nickname: '햄스터',
+      comment: '배송이 빨랐고 만족합니다!',
+      rating: 5,
+      images: null, // 사진 없음
+      createdAt: DateTime.parse('2025-07-03T09:20:00Z'),
+    ),
+    Review(
+      id: '4',
+      nickname: '너구리',
+      comment: '조금 아쉬웠어요. 맛이 제 취향은 아니네요.',
+      rating: 3,
+      images: [
+        "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+        "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+        "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+      ],
+      createdAt: DateTime.parse('2025-07-04T20:10:00Z'),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +115,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             body: TabBarView(
               children: [
                 SingleChildScrollView(child: ProductDetailInfo()),
-                Text("리뷰"),
+                SingleChildScrollView(child:ProductReviewsTab(reviewList: dummyReviews,)),
               ],
             ),
           ),
