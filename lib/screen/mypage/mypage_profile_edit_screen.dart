@@ -10,6 +10,7 @@ class MyPageProfileEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(16),
         child: Center(
