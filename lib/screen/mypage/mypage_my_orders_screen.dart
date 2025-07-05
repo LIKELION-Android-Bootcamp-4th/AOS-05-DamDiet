@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../routes/app_routes.dart';
 import '../../util/appcolor.dart';
 
 class OrderItem {
@@ -143,7 +144,7 @@ class _MyPageMyOrdersScreenState extends State<MyPageMyOrdersScreen>{
       children: [
         Text(date, style: const TextStyle(fontSize: 12,color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
         TextButton(
-          onPressed: () {  },
+          onPressed: () { Navigator.pushNamed(context, AppRoutes.myOrderDetail); },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: const Size(50, 30),
