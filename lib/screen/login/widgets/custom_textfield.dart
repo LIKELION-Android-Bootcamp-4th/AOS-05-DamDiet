@@ -4,11 +4,13 @@ import '../../../util/appcolor.dart';
 class CustomTextField extends StatefulWidget {
   final String hintText;
   final bool isPassword;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.isPassword = false,
+    this.controller,
   });
 
   @override
@@ -16,15 +18,23 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _controller = TextEditingController();
+  late TextEditingController _controller;
   bool _obscureText = true;
 
   @override
   void initState() {
     super.initState();
     _obscureText = widget.isPassword;
+    _controller = widget.controller ?? TextEditingController();
   }
 
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller?.dispose();
+    }
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return TextField(

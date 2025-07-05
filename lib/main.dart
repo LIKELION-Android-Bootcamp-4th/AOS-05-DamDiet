@@ -1,6 +1,7 @@
 import 'package:damdiet/provider/price_range_provider.dart';
 import 'package:damdiet/provider/product_provider.dart';
 import 'package:damdiet/provider/search_provider.dart';
+import 'package:damdiet/provider/signin_provider.dart';
 import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
@@ -16,20 +17,26 @@ import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_order_details/mypage_my_order_details_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_password_edit_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_profile_edit_screen.dart';
 import 'package:damdiet/screen/payment_screen.dart';
+import 'package:damdiet/screen/review/review_edit_screen.dart';
+import 'package:damdiet/screen/review/review_write_screen.dart';
 import 'package:damdiet/screen/search/product_detail/product_detail_screen.dart';
 import 'package:damdiet/screen/search/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => ProductProvider()),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
+          ChangeNotifierProvider(create: (_) => SignInProvider())
         ],
         child: const DamDietApp()
     )
@@ -73,12 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
         AppRoutes.profileEdit: (context) => MyPageProfileEditScreen(),
+        AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreen(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
         AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
         AppRoutes.payment: (context) => PaymentScreen(),
+        AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
+        AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
         AppRoutes.signIn: (context) => SignInScreen(),
         AppRoutes.signUp: (context) => SignUpScreen(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
