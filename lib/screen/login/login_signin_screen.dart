@@ -1,7 +1,9 @@
 import 'package:damdiet/screen/login/widgets/custom_textfield.dart';
 import 'package:damdiet/screen/login/widgets/sign_up_prompt.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/signin_provider.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/bottom_cta_button.dart';
 
@@ -15,6 +17,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<SignInProvider>();
+
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16),
@@ -39,7 +43,8 @@ class _SignInScreenState extends State<SignInScreen> {
               BottomCTAButton(
                 text: "로그인",
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.home);
+                  provider.signIn("buyer@example.com"	, "password123");
+                  //Navigator.pushNamed(context, AppRoutes.home);
                 },
               ),
 
