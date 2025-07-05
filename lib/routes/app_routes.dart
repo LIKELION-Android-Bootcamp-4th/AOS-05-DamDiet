@@ -14,6 +14,7 @@ class AppRoutes {
 
   static const String myPage = "/myPage";
   static const String profileEdit = "/myPage/profileEdit";
+  static const String passwordEdit = "/myPage/passwordEdit";
   static const String favoriteProduct = "/myPage/favoriteProduct";
   static const String myReview = "/myPage/myReview";
   static const String myCommunity = "/myPage/myCommunity";
