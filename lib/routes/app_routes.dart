@@ -19,6 +19,7 @@ class AppRoutes {
   static const String myReview = "/myPage/myReview";
   static const String myCommunity = "/myPage/myCommunity";
   static const String myOrders = "/myPage/myOrders";
+  static const String myOrderDetail = "/myPage/myOrders/detail";
 
   static const String reviewWrite = "/review/write";
   static const String reviewEdit = "/review/edit";
