@@ -14,10 +14,14 @@ class AppRoutes {
 
   static const String myPage = "/myPage";
   static const String profileEdit = "/myPage/profileEdit";
+  static const String passwordEdit = "/myPage/passwordEdit";
   static const String favoriteProduct = "/myPage/favoriteProduct";
   static const String myReview = "/myPage/myReview";
   static const String myCommunity = "/myPage/myCommunity";
   static const String myOrders = "/myPage/myOrders";
+
+  static const String reviewWrite = "/review/write";
+  static const String reviewEdit = "/review/edit";
 
   static const String signIn = "/login/signIn";
   static const String signUp = "/login/signUp";

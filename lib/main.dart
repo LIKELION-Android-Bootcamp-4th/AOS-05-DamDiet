@@ -15,8 +15,11 @@ import 'package:damdiet/screen/mypage/mypage_favorite_products_screen/mypage_fav
 import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
+import 'package:damdiet/screen/mypage/mypage_password_edit_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_profile_edit_screen.dart';
 import 'package:damdiet/screen/payment_screen.dart';
+import 'package:damdiet/screen/review/review_edit_screen.dart';
+import 'package:damdiet/screen/review/review_write_screen.dart';
 import 'package:damdiet/screen/search/product_detail/product_detail_screen.dart';
 import 'package:damdiet/screen/search/products_screen.dart';
 import 'package:flutter/material.dart';
@@ -72,11 +75,14 @@ class _MyHomePageState extends State<MyHomePage> {
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
         AppRoutes.profileEdit: (context) => MyPageProfileEditScreen(),
+        AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreen(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
         AppRoutes.payment: (context) => PaymentScreen(),
+        AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
+        AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
         AppRoutes.signIn: (context) => SignInScreen(),
         AppRoutes.signUp: (context) => SignUpScreen(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
