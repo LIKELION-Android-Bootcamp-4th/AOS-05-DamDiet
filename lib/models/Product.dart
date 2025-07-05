@@ -1,7 +1,7 @@
 class Product {
   final String? id;
   final String? name;
-  //final String image;
+  final String? image;
   final int? price;
   final bool? isFavorite;
   //final int discount;
@@ -26,7 +26,7 @@ class Product {
     // this.carbs,
     // this.fat,
     // this.protein,
-    //required this.image
+    this.image
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -45,7 +45,7 @@ class Product {
       // carbs: json['carbs'] as int?,
       // fat: json['fat'] as int?,
       // protein: json['protein'] as int?,
-      //image: json['image'] as String
+      image: json['image'] != null?  json['image'] as String : null
     );
   }
 }

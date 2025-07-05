@@ -98,7 +98,9 @@ class MyPageScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildSectionTitle('내 정보 관리'),
-              _buildListTile('내 정보 수정', () { Navigator.pushNamed(context, AppRoutes.profileEdit); }),
+              _buildListTile('배송지 변경', () { Navigator.pushNamed(context, AppRoutes.profileEdit); }),
+              _buildListTile('비밀번호 변경', () { Navigator.pushNamed(context, AppRoutes.passwordEdit); }),
+
               const Divider(indent: 16, endIndent: 16, color: AppColors.gray100,),
 
               _buildListTile('로그아웃', () { /* 다이얼로그 */ }),
