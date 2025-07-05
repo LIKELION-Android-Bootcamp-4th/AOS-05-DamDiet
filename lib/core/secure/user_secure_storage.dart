@@ -7,15 +7,6 @@ class UserSecureStorage {
   static const _accessToken = "accessToken";// 내부 저장소에 저장시 사용 할 key 값
   static const _refreshToken = "refreshToken";
 
-
-  static void setJwt(String jwt) async {// 로그인시 jwt 값을 내부저장소에 저장하는 함수
-    ;//api 통신에 사용 header에 넣을 값
-    await _storage.write(key: _accessToken, value: jwt);// key 값을 사용해서 저장
-    if (kDebugMode) {
-      print("user_secure_storage: jwt has been set");
-    }
-  }
-
   // refreshToken 저장
   static Future<void> saveAccessToken(String accessToken) async {
     await _storage.write(key: _accessToken, value: accessToken);
@@ -28,7 +19,7 @@ class UserSecureStorage {
     return await _storage.read(key: _accessToken);
   }
 
-  // 삭제 - 로그아웃 시
+  // 삭제 
   static Future<void> deleteAccessToken() async {
     await _storage.delete(key: _accessToken);
     _debugLog('Access token deleted');
@@ -46,7 +37,7 @@ class UserSecureStorage {
     return await _storage.read(key: _refreshToken);
   }
 
-  // 삭제 - 로그아웃 시
+  // 삭제
   static Future<void> deleteRefreshToken() async {
     await _storage.delete(key: _refreshToken);
     _debugLog('Refresh token deleted');
