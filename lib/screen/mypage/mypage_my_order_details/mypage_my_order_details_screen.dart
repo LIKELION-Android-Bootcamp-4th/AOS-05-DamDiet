@@ -44,9 +44,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
               'assets/icons/ic_arrow_back.svg', width: 24, height: 24),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('주문 상세', style: TextStyle(color: AppColors.textMain,
-            fontSize: 18,
-            fontFamily: 'PretendardBold')),
+        title: const Text('주문 상세', style: TextStyle(color: AppColors.textMain, fontSize: 18, fontFamily: 'PretendardBold')),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -170,7 +168,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
             children: [
               if (!item.hasReview)
                 ElevatedButton(
-                  onPressed: () { Navigator.pushNamed(context, AppRoutes.myReview); },
+                  onPressed: () { Navigator.pushNamed(context, AppRoutes.reviewWrite); },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     foregroundColor: Colors.white,
