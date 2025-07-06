@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+
+import '../../../../core/theme/appcolor.dart';
+
+class CartQuantityControl extends StatelessWidget {
+  final int quantity;
+  final VoidCallback onIncrement;
+  final VoidCallback onDecrement;
+
+  const CartQuantityControl({
+    super.key,
+    required this.quantity,
+    required this.onIncrement,
+    required this.onDecrement,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 76,
+      height: 22,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.gray200),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(onTap: onDecrement, child: const Icon(Icons.remove, size: 16, color: AppColors.textSub)),
+          Text('$quantity', style: const TextStyle(fontSize: 12, color: AppColors.textMain, fontFamily: 'PretendardMedium')),
+          InkWell(onTap: onIncrement, child: const Icon(Icons.add, size: 16, color: AppColors.textSub)),
+        ],
+      ),
+    );
+  }
+}
