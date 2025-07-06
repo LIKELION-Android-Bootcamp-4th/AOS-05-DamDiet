@@ -1,5 +1,5 @@
-const String BASE_URL = 'http://git.hansul.kr:3000/';
+const String BASE_URL = 'http://git.hansul.kr:3000/api/';
 
-const String X_COMPANY_CODE = '685f69fc439922c09c21aef0';
+const String X_COMPANY_CODE = '6866fd7b5b230f5dc709bdfb';
 
 const String ACCESS_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODVmNjlmYzQzOTkyMmMwOWMyMWFlZjMiLCJjb21wYW55SWQiOiI2ODVmNjlmYzQzOTkyMmMwOWMyMWFlZjAiLCJpc0FkbWluIjp0cnVlLCJpc1N1cGVyQWRtaW4iOnRydWUsImlhdCI6MTc1MTMzOTI2OCwiZXhwIjoxNzUxNDI1NjY4fQ.oRj5tVMltqCJ0Su_lVZy9PGiUyZ94NVFS4DnI4_Pc1w';

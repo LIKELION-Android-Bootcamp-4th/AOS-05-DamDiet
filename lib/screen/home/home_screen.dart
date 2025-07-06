@@ -17,7 +17,7 @@ import 'package:damdiet/widgets/underline_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/product_provider.dart';
+import '../../provider/home_viewmodel.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/bottom_nav_bar.dart';
 
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.microtask((){
-      context.read<ProductProvider>().getProducts();
+      context.read<HomeViewmodel>().getProducts();
     });
   }
 
@@ -112,7 +112,7 @@ class DamDietHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductProvider>();
+    final viewModel = context.watch<HomeViewmodel>();
     return Container(
       color: Colors.white,
       child: SingleChildScrollView(
@@ -129,15 +129,15 @@ class DamDietHomeScreen extends StatelessWidget {
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
-            ProductList(title: "할인율 큰 상품", productList: provider.products),
+            ProductList(title: "할인율 큰 상품", productList: viewModel.products),
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
-            ProductList(title: "다른 고객님들이 많이 구매한 상품", productList: provider.products),
+            ProductList(title: "다른 고객님들이 많이 구매한 상품", productList: viewModel.products),
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
-            ProductList(title: "이런 상품은 어때요?", productList: provider.products),
+            ProductList(title: "이런 상품은 어때요?", productList: viewModel.products),
 
             Divider(height: 6, color: AppColors.gray100, thickness: 6,),
 
