@@ -1,7 +1,8 @@
 import 'package:damdiet/provider/price_range_provider.dart';
-import 'package:damdiet/provider/product_provider.dart';
+import 'package:damdiet/provider/home_viewmodel.dart';
 import 'package:damdiet/provider/search_provider.dart';
 import 'package:damdiet/provider/signin_provider.dart';
+import 'package:damdiet/repositories/product_repository.dart';
 import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
@@ -24,6 +25,7 @@ import 'package:damdiet/screen/review/review_edit_screen.dart';
 import 'package:damdiet/screen/review/review_write_screen.dart';
 import 'package:damdiet/screen/search/product_detail/product_detail_screen.dart';
 import 'package:damdiet/screen/search/products_screen.dart';
+import 'package:damdiet/service/product_api/product_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +35,7 @@ void main() {
   runApp(
     MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => ProductProvider()),
+          ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => SignInProvider())

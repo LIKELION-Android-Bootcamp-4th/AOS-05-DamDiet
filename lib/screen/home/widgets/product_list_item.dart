@@ -1,7 +1,7 @@
 import 'package:damdiet/util/appcolor.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/Product.dart';
+import '../../../models/models/product/product.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({super.key, required this.product});
@@ -28,10 +28,7 @@ class ProductListItem extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-
-
-            product.name != null ? product.name! : "담다잇닭가슴살",
-
+            product.name,
             style: TextStyle(
               fontFamily: 'PretendardMedium',
               fontSize: 14,

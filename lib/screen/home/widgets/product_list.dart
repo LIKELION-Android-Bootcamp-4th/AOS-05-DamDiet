@@ -1,7 +1,6 @@
-import 'package:damdiet/models/Product.dart';
 import 'package:damdiet/screen/home/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
-import 'category_list_item.dart';
+import '../../../models/models/product/product.dart';
 import 'list_title.dart';
 
 class ProductList extends StatelessWidget {

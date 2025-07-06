@@ -6,7 +6,7 @@ import 'package:damdiet/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/product_provider.dart';
+import '../provider/home_viewmodel.dart';
 import '../routes/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.microtask((){
-      context.read<ProductProvider>().getProducts();
+      context.read<HomeViewmodel>().getProducts();
     });
   }
 
@@ -91,7 +91,7 @@ class DamDietHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductProvider>();
+    final provider = context.watch<HomeViewmodel>();
 
     return Center(
       child: provider.isLoading? CircularProgressIndicator() : Column(
@@ -100,7 +100,7 @@ class DamDietHomeScreen extends StatelessWidget {
           Text('This is Home Screen.'),
           Text(
             provider.products.isNotEmpty
-                ? provider.products[0].name!
+                ? provider.products[0].name
                 : '데이터 없음',
             style: TextStyle(
               fontSize: 20,

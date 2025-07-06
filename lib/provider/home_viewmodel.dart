@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-import '../models/Product.dart';
-import '../service/product_api/product_api.dart';
+import '../models/models/product/product.dart';
+import '../repositories/product_repository.dart';
 
-class ProductProvider extends ChangeNotifier {
-  final ProductService _service = ProductService();
+class HomeViewmodel extends ChangeNotifier {
+  final ProductRepository _repository;
+
+  HomeViewmodel(this._repository);
 
   List<Product> _products = [];
   List<Product> get products => _products;
@@ -17,10 +19,7 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _service.getProducts();
-
-      final items = response.data['data']['items'] as List;
-      _products = items.map((e) => Product.fromJson(e)).toList();
+      _products = await _repository.getProducts();
     } catch (e) {
       print('Error: $e');
     }
