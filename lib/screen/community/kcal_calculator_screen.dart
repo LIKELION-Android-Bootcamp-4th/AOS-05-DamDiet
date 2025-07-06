@@ -2,7 +2,7 @@ import 'package:damdiet/models/ProductNutrition.dart';
 import 'package:damdiet/provider/nutrition_provider.dart';
 import 'package:damdiet/screen/community/widgets/kcal_checked_list.dart';
 import 'package:damdiet/screen/community/widgets/kcal_listview_item.dart';
-import 'package:damdiet/screen/login/widgets/custom_textfield.dart';
+import 'package:damdiet/screen/auth/widgets/custom_textfield.dart';
 import 'package:damdiet/util/appcolor.dart';
 import 'package:damdiet/widgets/bottom_cta_button.dart';
 import 'package:flutter/material.dart';
