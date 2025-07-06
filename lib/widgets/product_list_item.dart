@@ -48,22 +48,16 @@ class ProductListItem extends StatelessWidget {
                         color: AppColors.textMain,
                       ),
                     ),
-                    IconButton(
-                      iconSize: 10,
-                      padding: EdgeInsets.zero,
-                      visualDensity: VisualDensity(vertical: -4, horizontal: -2),
-                      // constraints: BoxConstraints(minWidth: 16, minHeight: 16),
-                      onPressed: () {},
-                      icon: SvgPicture.asset('assets/icons/ic_cancel.svg'),
-                    )
-                    /*Visibility(
+                    Visibility(
                       visible: rating == 0.0,
                       child: IconButton(
                         iconSize: 10,
+                        padding: EdgeInsets.zero,
+                        visualDensity: VisualDensity(vertical: -4, horizontal: -2),
                         onPressed: () {},
                         icon: SvgPicture.asset('assets/icons/ic_cancel.svg'),
                       ),
-                    ),*/
+                    ),
                   ],
                 ),
                 SizedBox(height: 12),
