@@ -18,6 +18,7 @@ class DamDietBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
       items: [
         BottomNavigationBarItem(
           icon: SvgPicture.asset('assets/icons/ic_search_outline.svg', width: 20, height: 20),

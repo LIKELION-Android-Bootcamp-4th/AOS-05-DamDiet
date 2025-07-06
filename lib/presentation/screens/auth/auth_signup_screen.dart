@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(height: 32),
 
               BottomCTAButton(
-                text: "인증번호 전송",
+                text: "회원가입",
                 onPressed: () {
                   Navigator.pushNamed(context, AppRoutes.emailVerification);
                 },

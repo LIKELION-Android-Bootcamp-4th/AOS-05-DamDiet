@@ -2,6 +2,7 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
+import '../../../core/widgets/damdiet_appbar.dart';
 import '../auth/widgets/custom_textfield.dart';
 
 class MyPageAddressEditScreen extends StatelessWidget {
@@ -10,6 +11,10 @@ class MyPageAddressEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: DamdietAppbar(
+        title: '기본 배송지 변경',
+        showBackButton: true,
+      ),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(16),
@@ -51,8 +56,16 @@ class MyPageAddressEditScreen extends StatelessWidget {
               SizedBox(height: 16,),
               CustomTextField(hintText: '상세 주소', isPassword: false),
               SizedBox(height: 16,),
-              BottomCTAButton(text: '배송지 저장', onPressed: () {}),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
+          child: BottomCTAButton(
+            text: '확인',
+            onPressed: () {},
           ),
         ),
       ),

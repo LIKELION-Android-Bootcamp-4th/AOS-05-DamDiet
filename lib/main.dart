@@ -4,6 +4,7 @@ import 'package:damdiet/presentation/provider/search_provider.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
+import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
 import 'package:damdiet/presentation/screens/home/home_viewmodel.dart';
@@ -66,6 +67,7 @@ class DamDietApp extends StatelessWidget {
       routes: {
         AppRoutes.splash: (context) => SplashScreen(),
         AppRoutes.home: (context) => HomeScreen(),
+        AppRoutes.search: (context) => SearchScreen(),
         AppRoutes.products: (context) => ProductsScreen(),
         AppRoutes.productDetail: (context) => ProductDetailScreen(),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),

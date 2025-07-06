@@ -3,10 +3,9 @@ import 'package:damdiet/presentation/screens/review/widgets/review_product_info.
 import 'package:damdiet/presentation/screens/review/widgets/review_rating_section.dart';
 import 'package:damdiet/presentation/screens/review/widgets/review_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../core/theme/appcolor.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
+import '../../../core/widgets/damdiet_appbar.dart';
 
 class ReviewEditScreen extends StatefulWidget {
   const ReviewEditScreen({super.key});
@@ -30,16 +29,9 @@ class _ReviewEditScreenState extends State<ReviewEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-              'assets/icons/ic_arrow_back.svg', width: 24, height: 24),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: const Text('리뷰 수정', style: TextStyle(color: AppColors.textMain, fontSize: 18, fontFamily: 'PretendardBold')),
-        centerTitle: true,
+      appBar: DamdietAppbar(
+        title: '리뷰 수정',
+        showBackButton: true,
       ),
       body: Column(
         children: [
@@ -66,9 +58,14 @@ class _ReviewEditScreenState extends State<ReviewEditScreen> {
               ),
             ),
           ),
-          BottomCTAButton(text: '리뷰 수정', onPressed: (){}),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
+          child: BottomCTAButton(text: '리뷰 수정', onPressed: (){}),
+        ),
+      )
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/widgets/favorite_list_item.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/widgets/damdiet_appbar.dart';
 import '../../../../models/FavoriteProduct.dart';
 import '../../../../models/Product.dart';
 import '../../../routes/app_routes.dart';
@@ -79,6 +80,11 @@ class _MyPageFavoriteProductsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: DamdietAppbar(
+        title: '찜한 상품',
+        showBackButton: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: GridView.builder(

@@ -2,6 +2,7 @@ import 'package:damdiet/presentation/routes/app_routes.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/widgets/mypage_review_list_item.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/widgets/damdiet_appbar.dart';
 import '../../../../models/MyReview.dart';
 import '../../../../models/Product.dart';
 import '../../../../models/Review.dart';
@@ -72,7 +73,10 @@ class _MyPageMyReviewsScreen extends State<MyPageMyReviewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('리뷰')),
+      appBar: DamdietAppbar(
+        title: '내가 작성한 리뷰',
+        showBackButton: true,
+      ),
       body: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         itemCount: dummyMyReviews.length,

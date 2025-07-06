@@ -64,13 +64,14 @@ class ProductsScreen extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 12),
+              SizedBox(height: 32),
               SearchProductTextField(controller: controller),
               SizedBox(height: 12),
               Row(
@@ -81,37 +82,23 @@ class ProductsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 12),
-              SizedBox(
-                height: 500,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ProductListItem(
-                      name: listViewData[index].name,
-                      price: listViewData[index].price,
-                      discount: listViewData[index].discount,
-                      rating: listViewData[index].rating!,
-                      image: listViewData[index].image,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(color: AppColors.gray100),
-                  itemCount: listViewData.length,
-                  padding: EdgeInsets.only(right: 12.0),
-                ),
-              ),
 
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.productDetail);
+              ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return ProductListItem(
+                    name: listViewData[index].name,
+                    price: listViewData[index].price,
+                    discount: listViewData[index].discount,
+                    rating: listViewData[index].rating!,
+                    image: listViewData[index].image,
+                  );
                 },
-                child: Text("제품 상세"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("뒤로 가기"),
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(color: AppColors.gray100),
+                itemCount: listViewData.length,
+                padding: EdgeInsets.only(right: 12.0),
               ),
             ],
           ),

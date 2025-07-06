@@ -1,3 +1,4 @@
+import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.grey[200],
+        fillColor: AppColors.gray100,
         contentPadding: EdgeInsets.symmetric(
           vertical: 6.0,
           horizontal: 18.0,

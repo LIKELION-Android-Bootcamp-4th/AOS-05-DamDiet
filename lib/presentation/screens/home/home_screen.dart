@@ -11,11 +11,11 @@ import 'package:damdiet/presentation/screens/home/widgets/product_list.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_nav_bar.dart';
+import '../../../core/widgets/damdiet_appbar.dart';
 import '../mypage/mypage/mypage_screen.dart';
 import 'home_viewmodel.dart';
 import '../../routes/app_routes.dart';
@@ -25,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
-
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -42,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    Future.microtask((){
+    Future.microtask(() {
       context.read<HomeViewmodel>().getProducts();
     });
   }
@@ -53,35 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onSearchIconPressed() {
-    setState(() {
-      _selectedIndex = 0;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-
-        //TODO : 진짜 home 에서만 뜨게 수정
-
-        //TODO : title Image 정하고 변경
-        title: Text(
-          "DamDiet",
-          style: TextStyle(
-            fontFamily: 'PretendardExtraBlod',
-            fontSize: 24,
-            color: AppColors.textMain,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(onPressed: _onSearchIconPressed, icon: Icon(Icons.search)),
-        ],
-        elevation: 0,
-      ),
       body: PageTransitionSwitcher(
         duration: Duration(milliseconds: 1000),
         transitionBuilder:
@@ -112,64 +86,82 @@ class DamDietHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<HomeViewmodel>();
-    return Container(
-      color: Colors.white,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            HomeBanner(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: DamdietAppbar(
+        title: '',
+        isHome: true,
+        action: IconButton(
+          onPressed: (){
+            print('구라');
+            Navigator.pushNamed(context, AppRoutes.search);
+            },
+          icon: Icon(Icons.search),
+        ),
+      ),
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              HomeBanner(),
 
-            NoticeBanner(),
+              NoticeBanner(),
 
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-            CategoryList(),
+              CategoryList(),
 
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-            ProductList(title: "할인율 큰 상품", productList: viewModel.products),
+              ProductList(title: "할인율 큰 상품", productList: viewModel.products),
 
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-            ProductList(title: "다른 고객님들이 많이 구매한 상품", productList: viewModel.products),
-
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
-
-            ProductList(title: "이런 상품은 어때요?", productList: viewModel.products),
-
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
-
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.productDetail);
-              },
-              child: Text(
-                "제품 상세",
-                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+              ProductList(
+                title: "다른 고객님들이 많이 구매한 상품",
+                productList: viewModel.products,
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.products);
-              },
-              child: Text(
-                "제품 목록?",
-                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-              ),
-            ),
 
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.signIn);
-              },
-              child: Text(
-                "로그인",
-                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-              ),
-            ),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-          ],
+              ProductList(
+                title: "이런 상품은 어때요?",
+                productList: viewModel.products,
+              ),
+
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.productDetail);
+                },
+                child: Text(
+                  "제품 상세",
+                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.products);
+                },
+                child: Text(
+                  "제품 목록?",
+                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+                ),
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.signIn);
+                },
+                child: Text(
+                  "로그인",
+                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

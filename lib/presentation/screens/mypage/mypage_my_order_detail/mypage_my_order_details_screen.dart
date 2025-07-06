@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/theme/appcolor.dart';
+import '../../../../core/widgets/damdiet_appbar.dart';
 import '../../../routes/app_routes.dart';
 
 class OrderItem {
@@ -36,16 +37,9 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-              'assets/icons/ic_arrow_back.svg', width: 24, height: 24),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: const Text('주문 상세', style: TextStyle(color: AppColors.textMain, fontSize: 18, fontFamily: 'PretendardBold')),
-        centerTitle: true,
+      appBar: DamdietAppbar(
+        title: '주문 상세',
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(28.0),

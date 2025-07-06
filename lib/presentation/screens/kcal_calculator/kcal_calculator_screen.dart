@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
+import '../../../core/widgets/damdiet_appbar.dart';
 import '../../provider/nutrition_provider.dart';
 
 class KcalCalculatorScreen extends StatefulWidget {
@@ -29,6 +30,11 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
     var nutrition = Provider.of<NutritionProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: DamdietAppbar(
+        title: '칼로리계산기',
+        showBackButton: true,
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0),

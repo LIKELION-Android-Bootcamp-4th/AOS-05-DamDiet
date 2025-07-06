@@ -1,3 +1,4 @@
+import 'package:damdiet/core/widgets/damdiet_appbar.dart';
 import 'package:damdiet/presentation/screens/cart/widgets/cart_empty_view.dart';
 import 'package:damdiet/presentation/screens/cart/widgets/cart_header.dart';
 import 'package:damdiet/presentation/screens/cart/widgets/cart_item_card.dart';
@@ -136,12 +137,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('장바구니', style: TextStyle(
-            fontWeight: FontWeight.bold, fontFamily: 'PretendardBold')),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
+      backgroundColor: Colors.white,
+      appBar: DamdietAppbar(
+        title: '장바구니',
+        showBackButton: false,
       ),
       body: Column(
         children: [

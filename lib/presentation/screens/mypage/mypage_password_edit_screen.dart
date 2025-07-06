@@ -2,6 +2,7 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
+import '../../../core/widgets/damdiet_appbar.dart';
 import '../auth/widgets/custom_textfield.dart';
 
 class MyPagePasswordEditScreen extends StatefulWidget {
@@ -61,6 +62,10 @@ class _MyPagePasswordEditScreen extends State<MyPagePasswordEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: DamdietAppbar(
+        title: '내가 작성한 리뷰',
+        showBackButton: true,
+      ),
       body: Container(
         padding: EdgeInsets.all(16),
         child: Center(
@@ -98,10 +103,15 @@ class _MyPagePasswordEditScreen extends State<MyPagePasswordEditScreen> {
                     ),
                   ),
                 ),
-              BottomCTAButton(text: '비밀번호 변경', onPressed:
-                _validateAndSubmit,)
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
+          child: BottomCTAButton(text: '비밀번호 변경', onPressed:
+          _validateAndSubmit,)
         ),
       ),
     );
