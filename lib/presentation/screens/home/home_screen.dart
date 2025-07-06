@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_nav_bar.dart';
-import '../mypage/mypage_screen.dart';
+import '../mypage/mypage/mypage_screen.dart';
 import 'home_viewmodel.dart';
 import '../../routes/app_routes.dart';
 
