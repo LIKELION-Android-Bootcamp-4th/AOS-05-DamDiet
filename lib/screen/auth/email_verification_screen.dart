@@ -1,5 +1,5 @@
-import 'package:damdiet/screen/login/widgets/custom_textfield.dart';
-import 'package:damdiet/screen/login/widgets/status_message_text.dart';
+import 'package:damdiet/screen/auth/widgets/custom_textfield.dart';
+import 'package:damdiet/screen/auth/widgets/status_message_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../routes/app_routes.dart';

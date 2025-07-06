@@ -2,7 +2,7 @@ import 'package:damdiet/util/appcolor.dart';
 import 'package:damdiet/widgets/bottom_cta_button.dart';
 import 'package:flutter/material.dart';
 
-import '../login/widgets/custom_textfield.dart';
+import '../auth/widgets/custom_textfield.dart';
 
 class MyPageProfileEditScreen extends StatelessWidget {
   const MyPageProfileEditScreen({super.key});

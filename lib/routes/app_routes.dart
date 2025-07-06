@@ -1,4 +1,6 @@
 class AppRoutes {
+  static const String splash = "/splash";
+
   static const String home = "";
 
   static const String search = "/search";
@@ -24,11 +26,12 @@ class AppRoutes {
   static const String reviewWrite = "/review/write";
   static const String reviewEdit = "/review/edit";
 
-  static const String signIn = "/login/signIn";
-  static const String signUp = "/login/signUp";
-  static const String emailVerification = "/login/emailVerification";
-  static const String setNickname = "/login/setNickname";
+  static const String signIn = "/auth/signIn";
+  static const String signUp = "/auth/signUp";
+  static const String emailVerification = "/auth/emailVerification";
+  static const String setNickname = "/auth/setNickname";
 
   static const String payment = "/payment";
+
 
 }

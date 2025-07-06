@@ -1,10 +1,10 @@
 import 'package:damdiet/service/product_api/product_datasource.dart';
 import 'package:flutter/material.dart';
 
-import '../core/secure/user_secure_storage.dart';
-import '../service/product_api/login_service.dart';
+import '../../core/secure/user_secure_storage.dart';
+import '../../service/product_api/login_service.dart';
 
-class SignInProvider extends ChangeNotifier{
+class SignInViewModel extends ChangeNotifier{
   final LogInService _service = LogInService();
 
   bool _isLoading = false;
@@ -12,6 +12,23 @@ class SignInProvider extends ChangeNotifier{
 
   String _errorMessage = '';
   String get errorMessage => _errorMessage;
+
+
+  String _email = '';
+  String get email => _email;
+
+  String _password = '';
+  String get password => _password;
+
+  void setEmail(String value) {
+    _email = value;
+    notifyListeners();
+  }
+
+  void setPassword(String value) {
+    _password = value;
+    notifyListeners();
+  }
 
   Future<void> signIn(String email, String password) async {
     _isLoading = true;

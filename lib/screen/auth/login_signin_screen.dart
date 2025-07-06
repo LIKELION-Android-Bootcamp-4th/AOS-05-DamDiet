@@ -1,9 +1,9 @@
-import 'package:damdiet/screen/login/widgets/custom_textfield.dart';
-import 'package:damdiet/screen/login/widgets/sign_up_prompt.dart';
+import 'package:damdiet/screen/auth/widgets/custom_textfield.dart';
+import 'package:damdiet/screen/auth/widgets/sign_up_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/signin_provider.dart';
+import 'signin_viewmodel.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/bottom_cta_button.dart';
 
@@ -15,9 +15,19 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<SignInProvider>();
+    final signinViewmodel = context.watch<SignInViewModel>();
 
     return Scaffold(
       body: Container(
@@ -29,6 +39,8 @@ class _SignInScreenState extends State<SignInScreen> {
               CustomTextField(
                 hintText: '이메일',
                 isPassword: false,
+                controller: _emailController,
+                onChanged: (value) => provider.setEmail(value),
               ),
 
               SizedBox(height: 16,),
@@ -43,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
               BottomCTAButton(
                 text: "로그인",
                 onPressed: () {
-                  provider.signIn("buyer@example.com"	, "password123");
+                  provider.signIn("buyer@mtz.com"	, "qwer1234");
                   //Navigator.pushNamed(context, AppRoutes.home);
                 },
               ),

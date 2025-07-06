@@ -2,7 +2,7 @@ import 'package:damdiet/provider/nutrition_provider.dart';
 import 'package:damdiet/provider/price_range_provider.dart';
 import 'package:damdiet/provider/home_viewmodel.dart';
 import 'package:damdiet/provider/search_provider.dart';
-import 'package:damdiet/provider/signin_provider.dart';
+import 'package:damdiet/screen/auth/signin_viewmodel.dart';
 import 'package:damdiet/repositories/product_repository.dart';
 import 'package:damdiet/routes/app_routes.dart';
 import 'package:damdiet/screen/community/community_detail_screen.dart';
@@ -10,9 +10,9 @@ import 'package:damdiet/screen/community/community_write_screen.dart';
 import 'package:damdiet/screen/community/kcal_calculator_screen.dart';
 import 'package:damdiet/screen/home/home_screen.dart';
 
-import 'package:damdiet/screen/login/email_verification_screen.dart';
-import 'package:damdiet/screen/login/login_signin_screen.dart';
-import 'package:damdiet/screen/login/login_signup_screen.dart';
+import 'package:damdiet/screen/auth/email_verification_screen.dart';
+import 'package:damdiet/screen/auth/login_signin_screen.dart';
+import 'package:damdiet/screen/auth/login_signup_screen.dart';
 
 import 'package:damdiet/screen/mypage/mypage_favorite_products_screen/mypage_favorite_products_screen.dart';
 import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
@@ -26,9 +26,13 @@ import 'package:damdiet/screen/review/review_edit_screen.dart';
 import 'package:damdiet/screen/review/review_write_screen.dart';
 import 'package:damdiet/screen/search/product_detail/product_detail_screen.dart';
 import 'package:damdiet/screen/search/products_screen.dart';
+import 'package:damdiet/screen/splash/splash_screen.dart';
+import 'package:damdiet/screen/splash/splash_viewmodel.dart';
 import 'package:damdiet/service/product_api/product_datasource.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,10 +40,11 @@ void main() {
   runApp(
     MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
-          ChangeNotifierProvider(create: (_) => SignInProvider()),
+          ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],
         child: const DamDietApp()
@@ -75,8 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.splash,
       routes: {
+        AppRoutes.splash: (context) => SplashScreen(),
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.products: (context) => ProductsScreen(),
         AppRoutes.productDetail: (context) => ProductDetailScreen(),
