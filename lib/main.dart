@@ -1,3 +1,4 @@
+import 'package:damdiet/provider/nutrition_provider.dart';
 import 'package:damdiet/provider/price_range_provider.dart';
 import 'package:damdiet/provider/product_provider.dart';
 import 'package:damdiet/provider/search_provider.dart';
@@ -36,7 +37,8 @@ void main() {
           ChangeNotifierProvider(create: (_) => ProductProvider()),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
-          ChangeNotifierProvider(create: (_) => SignInProvider())
+          ChangeNotifierProvider(create: (_) => SignInProvider()),
+          ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],
         child: const DamDietApp()
     )
