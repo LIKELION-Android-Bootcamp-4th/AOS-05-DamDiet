@@ -42,6 +42,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   flutter_rating_bar: ^4.0.1
   flutter_secure_storage: ^9.2.4
+  image_picker:
 
 
 dev_dependencies:

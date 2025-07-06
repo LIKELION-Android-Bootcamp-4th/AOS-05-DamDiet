@@ -7,6 +7,7 @@ import 'package:damdiet/screen/community/community_detail_screen.dart';
 import 'package:damdiet/screen/community/community_write_screen.dart';
 import 'package:damdiet/screen/community/kcal_calculator_screen.dart';
 import 'package:damdiet/screen/home/home_screen.dart';
+import 'package:damdiet/screen/cart_screen.dart';
 
 import 'package:damdiet/screen/login/email_verification_screen.dart';
 import 'package:damdiet/screen/login/login_signin_screen.dart';
@@ -86,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
         AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
+        AppRoutes.cart: (context) => CartScreen(),
         AppRoutes.payment: (context) => PaymentScreen(),
         AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
         AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
