@@ -1,35 +1,34 @@
-import 'package:damdiet/provider/nutrition_provider.dart';
-import 'package:damdiet/provider/price_range_provider.dart';
-import 'package:damdiet/provider/home_viewmodel.dart';
-import 'package:damdiet/provider/search_provider.dart';
-import 'package:damdiet/screen/auth/signin_viewmodel.dart';
-import 'package:damdiet/repositories/product_repository.dart';
-import 'package:damdiet/routes/app_routes.dart';
-import 'package:damdiet/screen/community/community_detail_screen.dart';
-import 'package:damdiet/screen/community/community_write_screen.dart';
-import 'package:damdiet/screen/community/kcal_calculator_screen.dart';
-import 'package:damdiet/screen/home/home_screen.dart';
-import 'package:damdiet/screen/cart_screen.dart';
-
-import 'package:damdiet/screen/auth/email_verification_screen.dart';
-import 'package:damdiet/screen/auth/login_signin_screen.dart';
-import 'package:damdiet/screen/auth/login_signup_screen.dart';
-
-import 'package:damdiet/screen/mypage/mypage_favorite_products_screen/mypage_favorite_products_screen.dart';
-import 'package:damdiet/screen/mypage/mypage_my_community_screen.dart';
-import 'package:damdiet/screen/mypage/mypage_my_orders_screen.dart';
-import 'package:damdiet/screen/mypage/mypage_my_order_details/mypage_my_order_details_screen.dart';
-import 'package:damdiet/screen/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
-import 'package:damdiet/screen/mypage/mypage_password_edit_screen.dart';
-import 'package:damdiet/screen/mypage/mypage_profile_edit_screen.dart';
-import 'package:damdiet/screen/payment_screen.dart';
-import 'package:damdiet/screen/review/review_edit_screen.dart';
-import 'package:damdiet/screen/review/review_write_screen.dart';
-import 'package:damdiet/screen/search/product_detail/product_detail_screen.dart';
-import 'package:damdiet/screen/search/products_screen.dart';
-import 'package:damdiet/screen/splash/splash_screen.dart';
-import 'package:damdiet/screen/splash/splash_viewmodel.dart';
-import 'package:damdiet/service/product_api/product_datasource.dart';
+import 'package:damdiet/presentation/provider/nutrition_provider.dart';
+import 'package:damdiet/presentation/provider/price_range_provider.dart';
+import 'package:damdiet/presentation/provider/search_provider.dart';
+import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
+import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
+import 'package:damdiet/presentation/screens/search/search_screen.dart';
+import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
+import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
+import 'package:damdiet/presentation/screens/home/home_viewmodel.dart';
+import 'package:damdiet/presentation/screens/auth/signin_viewmodel.dart';
+import 'package:damdiet/data/repositories/product_repository.dart';
+import 'package:damdiet/presentation/routes/app_routes.dart';
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_screen.dart';
+import 'package:damdiet/presentation/screens/home/home_screen.dart';
+import 'package:damdiet/presentation/screens/cart/cart_screen.dart';
+import 'package:damdiet/presentation/screens/auth/email_verification_screen.dart';
+import 'package:damdiet/presentation/screens/auth/auth_signin_screen.dart';
+import 'package:damdiet/presentation/screens/auth/auth_signup_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_community_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/mypage_my_order_details_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_password_edit_screen.dart';
+import 'package:damdiet/presentation/screens/payment/payment_screen.dart';
+import 'package:damdiet/presentation/screens/review/review_edit_screen.dart';
+import 'package:damdiet/presentation/screens/review/review_write_screen.dart';
+import 'package:damdiet/presentation/screens/product_detail/product_detail_screen.dart';
+import 'package:damdiet/presentation/screens/products/products_screen.dart';
+import 'package:damdiet/data/datasource/product_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +55,7 @@ void main() {
 class DamDietApp extends StatelessWidget {
   const DamDietApp({super.key});
 
-  // This widget is the root of your application.
+  // This widgets is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,33 +63,17 @@ class DamDietApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splash,
       routes: {
         AppRoutes.splash: (context) => SplashScreen(),
         AppRoutes.home: (context) => HomeScreen(),
+        AppRoutes.search: (context) => SearchScreen(),
         AppRoutes.products: (context) => ProductsScreen(),
         AppRoutes.productDetail: (context) => ProductDetailScreen(),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
-        AppRoutes.profileEdit: (context) => MyPageProfileEditScreen(),
+        AppRoutes.profileEdit: (context) => MyPageAddressEditScreen(),
         AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreen(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
@@ -108,4 +91,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
