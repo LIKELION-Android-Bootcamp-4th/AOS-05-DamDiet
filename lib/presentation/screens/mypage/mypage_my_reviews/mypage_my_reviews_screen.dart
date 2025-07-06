@@ -79,7 +79,7 @@ class _MyPageMyReviewsScreen extends State<MyPageMyReviewsScreen> {
         itemBuilder: (context, index) {
             return MypageReviewListItem(
               myReview: dummyMyReviews[index],
-              onTapEdit: () {  },
+              onTapEdit: () {  Navigator.pushNamed(context, AppRoutes.reviewEdit); },
               onTapDelete: () {  },
             );
         },
