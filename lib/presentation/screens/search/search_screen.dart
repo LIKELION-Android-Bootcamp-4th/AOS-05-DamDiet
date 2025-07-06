@@ -31,6 +31,7 @@ class SearchScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: 'PretendardSemiBold',
+                  color: AppColors.textMain
                 ),
               ),
               SizedBox(height: 18),
@@ -60,6 +61,7 @@ class SearchScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: 'PretendardSemiBold',
+                  color: AppColors.textMain
                 ),
               ),
               SizedBox(height: 20),

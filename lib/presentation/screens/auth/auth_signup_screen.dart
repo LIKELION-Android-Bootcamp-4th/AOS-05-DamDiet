@@ -17,7 +17,6 @@ class SignUpScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('This is SignUp Screen.'),
               CustomTextField(hintText: '이메일', isPassword: false),
 
               SizedBox(height: 16),
