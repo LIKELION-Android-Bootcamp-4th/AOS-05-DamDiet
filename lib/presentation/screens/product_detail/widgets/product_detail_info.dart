@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../../../data/models/product/product_nutrition.dart';
 
 class ProductDetailInfo extends StatelessWidget {
-  const ProductDetailInfo({super.key});
+  final ProductNutrition productNutrition;
+
+  const ProductDetailInfo({super.key, required this.productNutrition});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +25,13 @@ class ProductDetailInfo extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            _buildRow('총 칼로리', '220 kcal'),
+            _buildRow('총 칼로리', productNutrition.calories),
             const SizedBox(height: 12),
-            _buildRow('탄수화물', '50 g'),
+            _buildRow('탄수화물', productNutrition.carbs),
             const SizedBox(height: 12),
-            _buildRow('단백질', '12 g'),
+            _buildRow('단백질', productNutrition.protein),
             const SizedBox(height: 12),
-            _buildRow('지방', '1.7 g'),
+            _buildRow('지방', productNutrition.fat),
           ],
         ),
     );

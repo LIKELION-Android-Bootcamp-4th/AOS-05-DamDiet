@@ -1,8 +1,8 @@
 import 'package:damdiet/presentation/screens/product_detail/widgets/product_review_list_item.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../models/Review.dart';
 import '../../../../core/theme/appcolor.dart';
+import '../../../../data/models/review/review.dart';
 
 class ProductReviewsTab extends StatelessWidget {
   const ProductReviewsTab({super.key, required this.reviewList});
@@ -11,7 +11,6 @@ class ProductReviewsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //reviewList.clear();
 
     final List<String> allReviewImages = reviewList
         .where((review) => review.images != null)
@@ -113,7 +112,7 @@ class ProductReviewsTab extends StatelessWidget {
             ),
 
             // TODO: 현재는 리뷰 리스트 엠티 검사를 하는데 ImageList 로 검사해서 else 문도 작성 해야함
-            if (reviewList.isNotEmpty)
+            if (reviewList.isNotEmpty) ... [
               Padding(
                 padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
                 child: SizedBox(
@@ -137,7 +136,7 @@ class ProductReviewsTab extends StatelessWidget {
                   ),
                 ),
               ),
-            Divider(height: 6, color: AppColors.gray100, thickness: 6,),
+              Divider(height: 6, color: AppColors.gray100, thickness: 6,),],
             if(reviewList.isNotEmpty)
               ListView.builder(
                   shrinkWrap: true,

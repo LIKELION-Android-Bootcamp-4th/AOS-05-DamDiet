@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../cart/widgets/cart_quantity_control.dart';
 
 class ProductQuantitySelector extends StatelessWidget {
   const ProductQuantitySelector({super.key});
@@ -25,21 +26,15 @@ class ProductQuantitySelector extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 8,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            //TODO 머지 후 cart 쪽에서 작업한 것으로 대체
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "- 0 +",
-                style: TextStyle(
-                  fontFamily: 'PretendardSemiBold',
-                  fontSize: 14,
-                  color: AppColors.textMain,
-                ),
-              ),
-            ),
+              padding: const EdgeInsets.only(left: 16, bottom: 16),
+              child: CartQuantityControl(quantity: 0, onIncrement: () {  }, onDecrement: () {  },),
+            )
+            ,
             Row(
               children: [
                 Text(
