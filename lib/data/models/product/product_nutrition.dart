@@ -1,8 +1,8 @@
 class ProductNutrition {
-  final int calories;
-  final int carbs;
-  final int fat;
-  final int protein;
+  final String calories;
+  final String carbs;
+  final String fat;
+  final String protein;
 
   const ProductNutrition({
     required this.calories,
@@ -13,10 +13,10 @@ class ProductNutrition {
 
   factory ProductNutrition.fromJson(Map<String, dynamic> json) {
     return ProductNutrition(
-      calories: json['calories'] as int,
-      carbs: json['carbs'] as int,
-      fat: json['fat'] as int,
-      protein: json['protein'] as int,
+      calories: json['calories']?.toString() ?? '',
+      carbs: json['carbs']?.toString() ?? '',
+      fat: json['fat']?.toString() ?? '',
+      protein: json['protein']?.toString() ?? '',
     );
   }
 

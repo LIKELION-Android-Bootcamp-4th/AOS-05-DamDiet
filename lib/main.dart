@@ -5,6 +5,7 @@ import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
+import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
@@ -43,6 +44,7 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
+          ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
@@ -71,7 +73,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.search: (context) => SearchScreen(),
         AppRoutes.products: (context) => ProductsScreen(),
-        AppRoutes.productDetail: (context) => ProductDetailScreen(),
+        AppRoutes.productDetail: (context) => ProductDetailScreen(productId: "686b34a13b506684125d08f5",),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
