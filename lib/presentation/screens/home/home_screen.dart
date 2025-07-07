@@ -93,7 +93,6 @@ class DamDietHomeScreen extends StatelessWidget {
         isHome: true,
         action: IconButton(
           onPressed: (){
-            print('구라');
             Navigator.pushNamed(context, AppRoutes.search);
             },
           icon: Icon(Icons.search),
@@ -110,7 +109,11 @@ class DamDietHomeScreen extends StatelessWidget {
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-              CategoryList(),
+              CategoryList(onCategorySelected: (category){
+                print(category);
+                //TODO Products 화면에 category 넘기는 작업
+                Navigator.pushNamed(context, AppRoutes.products);
+              }),
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
