@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../core/theme/appcolor.dart';
-import '../../../../core/widgets/damdiet_appbar.dart';
-import '../../../routes/app_routes.dart';
+import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/core/widgets/damdiet_appbar.dart';
+import 'package:damdiet/presentation/routes/app_routes.dart';
 
-class OrderItem {
-  final String imageUrl;
-  final String name;
-  final String? optionName;
-  final int quantity;
-  final int price;
-  final bool hasReview;
-  OrderItem({required this.imageUrl, required this.name, this.optionName, required this.quantity, required this.price, required this.hasReview});
-}
+import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/order_item.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_product_list_section.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_section.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_row.dart';
 
 class MyPageMyOrderDetailsScreen extends StatelessWidget {
   const MyPageMyOrderDetailsScreen({super.key});
@@ -54,19 +49,22 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
                   fontFamily: 'PretendardSemiBold')),
             ),
             const Divider(color: AppColors.gray100, height: 1),
-            SizedBox(height: 12,),
-            _buildProductList(items, context),
+            const SizedBox(height: 12),
+
+            MyPageOrderProductListSection(items: items),
 
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 16),
 
-            _buildInfoSection(
+            MyPageOrderInfoSection(
               title: '배송 정보',
               child: Column(
                 children: [
-                  _buildInfoRow('수령인', '김멋사'),
-                  _buildInfoRow('휴대폰', '010-1234-5678'),
-                  _buildInfoRow('주소', '경기도 00시 00구 00-0 000아파트\n00동 000호',
+                  MyPageOrderInfoRow(label: '수령인', value: '김멋사'),
+                  MyPageOrderInfoRow(label: '휴대폰', value: '010-1234-5678'),
+                  MyPageOrderInfoRow(
+                      label: '주소',
+                      value: '경기도 00시 00구 00-0 000아파트\n00동 000호',
                       crossAxisAlignment: CrossAxisAlignment.start),
                 ],
               ),
@@ -74,7 +72,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
             const Divider(color: AppColors.gray100, height: 14),
             const SizedBox(height: 10),
 
-            _buildInfoSection(
+            MyPageOrderInfoSection(
               title: '결제 내역',
               child: Column(
                 children: [
@@ -84,7 +82,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('상품 금액', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-                        const Text('${totalAmount}원', style: TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
+                        Text('${totalAmount}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
                         ),
                       ],
                     ),
@@ -107,124 +105,4 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
-
-  Widget _buildProductList(List<OrderItem> items, BuildContext context) {
-    return Container(
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return _buildProductItemRow(items[index], context);
-        },
-        separatorBuilder: (context, index) =>
-        const Column(
-          children: [
-            SizedBox(height: 12),
-            Divider(height: 1, color: AppColors.gray100),
-            SizedBox(height: 12),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  Widget _buildProductItemRow(OrderItem item, BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            child: Container(
-              width: 70, height: 70, color: AppColors.gray100,
-              child: const Icon(Icons.image, color: Colors.grey, size: 30),
-            ),
-          ),
-          const SizedBox(width: 9),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                style: const TextStyle(fontSize: 14, color: AppColors.textMain, fontFamily: 'PretendardMedium', height: 1.6),
-                children: [
-                  TextSpan(text: '${item.name}\n'),
-                  if (item.optionName != null)
-                    TextSpan(text: item.optionName, style: const TextStyle(fontSize: 12, color: AppColors.textSub, fontFamily: 'PretendardMedium')
-                    ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (!item.hasReview)
-                ElevatedButton(
-                  onPressed: () { Navigator.pushNamed(context, AppRoutes.reviewWrite); },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    elevation: 0,
-                  ),
-                  child: const Text('리뷰작성', style: TextStyle(fontSize: 12, fontFamily: 'PretendardMedium',)),
-                ),
-              const Spacer(),
-              Text.rich(
-                TextSpan(style: const TextStyle(color: AppColors.textHint, fontSize: 12, fontFamily: 'PretendardMedium'),
-                    children: [
-                      TextSpan(text: '${item.quantity}개  '),
-                      TextSpan(text: '${item.price}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium'),
-                      ),
-                    ]
-                ),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-
-  Widget _buildInfoSection({required String title, required Widget child}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardSemiBold')),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          child: child,
-        ),
-      ],
-    );
-  }
-
-
-  Widget _buildInfoRow(String label, String value, {CrossAxisAlignment? crossAxisAlignment}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 70,
-            child: Text(label, style: const TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-          ),
-          Expanded(child: Text(value, style: const TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium'))),
-        ],
-      ),
-    );
-  }
-
-
 }
