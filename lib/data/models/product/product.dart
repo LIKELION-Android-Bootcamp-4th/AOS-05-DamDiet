@@ -1,6 +1,6 @@
 import 'package:damdiet/data/models/product/product_nutrition.dart';
+import 'package:damdiet/data/models/review/review.dart';
 
-import '../../../models/Review.dart';
 
 
 class Product {

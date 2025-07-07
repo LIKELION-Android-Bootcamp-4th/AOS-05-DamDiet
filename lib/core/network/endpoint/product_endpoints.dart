@@ -16,7 +16,7 @@ class ProductEndpoints {
   }
 
   // 상품 상세 조회
-  static String getProductDetail({required int productId}) =>
+  static String getProductDetail({required String productId}) =>
       '/api/products/$productId';
 
   // 리뷰 작성
