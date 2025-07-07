@@ -1,9 +1,16 @@
 class ReviewEndpoints {
-
   // 리뷰 수정
-  static const String putReview = '/api/reviews/{reviewId}';
+  static String putReview({required int reviewId}) =>
+      '/api/reviews/$reviewId';
+
   // 리뷰 삭제
-  static const String deleteReview = '/api/reviews/{reviewId}';
+  static String deleteReview({required int reviewId}) =>
+      '/api/reviews/$reviewId';
+
   // 리뷰 이미지 개별 삭제
-  static const String deleteReviewImage = '/api/reviews/{reviewId}/images/{imageId}';
+  static String deleteReviewImage({
+    required int reviewId,
+    required int imageId,
+  }) =>
+      '/api/reviews/$reviewId/images/$imageId';
 }

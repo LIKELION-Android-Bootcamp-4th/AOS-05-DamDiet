@@ -13,37 +13,37 @@ class AppCategory {
 const List<AppCategory> appCategories = [
   AppCategory(
     nameKo: '닭가슴살',
-    nameEn: 'electronics',
+    nameEn: 'chicken',
     imagePath: 'assets/images/damdiet_logo_1.png',
   ),
   AppCategory(
     nameKo: '볶음밥/도시락',
-    nameEn: 'fashion',
+    nameEn: 'meal',
     imagePath: 'assets/images/damdiet_logo_2.png',
   ),
   AppCategory(
     nameKo: '샐러드',
-    nameEn: 'appliances',
+    nameEn: 'salad',
     imagePath: 'assets/images/damdiet_logo_3.png',
   ),
   AppCategory(
     nameKo: '프로틴',
-    nameEn: 'appliances',
+    nameEn: 'protein',
     imagePath: 'assets/images/damdiet_logo_4.png',
   ),
   AppCategory(
     nameKo: '간식',
-    nameEn: 'appliances',
+    nameEn: 'snack',
     imagePath: 'assets/images/damdiet_logo_5.png',
   ),
   AppCategory(
     nameKo: '음료',
-    nameEn: 'appliances',
+    nameEn: 'beverage',
     imagePath: 'assets/images/damdiet_logo_6.png',
   ),
   AppCategory(
     nameKo: '건강/뷰티',
-    nameEn: 'appliances',
+    nameEn: 'health',
     imagePath: 'assets/images/damdiet_logo_7.png',
   ),
 ];
