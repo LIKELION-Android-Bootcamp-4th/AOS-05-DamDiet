@@ -34,7 +34,9 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
           borderSide: BorderSide.none
         ),
         suffixIcon: IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            search.searchProducts();
+          },
           icon: SvgPicture.asset('assets/icons/ic_search_outline.svg'),
         ),
       ),

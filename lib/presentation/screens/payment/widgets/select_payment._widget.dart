@@ -20,12 +20,12 @@ class _SelectPaymentWidgetState extends State<SelectPaymentWidget> {
             children: [
               Expanded(
                   flex: 1,
-                  child: CategoryOutlineButton(text: '신용카드')
+                  child: CategoryOutlineButton(index: 11)
               ),
               SizedBox(width: 16),
               Expanded(
                   flex: 1,
-                  child: CategoryOutlineButton(text: '무통장입금')
+                  child: CategoryOutlineButton(index: 12)
               ),
             ],
           ),
@@ -34,12 +34,12 @@ class _SelectPaymentWidgetState extends State<SelectPaymentWidget> {
             children: [
               Expanded(
                   flex: 1,
-                  child: CategoryOutlineButton(text: '카카오페이')
+                  child: CategoryOutlineButton(index: 13)
               ),
               SizedBox(width: 16),
               Expanded(
                   flex: 1,
-                  child: CategoryOutlineButton(text: '토스')
+                  child: CategoryOutlineButton(index: 14)
               ),
             ],
           )

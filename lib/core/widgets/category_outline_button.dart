@@ -1,3 +1,4 @@
+import 'package:damdiet/core/constants/category_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,40 +7,40 @@ import '../theme/appcolor.dart';
 
 
 class CategoryOutlineButton extends StatefulWidget {
-  const CategoryOutlineButton({super.key, required this.text});
+  const CategoryOutlineButton({super.key, required this.index});
 
-  final String text;
+  final int index;
 
   @override
   State<CategoryOutlineButton> createState() => _CategoryOutlineButtonState();
 }
 
 class _CategoryOutlineButtonState extends State<CategoryOutlineButton> {
-  bool _selectedState = false;
 
   @override
   Widget build(BuildContext context) {
     var search = Provider.of<SearchProvider>(context);
     return OutlinedButton(
-      style: _setButtonState(),
+      style: _setButtonState(search.selectedCategory),
       onPressed: () {
         setState(() {
-          _selectedState = !_selectedState;
-          if(_selectedState) {
-            search.addCategory(widget.text);
+          if(search.selectedCategory != widget.index) {
+            search.setCategory(widget.index);
           } else  {
-            search.removeCategory(widget.text);
+            search.removeCategory();
           }
         });
       },
-      child: Text(widget.text,
+      child: Text(appCategories[widget.index].nameKo,
         style: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium')
       ),
     );
+
+
   }
 
-  ButtonStyle _setButtonState() {
-    if(_selectedState) {
+  ButtonStyle _setButtonState(int selectedIndex) {
+    if(selectedIndex == widget.index) {
       return OutlinedButton.styleFrom(
         padding: EdgeInsets.all(14.0),
         foregroundColor: AppColors.primaryColor,

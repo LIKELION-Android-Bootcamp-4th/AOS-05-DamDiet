@@ -1,25 +1,48 @@
 import 'package:flutter/material.dart';
 
+import '../../data/datasource/search_service.dart';
+
 class SearchProvider extends ChangeNotifier {
   String _productName = "";
-  final List<String> _categories = [];
+  int _selectedCategory = 0;
 
   String get productName => _productName;
-  List<String> get categories => _categories;
+  int get selectedCategory => _selectedCategory;
 
   void setProductName(String productName) {
     _productName = productName;
     notifyListeners();
   }
 
-  void addCategory(String category) {
-    _categories.add(category);
+  void setCategory(int index) {
+    _selectedCategory = index;
     notifyListeners();
   }
 
-  void removeCategory(String category) {
-    _categories.remove(category);
+  void removeCategory() {
+    _selectedCategory = 0;
     notifyListeners();
   }
+
+
+  final SearchService _service = SearchService();
+
+  Future<void> searchProducts() async {
+    try {
+      final response = await _service.searchProducts();
+
+      switch(response.statusCode) {
+        case 200:
+          print('Success: ${response.data}');
+          break;
+        default:
+          print('error occurred');
+      }
+    }
+    catch(e) {
+      debugPrint('$e');
+    }
+  }
+
 
 }

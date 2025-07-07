@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/category_constants.dart';
 import '../../../core/theme/appcolor.dart';
 import '../../../core/widgets/category_outline_button.dart';
 import '../../../core/widgets/search_product_textfield.dart';
@@ -37,21 +38,21 @@ class SearchScreen extends StatelessWidget {
               SizedBox(height: 18),
               Row(
                 children: [
-                  CategoryOutlineButton(text: "닭가슴살"),
+                  CategoryOutlineButton(index: 1),
                   SizedBox(width: 16),
-                  CategoryOutlineButton(text: '볶음밥/도시락'),
+                  CategoryOutlineButton(index: 2),
                   SizedBox(width: 16),
-                  CategoryOutlineButton(text: "샐러드"),
+                  CategoryOutlineButton(index: 3),
                 ],
               ),
               SizedBox(height: 12),
               Row(
                 children: [
-                  CategoryOutlineButton(text: "간식/음료"),
+                  CategoryOutlineButton(index: 4),
                   SizedBox(width: 16),
-                  CategoryOutlineButton(text: '건강/뷰티'),
+                  CategoryOutlineButton(index: 5),
                   SizedBox(width: 16),
-                  CategoryOutlineButton(text: "운동용품"),
+                  CategoryOutlineButton(index: 6),
                 ],
               ),
 
