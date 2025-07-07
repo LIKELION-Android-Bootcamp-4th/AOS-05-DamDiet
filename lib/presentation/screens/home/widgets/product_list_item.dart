@@ -1,6 +1,7 @@
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/formatters.dart';
 import '../../../../data/models/product/product.dart';
 
 
@@ -55,18 +56,39 @@ class ProductListItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(width: 4),
-              Text(
-                "30%",
-                style: TextStyle(fontFamily: 'PretendardBold', fontSize: 14, color: AppColors.errorRed),
-              ),
-              SizedBox(width: 4),
-              Text(
-                "${product.price}원",
-                style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 12, color: AppColors.textSub),
-              ),
+              Row(
+                children: [
+                  if (product.discount > 0) ...[
+                    Text(
+                      "${product.discount}%",
+                      style: TextStyle(
+                        fontFamily: 'PretendardBold',
+                        fontSize: 14,
+                        color: AppColors.errorRed,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      formatPrice((product.price * (100 - product.discount) / 100).toInt()),
+                      style: TextStyle(
+                        fontFamily: 'PretendardMedium',
+                        fontSize: 14,
+                        color: AppColors.textSub,
+                      ),
+                    ),
+                  ] else
+                    Text(
+                      formatPrice(product.price),
+                      style: TextStyle(
+                        fontFamily: 'PretendardMedium',
+                        fontSize: 14,
+                        color: AppColors.textSub,
+                      ),
+                    ),
+                ],
+              )
             ],
           ),
         ],
