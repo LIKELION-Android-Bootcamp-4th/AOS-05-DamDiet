@@ -20,11 +20,26 @@ class ProductListItem extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: Image.asset(
-              "assets/images/damdiet_logo_6.png",
+            child:
+            Image.network(
+              product.image,
               width: 100,
               height: 100,
-              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Center(child: Icon(Icons.error)),
+                );
+              },
             ),
           ),
           SizedBox(height: 4),
