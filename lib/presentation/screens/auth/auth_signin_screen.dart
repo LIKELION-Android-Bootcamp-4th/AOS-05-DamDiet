@@ -1,3 +1,4 @@
+import 'package:damdiet/presentation/routes/app_routes.dart';
 import 'package:damdiet/presentation/screens/auth/widgets/custom_textfield.dart';
 import 'package:damdiet/presentation/screens/auth/widgets/sign_up_prompt.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,11 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final signinViewmodel = context.watch<SignInViewModel>();
+    final viewModel = context.watch<SignInViewModel>();
 
     return Scaffold(
-      body: Container(
+      backgroundColor: Colors.white,
+      body: Padding(
         padding: EdgeInsets.all(16),
         child: Center(
           child: Column(
@@ -39,26 +41,38 @@ class _SignInScreenState extends State<SignInScreen> {
                 hintText: '이메일',
                 isPassword: false,
                 controller: _emailController,
+                onChanged: viewModel.setEmail
               ),
 
-              SizedBox(height: 16,),
+              const SizedBox(height: 16,),
 
               CustomTextField(
                 hintText: '비밀번호',
                 isPassword: true,
+                controller: _passwordController,
+                onChanged: viewModel.setPassword
               ),
 
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
+
+              if (viewModel.errorMessage.isNotEmpty)
+                Text(
+                  viewModel.errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                ),
 
               BottomCTAButton(
-                text: "로그인",
-                onPressed: () {
-                  signinViewmodel.signIn("buyer@mtz.com"	, "qwer1234");
-                  //Navigator.pushNamed(context, AppRoutes.home);
+                text: '로그인',
+                onPressed: () async {
+                  final isSuccess = await viewModel.signIn();
+
+                  if (isSuccess && mounted) {
+                    Navigator.pushReplacementNamed(context, AppRoutes.home);
+                  }
                 },
               ),
 
-              SignUpPrompt(),
+              const SignUpPrompt(),
 
               ElevatedButton(
                 onPressed: () {

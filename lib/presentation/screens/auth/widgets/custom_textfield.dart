@@ -5,12 +5,14 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
   final bool isPassword;
   final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.isPassword = false,
     this.controller,
+    this.onChanged,
   });
 
   @override
@@ -78,13 +80,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           onPressed: () {
             _controller.clear();
+            widget.onChanged?.call('');
             setState(() {});
           },
         )
             : null),
       ),
       cursorColor: AppColors.primaryColor,
-      onChanged: (_) => setState(() {}),
+      onChanged: (value) {
+        widget.onChanged?.call(value);
+        setState(() {});
+      }
     );
   }
 }

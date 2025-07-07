@@ -6,7 +6,7 @@ class LogInService {
   final dio = ApiClient().dio;
 
   Future<Response> signIn(String email, String password) async {
-    return await dio.post('/auth/auth', data: {
+    return await dio.post('api/auth/login', data: {
       'email': email,
       'password': password,
     });
