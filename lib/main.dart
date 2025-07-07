@@ -1,3 +1,5 @@
+import 'package:damdiet/data/datasource/search_service.dart';
+import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
 import 'package:damdiet/presentation/provider/price_range_provider.dart';
 import 'package:damdiet/presentation/provider/search_provider.dart';
@@ -43,7 +45,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
-          ChangeNotifierProvider(create: (_) => SearchProvider()),
+          ChangeNotifierProvider(create: (_) => SearchProvider(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],

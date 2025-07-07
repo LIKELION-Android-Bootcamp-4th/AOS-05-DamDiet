@@ -1,5 +1,7 @@
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/presentation/provider/search_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../core/widgets/category_outline_button.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../core/widgets/search_product_textfield.dart';
@@ -11,6 +13,7 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var search = Provider.of<SearchProvider>(context);
     var controller = TextEditingController();
     final listViewData = [
       Product(
@@ -88,16 +91,23 @@ class ProductsScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ProductListItem(
-                    name: listViewData[index].name,
+                    name: search.searchProductList[index].name,
+                    price: search.searchProductList[index].price,
+                    discount: search.searchProductList[index].discount,
+                    rating: search.searchProductList[index].rating,
+                    image: search.searchProductList[index].image,
+
+
+                    /*name: listViewData[index].name,
                     price: listViewData[index].price,
                     discount: listViewData[index].discount,
                     rating: listViewData[index].rating!,
-                    image: listViewData[index].image,
+                    image: listViewData[index].image,*/
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
                     Divider(color: AppColors.gray100),
-                itemCount: listViewData.length,
+                itemCount: search.searchProductList.length,
                 padding: EdgeInsets.only(right: 12.0),
               ),
             ],

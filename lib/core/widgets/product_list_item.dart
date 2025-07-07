@@ -30,7 +30,19 @@ class ProductListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(image, width: 100, height: 100),
+          Image.network(
+            image,
+            width: 100,
+            height: 100,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return SizedBox(
+                width: 100,
+                height: 100,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            },
+          ),
           SizedBox(width: 14),
 
           Expanded(
@@ -40,20 +52,26 @@ class ProductListItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'PretendardMedium',
-                        color: AppColors.textMain,
+                    Expanded(
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'PretendardMedium',
+                          color: AppColors.textMain,
+                        ),
                       ),
                     ),
+
                     Visibility(
                       visible: rating == 0.0,
                       child: IconButton(
                         iconSize: 10,
                         padding: EdgeInsets.zero,
-                        visualDensity: VisualDensity(vertical: -4, horizontal: -2),
+                        visualDensity: VisualDensity(
+                          vertical: -4,
+                          horizontal: -2,
+                        ),
                         onPressed: () {},
                         icon: SvgPicture.asset('assets/icons/ic_cancel.svg'),
                       ),
