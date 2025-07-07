@@ -2,6 +2,19 @@ class ProductEndpoints {
   // 상품 목록 검색
   static const String getProducts = '/api/products';
 
+  static Uri getProductsUri({
+    String? sortBy,
+    String? category,
+  }) {
+    return Uri(
+      path: '/api/products',
+      queryParameters: {
+        if (sortBy != null) 'sortBy': sortBy,
+        if (category != null) 'category': category
+      },
+    );
+  }
+
   // 상품 상세 조회
   static String getProductDetail({required int productId}) =>
       '/api/products/$productId';
