@@ -6,10 +6,16 @@ import '../../core/network/endpoint/product_endpoints.dart';
 class SearchService {
   final dio = ApiClient().dio;
 
-  Future<Response> searchProducts() async {
+  Future<Response> searchProducts(String productName) async {
     return await dio.get(
       ProductEndpoints.getProducts,
-      data: {'page': 1, 'limit': 20, 'sortOrder': 'desc'},
+      queryParameters: {
+        'page': 1,
+        'limit': 20,
+        // 'category': 'aa',
+        'search': productName,
+        'sortOrder': 'desc'
+      },
     );
   }
 }

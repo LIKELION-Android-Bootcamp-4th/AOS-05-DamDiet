@@ -5,6 +5,7 @@ import '../../data/datasource/search_service.dart';
 class SearchProvider extends ChangeNotifier {
   String _productName = "";
   int _selectedCategory = 0;
+  final SearchService _service = SearchService();
 
   String get productName => _productName;
   int get selectedCategory => _selectedCategory;
@@ -25,19 +26,18 @@ class SearchProvider extends ChangeNotifier {
   }
 
 
-  final SearchService _service = SearchService();
-
   Future<void> searchProducts() async {
     try {
-      final response = await _service.searchProducts();
+      final response = await _service.searchProducts(_productName);
 
-      switch(response.statusCode) {
+
+      /*switch(response.statusCode) {
         case 200:
           print('Success: ${response.data}');
           break;
         default:
           print('error occurred');
-      }
+      }*/
     }
     catch(e) {
       debugPrint('$e');
