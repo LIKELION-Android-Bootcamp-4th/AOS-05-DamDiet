@@ -32,6 +32,26 @@ class ProductDetailViewmodel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  int _quantity = 0;
+  int get quantity => _quantity;
+
+  void increaseQuantity() {
+    _quantity++;
+    notifyListeners();
+  }
+
+  void decreaseQuantity() {
+    if (_quantity > 1) {
+      _quantity--;
+      notifyListeners();
+    }
+  }
+
+  void setQuantity(int value) {
+      _quantity = value;
+      notifyListeners();
+  }
+
   Future<void> getProductDetail({required String id}) async {
     _isLoading = true;
     notifyListeners();
