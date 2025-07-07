@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.microtask(() {
-      context.read<HomeViewmodel>().getProducts();
+      context.read<HomeViewmodel>().getHomeProducts();
     });
   }
 
@@ -93,7 +93,6 @@ class DamDietHomeScreen extends StatelessWidget {
         isHome: true,
         action: IconButton(
           onPressed: (){
-            print('구라');
             Navigator.pushNamed(context, AppRoutes.search);
             },
           icon: Icon(Icons.search),
@@ -110,24 +109,28 @@ class DamDietHomeScreen extends StatelessWidget {
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-              CategoryList(),
+              CategoryList(onCategorySelected: (category){
+                print(category);
+                //TODO Products 화면에 category 넘기는 작업
+                Navigator.pushNamed(context, AppRoutes.products);
+              }),
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-              ProductList(title: "할인율 큰 상품", productList: viewModel.products),
+              ProductList(title: "따끈따끈! 신제품", productList: viewModel.latestProducts),
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
               ProductList(
-                title: "다른 고객님들이 많이 구매한 상품",
-                productList: viewModel.products,
+                title: "다른 고객님들이 많이 본 상품",
+                productList: viewModel.popularProducts,
               ),
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
               ProductList(
-                title: "이런 상품은 어때요?",
-                productList: viewModel.products,
+                title: "판매량 높은 상품",
+                productList: viewModel.salesProducts,
               ),
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
