@@ -56,3 +56,23 @@ class Product {
     );
   }
 }
+
+extension ProductCopyWith on Product {
+  Product copyWith({
+    bool? isFavorite,
+}){
+    return Product(
+      id: id,
+      name: name,
+      image: image,
+      price: price,
+      isFavorite: isFavorite ?? this.isFavorite,
+      discount: discount,
+      category: category,
+      rating: rating,
+      attributes: attributes,
+      reviews: reviews,
+      options: options,
+    );
+  }
+}

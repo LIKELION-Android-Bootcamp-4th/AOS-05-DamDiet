@@ -1,12 +1,14 @@
+import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
+import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
 import 'package:damdiet/presentation/provider/price_range_provider.dart';
-import 'package:damdiet/presentation/provider/search_provider.dart';
 import 'package:damdiet/presentation/screens/auth/signup_viewmodel.dart';
 import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
@@ -52,8 +54,9 @@ void main() {
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
-          ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => CartViewModel()),
+          ChangeNotifierProvider(create: (_) => NutritionProvider()),
+          ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataResource()))),
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],
