@@ -9,8 +9,8 @@ class CartPriceInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final originalTotalPrice = item.product.price * item.quantity;
-    final bool hasDiscount = originalTotalPrice != item.subtotal;
+    final originalTotalPrice = item.product.unitPrice * item.quantity;
+    final bool hasDiscount = originalTotalPrice != item.totalPrice;
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),
@@ -31,7 +31,7 @@ class CartPriceInfo extends StatelessWidget {
           const SizedBox(height: 4),
 
           Text(
-            '${item.subtotal}원',
+            '${item.totalPrice}원',
             style: const TextStyle(
               fontSize: 14,
               color: AppColors.textMain,

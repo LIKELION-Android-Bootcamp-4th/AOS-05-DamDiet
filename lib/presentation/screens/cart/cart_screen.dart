@@ -59,7 +59,7 @@ class _CartScreenState extends State<CartScreen> {
                   isSelected: viewModel.selectedItemIds.contains(item.id),
                   onToggle: viewModel.toggleItemSelection,
                   onDelete: (selectedItem) {
-                    viewModel.deleteSelectedItems();
+                    viewModel.deleteSingleItem(selectedItem);
                   },
                   onUpdateQuantity: (selectedItem, newQuantity) {
                     viewModel.updateQuantity(selectedItem, newQuantity);
@@ -73,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
           if (viewModel.cart != null)
             CartOrderSummary(
               selectedItemCount: viewModel.selectedItemIds.length,
-              totalAmount: viewModel.cart!.totalAmount,
+              totalAmount: viewModel.selectedItemsTotalAmount,
             ),
         ],
       ),

@@ -82,12 +82,16 @@ class CartItemCard extends StatelessWidget {
                     const SizedBox(width: 12),
                   ],
                 ),
-                if (item.option != null)
+                if (item.product.options.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
-                    child: CartOptionRow(optionName: item.option!),
+                    child: CartOptionRow(
+                      optionName: item.product.options.entries
+                          .map((e) => '${e.key}: ${e.value}')
+                          .join(', '),
+                    ),
                   ),
-                if (item.option != null)
+                if (item.product.options.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 12.0),
                     child: SizedBox(

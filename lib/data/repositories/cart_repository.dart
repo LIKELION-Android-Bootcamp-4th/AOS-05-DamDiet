@@ -13,11 +13,15 @@ class CartRepository {
   Future<void> addToCart({
     required String productId,
     required int quantity,
-
+    required int unitPrice,
+    required Map<String, dynamic> options,
   }) async {
     await _dio.post(CartEndpoints.postCart, data: {
       'productId': productId,
       'quantity': quantity,
+      'unitPrice': unitPrice,
+      'options': options,
+      'discount': null,
     });
   }
 

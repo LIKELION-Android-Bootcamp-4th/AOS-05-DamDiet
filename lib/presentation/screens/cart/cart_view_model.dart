@@ -56,13 +56,40 @@ class CartViewModel with ChangeNotifier {
   }
 
   Future<void> updateQuantity(CartItem item, int newQuantity) async {
-    await _repository.addToCart(productId: item.product.id, quantity: newQuantity);
-    await fetchCart();
+    if (newQuantity < 1) {
+      print("수량은 1 이상이어야 합니다.");
+      return;
+    }
+    try {
+      await _repository.addToCart(
+        productId: item.product.id,
+        quantity: newQuantity,
+        unitPrice: item.product.unitPrice,
+        options: item.product.options,
+      );
+      await fetchCart();
+    } catch (e) {
+      print('수량 변경 중 오류 발생: $e');
+    }
   }
 
   Future<void> deleteSelectedItems() async {
     if (_selectedItemIds.isEmpty) return;
     await _repository.removeItems(_selectedItemIds.toList());
     await fetchCart();
+  }
+
+  Future<void> deleteSingleItem(CartItem itemToDelete) async {
+    await _repository.removeItems([itemToDelete.id]);
+    await fetchCart();
+  }
+  
+  int get selectedItemsTotalAmount {
+    if (_cart == null) return 0;
+
+    return _selectedItemIds.fold(0, (sum, id) {
+      final item = _cart!.items.firstWhere((it) => it.id == id);
+      return sum + item.totalPrice;
+    });
   }
 }

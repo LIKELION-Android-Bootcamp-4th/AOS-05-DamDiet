@@ -4,16 +4,14 @@ class CartItem {
   final String id;
   final CartProduct product;
   final int quantity;
-  final String? option;
-  final int subtotal;
+  final int totalPrice;
   final DateTime createdAt;
 
   CartItem({
     required this.id,
     required this.product,
     required this.quantity,
-     this.option,
-    required this.subtotal,
+    required this.totalPrice,
     required this.createdAt,
   });
 
@@ -22,8 +20,7 @@ class CartItem {
       id: json['id'],
       product: CartProduct.fromJson(json['product']),
       quantity: json['quantity'],
-      option: json['options'] as String?,
-      subtotal: json['subtotal'],
+      totalPrice: json['totalPrice'],
       createdAt: DateTime.parse(json['createdAt']),
     );
   }
