@@ -24,6 +24,29 @@ class LoginRepository {
     }
   }
 
+  Future<bool> signUp(String email, String password, String nickName) async {
+    try {
+      final response = await _service.signUp(email, password, nickName);
+
+      if (response.statusCode == 201) {
+        return true;
+      }
+      return false;
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode ?? 0;
+      final message = e.response?.data['message'] ?? '알 수 없는 오류가 발생했습니다.';
+
+      if (statusCode == 400) {
+        throw Exception("잘못된 요청 혹은 이미 가입된 계정입니다.");
+      } else if (statusCode == 409) {
+        throw Exception("이미 가입된 계정입니다.");
+      } else {
+        throw Exception("서버 오류: $message");
+      }
+    }
+  }
+
+
   String _convertMessage(String message) {
     switch (message) {
       case 'No user found with this email or company':
