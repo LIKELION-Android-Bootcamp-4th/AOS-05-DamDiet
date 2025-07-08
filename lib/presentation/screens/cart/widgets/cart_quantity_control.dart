@@ -18,19 +18,41 @@ class CartQuantityControl extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 76,
-      height: 22,
+      height: 24,
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: AppColors.gray100),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(onTap: onDecrement, child: const Icon(Icons.remove, size: 16, color: AppColors.textSub)),
-          Text('$quantity', style: const TextStyle(fontSize: 12, color: AppColors.textMain, fontFamily: 'PretendardMedium')),
-          InkWell(onTap: onIncrement, child: const Icon(Icons.add, size: 16, color: AppColors.textSub)),
+          InkWell(
+            onTap: onDecrement,
+            borderRadius: BorderRadius.circular(10),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: const Icon(Icons.remove, size: 16, color: AppColors.textSub),
+            ),
+          ),
+          Text(
+            '$quantity',
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.textMain,
+              fontFamily: 'PretendardMedium',
+            ),
+          ),
+          InkWell(
+            onTap: onIncrement,
+            borderRadius: BorderRadius.circular(10),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: const Icon(Icons.add, size: 16, color: AppColors.textSub),
+            ),
+          ),
         ],
       ),
     );
   }
+
 }

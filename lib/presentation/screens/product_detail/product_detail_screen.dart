@@ -31,6 +31,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ProductDetailViewmodel>();
+    final hasDiscount = viewModel.product.discount > 0;
+
+    final int price = hasDiscount
+        ? (viewModel.product.price * (1 - viewModel.product.discount / 100)).round()
+        : viewModel.product.price;
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -70,7 +76,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           color: AppColors.gray100,
                           thickness: 6,
                         ),
-                        ProductQuantitySelector(),
+                        ProductQuantitySelector(
+                          quantity: viewModel.quantity,
+                          totalPrice: price*viewModel.quantity,
+                          onIncrement: () { viewModel.increaseQuantity(); },
+                          onDecrement: () { viewModel.decreaseQuantity(); },
+                          onCancel: () { viewModel.setQuantity(0); },
+                        ),
                         Divider(
                           height: 6,
                           color: AppColors.gray100,
