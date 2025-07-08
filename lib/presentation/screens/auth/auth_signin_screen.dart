@@ -4,6 +4,7 @@ import 'package:damdiet/presentation/screens/auth/widgets/sign_up_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/secure/user_secure_storage.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
 import 'signin_viewmodel.dart';
 
@@ -17,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
+  
   @override
   void dispose() {
     _emailController.dispose();
@@ -53,13 +54,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 onChanged: viewModel.setPassword
               ),
 
-              const SizedBox(height: 32,),
+              const SizedBox(height: 28,),
 
               if (viewModel.errorMessage.isNotEmpty)
                 Text(
                   viewModel.errorMessage,
                   style: const TextStyle(color: Colors.red),
                 ),
+              const SizedBox(height: 4,),
 
               BottomCTAButton(
                 text: '로그인',

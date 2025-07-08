@@ -1,13 +1,12 @@
-import 'package:damdiet/data/repositories/product_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import '../../data/models/product/product.dart';
-import '../../data/repositories/search_repository.dart';
+import '../../../data/models/product/product.dart';
+import '../../../data/repositories/search_repository.dart';
 
-class SearchProvider extends ChangeNotifier {
+class SearchViewModel extends ChangeNotifier {
   final SearchRepository _repository;
 
-  SearchProvider(this._repository);
+  SearchViewModel(this._repository);
 
   String _productName = "";
   int? _selectedCategory;
@@ -42,6 +41,4 @@ class SearchProvider extends ChangeNotifier {
       debugPrint('$e');
     }
   }
-
-
 }
