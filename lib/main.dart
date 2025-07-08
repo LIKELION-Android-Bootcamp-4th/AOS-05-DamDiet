@@ -1,3 +1,5 @@
+import 'package:damdiet/data/datasource/search_service.dart';
+import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
 import 'package:damdiet/presentation/provider/price_range_provider.dart';
 import 'package:damdiet/presentation/provider/search_provider.dart';
@@ -6,6 +8,7 @@ import 'package:damdiet/presentation/screens/community/community_write_screen.da
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
+import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
 import 'package:damdiet/presentation/screens/home/home_viewmodel.dart';
@@ -45,7 +48,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
-          ChangeNotifierProvider(create: (_) => SearchProvider()),
+          ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],

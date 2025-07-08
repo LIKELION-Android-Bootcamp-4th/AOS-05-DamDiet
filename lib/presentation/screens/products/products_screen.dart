@@ -1,17 +1,26 @@
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/presentation/provider/search_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../core/widgets/category_outline_button.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../core/widgets/search_product_textfield.dart';
 import '../../../models/ListProduct.dart';
 import '../../routes/app_routes.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
   @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  var controller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    var controller = TextEditingController();
+    var search = Provider.of<SearchProvider>(context);
     final listViewData = [
       Product(
         id: "1",
@@ -88,16 +97,23 @@ class ProductsScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ProductListItem(
-                    name: listViewData[index].name,
+                    name: search.searchProductList[index].name,
+                    price: search.searchProductList[index].price,
+                    discount: search.searchProductList[index].discount,
+                    rating: search.searchProductList[index].rating,
+                    image: search.searchProductList[index].image,
+
+
+                    /*name: listViewData[index].name,
                     price: listViewData[index].price,
                     discount: listViewData[index].discount,
                     rating: listViewData[index].rating!,
-                    image: listViewData[index].image,
+                    image: listViewData[index].image,*/
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
                     Divider(color: AppColors.gray100),
-                itemCount: listViewData.length,
+                itemCount: search.searchProductList.length,
                 padding: EdgeInsets.only(right: 12.0),
               ),
             ],
