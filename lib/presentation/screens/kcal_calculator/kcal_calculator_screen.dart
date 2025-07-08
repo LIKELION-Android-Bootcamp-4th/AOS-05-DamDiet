@@ -1,4 +1,5 @@
 import 'package:damdiet/models/ProductNutrition.dart';
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_checked_list.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_listview_item.dart';
 import 'package:damdiet/presentation/screens/auth/widgets/custom_textfield.dart';
@@ -25,9 +26,13 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
     ProductNutrition(name: '신라면', company: '농심', ),
   ];
 
+  var productTextController = TextEditingController();
+  var companyTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var nutrition = Provider.of<NutritionProvider>(context);
+    var viewModel = context.watch<KcalCalculatorViewmodel>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -52,15 +57,19 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
                       Expanded(
                         child: Column(
                           children: [
-                            CustomTextField(hintText: '음식 명'),
+                            CustomTextField(hintText: '음식 명', controller: productTextController),
                             SizedBox(height: 8),
-                            CustomTextField(hintText: '제조사 명'),
+                            CustomTextField(hintText: '제조사 명', controller: companyTextController),
                           ],
                         ),
                       ),
                       SizedBox(width: 14),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          viewModel.searchFood(
+                            productTextController.text, companyTextController.text
+                          );
+                        },
                         icon: SvgPicture.asset('assets/icons/ic_search_fill.svg'),
                       ),
                     ],
@@ -81,14 +90,17 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
                     child: ListView.separated(
                       itemBuilder: (context, index) {
                         return KcalListviewItem(
-                          name: searchProductNutList[index].name,
+                          name: viewModel.searchedFoodList[index].product,
+                          company: viewModel.searchedFoodList[index].company,
+                          calorie: viewModel.searchedFoodList[index].calorie,
+                          /*name: searchProductNutList[index].name,
                           company: searchProductNutList[index].company,
-                          calorie: searchProductNutList[index].calorie,
+                          calorie: searchProductNutList[index].calorie,*/
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
                           Divider(thickness: 1, color: AppColors.textSub),
-                      itemCount: searchProductNutList.length,
+                      itemCount: viewModel.searchedFoodList.length,
                       padding: EdgeInsets.symmetric(vertical: 12.0),
                     ),
                   ),
