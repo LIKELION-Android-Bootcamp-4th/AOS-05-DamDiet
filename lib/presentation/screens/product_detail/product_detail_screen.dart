@@ -11,6 +11,7 @@ import '../../../core/theme/appcolor.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String productId;
+
   const ProductDetailScreen({super.key, required this.productId});
 
   @override
@@ -18,13 +19,14 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-
   @override
   void initState() {
     super.initState();
 
     Future.microtask(() {
-      context.read<ProductDetailViewmodel>().getProductDetail(id: widget.productId);
+      context.read<ProductDetailViewmodel>().getProductDetail(
+        id: widget.productId,
+      );
     });
   }
 
@@ -34,78 +36,90 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final hasDiscount = viewModel.product.discount > 0;
 
     final int price = hasDiscount
-        ? (viewModel.product.price * (1 - viewModel.product.discount / 100)).round()
+        ? (viewModel.product.price * (1 - viewModel.product.discount / 100))
+              .round()
         : viewModel.product.price;
-
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: viewModel.isLoading
-        ? const Center(
-          child: CircularProgressIndicator(),
-        )
-        : DefaultTabController(
-          length: 2,
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  backgroundColor: Colors.white,
-                  leading: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/ic_arrow_back.svg',
-                      width: 20,
-                      height: 20,
-                    ),
+            ? const Center(child: CircularProgressIndicator())
+            : DefaultTabController(
+                length: 2,
+                child: NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) {
+                    return [
+                      SliverAppBar(
+                        backgroundColor: Colors.white,
+                        leading: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/icons/ic_arrow_back.svg',
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ProductImage(imageUrl: viewModel.product.image),
+                              ProductDetailMainInfo(product: viewModel.product),
+                              Divider(
+                                height: 6,
+                                color: AppColors.gray100,
+                                thickness: 6,
+                              ),
+                              ProductQuantitySelector(
+                                quantity: viewModel.quantity,
+                                totalPrice: price * viewModel.quantity,
+                                onIncrement: () {
+                                  viewModel.increaseQuantity();
+                                },
+                                onDecrement: () {
+                                  viewModel.decreaseQuantity();
+                                },
+                                onCancel: () {
+                                  viewModel.setQuantity(0);
+                                },
+                              ),
+                              Divider(
+                                height: 6,
+                                color: AppColors.gray100,
+                                thickness: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: SliverDelegate(),
+                      ),
+                    ];
+                  },
+                  body: TabBarView(
+                    children: [
+                      SingleChildScrollView(
+                        child: ProductDetailInfo(
+                          productNutrition: viewModel.product.attributes,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: ProductReviewsTab(
+                          reviewList: viewModel.product.reviews ?? [],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ProductImage(imageUrl: viewModel.product.image,),
-                        ProductDetailMainInfo(product: viewModel.product,),
-                        Divider(
-                          height: 6,
-                          color: AppColors.gray100,
-                          thickness: 6,
-                        ),
-                        ProductQuantitySelector(
-                          quantity: viewModel.quantity,
-                          totalPrice: price*viewModel.quantity,
-                          onIncrement: () { viewModel.increaseQuantity(); },
-                          onDecrement: () { viewModel.decreaseQuantity(); },
-                          onCancel: () { viewModel.setQuantity(0); },
-                        ),
-                        Divider(
-                          height: 6,
-                          color: AppColors.gray100,
-                          thickness: 6,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverDelegate(),
-                ),
-              ];
-            },
-            body: TabBarView(
-              children: [
-                SingleChildScrollView(child: ProductDetailInfo(productNutrition: viewModel.product.attributes,)),
-                SingleChildScrollView(child:ProductReviewsTab(reviewList: viewModel.product.reviews ?? [],)),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -116,7 +130,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Expanded(
               flex: 1,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final message = await viewModel.toggleFavorite();
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(message)));
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(48),
                   side: const BorderSide(
@@ -130,7 +151,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 child: SvgPicture.asset(
-                  'assets/icons/ic_heart_outline.svg',
+                  viewModel.product.isFavorite
+                      ? 'assets/icons/ic_heart_fill.svg'
+                      : 'assets/icons/ic_heart_outline.svg',
                   width: 20,
                   height: 20,
                   colorFilter: ColorFilter.mode(

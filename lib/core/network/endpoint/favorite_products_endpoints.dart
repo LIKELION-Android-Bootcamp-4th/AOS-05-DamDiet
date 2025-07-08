@@ -3,5 +3,5 @@ class FavoriteProductEndpoints {
   static String getFavorites = '/api/mypage/favorites';
 
   // 관심 상품 토글
-  static String postFavorite({required int productId}) => '/api/products/{$productId}/toggle-favorites';
+  static String postFavorite({required String productId}) => '/api/products/$productId/toggle-favorites';
 }

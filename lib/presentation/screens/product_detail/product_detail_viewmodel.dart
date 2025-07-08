@@ -52,6 +52,23 @@ class ProductDetailViewmodel extends ChangeNotifier {
       notifyListeners();
   }
 
+  Future<String> toggleFavorite() async {
+    try {
+      final isNowFavorite = await _repository.toggleFavorite(id: _product.id);
+
+      _product = _product.copyWith(isFavorite: isNowFavorite);
+      notifyListeners();
+
+      return isNowFavorite ? '찜한 상품에 추가되었습니다!' : '찜이 해제되었습니다!';
+
+    } catch (e) {
+      debugPrint('즐겨찾기 변경 실패: $e');
+      return '찜 처리 실패. 다시 시도해주세요.';
+    }
+  }
+
+
+
   Future<void> getProductDetail({required String id}) async {
     _isLoading = true;
     notifyListeners();

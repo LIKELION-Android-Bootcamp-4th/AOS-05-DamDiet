@@ -44,4 +44,13 @@ class ProductRepository {
     print(response.data);
     return Product.fromJson(response.data['data']);
   }
+
+  Future<bool> toggleFavorite({required String id}) async {
+    final response = await _datasource.toggleFavorite(id: id);
+    if (response.statusCode == 200) {
+      final isFavorite = response.data['message']['result']['isLiked'] as bool;
+      return isFavorite;
+    }
+    throw Exception(response.statusMessage);
+  }
 }
