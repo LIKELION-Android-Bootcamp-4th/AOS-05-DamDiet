@@ -10,4 +10,7 @@ class AuthEndpoints {
 
   // 닉네임 중복 확인
   static const String checkNickname = '/api/auth/check-nickname';
+
+  // 회원 가입
+  static const String signup = '/api/auth/register/buyer';
 }
