@@ -33,7 +33,7 @@ class ProductReviewListItem extends StatelessWidget {
                         color: AppColors.textMain,
                       ),
                     ),
-                    SizedBox(width: 8,),
+                    const SizedBox(width: 8,),
                     Text(
                       date,
                       style: TextStyle(
@@ -45,7 +45,7 @@ class ProductReviewListItem extends StatelessWidget {
                   ],
                 ),
                 RatingBarIndicator(
-                  rating: 2.7,
+                  rating: review.rating,
                   itemBuilder: (context, index) => Icon(
                     Icons.star,
                     color: Colors.amber,
@@ -55,11 +55,12 @@ class ProductReviewListItem extends StatelessWidget {
                   direction: Axis.horizontal,
                 )
               ]),
+          const SizedBox(height: 4,),
           Text(
             review.comment,
             style: TextStyle(
               fontFamily: 'PretendardRegular',
-              fontSize: 12,
+              fontSize: 14,
               color: AppColors.textMain,
             ),
           ),
