@@ -11,12 +11,12 @@ class KcalListviewItem extends StatelessWidget {
     super.key,
     required this.name,
     required this.company,
-    this.calorie,
+    this.calorie = '',
   });
 
   final String name;
   final String company;
-  final int? calorie;
+  final String calorie;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class KcalListviewItem extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: calorie == null ? null :
                       () {
-                    provider.addCalorie(name, calorie!);
+                    provider.addCalorie(name, int.parse(calorie));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
@@ -106,7 +106,7 @@ class KcalListviewItem extends StatelessWidget {
                       return KcalNutritionDialog(
                         name: name,
                         company: company,
-                        calorie: calorie,
+                        calorie: int.parse(calorie),
                       );
                     },
                   );
