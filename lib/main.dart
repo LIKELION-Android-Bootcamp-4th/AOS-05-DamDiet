@@ -7,6 +7,7 @@ import 'package:damdiet/presentation/screens/community/community_detail_screen.d
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
+import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
 import 'package:damdiet/presentation/screens/home/home_viewmodel.dart';
@@ -45,7 +46,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
-          ChangeNotifierProvider(create: (_) => SearchProvider(SearchRepository(SearchService()))),
+          ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],
