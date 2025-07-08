@@ -1,3 +1,4 @@
+import 'package:damdiet/core/widgets/damdiet_appbar.dart';
 import 'package:damdiet/presentation/screens/auth/signup_viewmodel.dart';
 import 'package:damdiet/presentation/screens/auth/widgets/custom_textfield.dart';
 import 'package:damdiet/presentation/screens/auth/widgets/status_message_text.dart';
@@ -26,10 +27,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final viewModel = context.watch<SignUpViewModel>();
 
     return Scaffold(
+      appBar: DamdietAppbar(title:'회원가입'),
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.all(16),
-        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -72,16 +73,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                 },
               ),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("뒤로 가기"),
-              ),
             ],
           ),
-        ),
       ),
     );
   }
