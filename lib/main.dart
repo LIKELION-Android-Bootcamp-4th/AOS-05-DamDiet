@@ -1,6 +1,7 @@
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
 import 'package:damdiet/presentation/provider/price_range_provider.dart';
 import 'package:damdiet/presentation/provider/search_provider.dart';
+import 'package:damdiet/presentation/screens/auth/signup_viewmodel.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
@@ -47,6 +48,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
+          ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider())
         ],
         child: const DamDietApp()
