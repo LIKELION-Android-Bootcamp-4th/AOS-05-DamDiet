@@ -25,7 +25,7 @@ class SearchScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 32),
-              SearchProductTextField(controller: controller),
+              SearchProductTextField(controller: controller, isSearched: false),
               SizedBox(height: 28),
               Text(
                 "카테고리 별 상품 보기",
@@ -38,6 +38,9 @@ class SearchScreen extends StatelessWidget {
               SizedBox(height: 18),
               Row(
                 children: [
+                  // index: appCategories index
+                  CategoryOutlineButton(index: 0),
+                  SizedBox(width: 16),
                   CategoryOutlineButton(index: 1),
                   SizedBox(width: 16),
                   CategoryOutlineButton(index: 2),
@@ -52,7 +55,7 @@ class SearchScreen extends StatelessWidget {
                   SizedBox(width: 16),
                   CategoryOutlineButton(index: 5),
                   SizedBox(width: 16),
-                  CategoryOutlineButton(index: 6),
+                  CategoryOutlineButton(index: 6)
                 ],
               ),
 

@@ -60,6 +60,8 @@ class ProductListItem extends StatelessWidget {
                           fontFamily: 'PretendardMedium',
                           color: AppColors.textMain,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
 

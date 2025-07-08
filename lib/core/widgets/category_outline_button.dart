@@ -39,7 +39,7 @@ class _CategoryOutlineButtonState extends State<CategoryOutlineButton> {
 
   }
 
-  ButtonStyle _setButtonState(int selectedIndex) {
+  ButtonStyle _setButtonState(int? selectedIndex) {
     if(selectedIndex == widget.index) {
       return OutlinedButton.styleFrom(
         padding: EdgeInsets.all(14.0),

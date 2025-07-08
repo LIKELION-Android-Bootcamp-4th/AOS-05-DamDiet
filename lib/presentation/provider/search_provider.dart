@@ -10,11 +10,11 @@ class SearchProvider extends ChangeNotifier {
   SearchProvider(this._repository);
 
   String _productName = "";
-  int _selectedCategory = 0;
+  int? _selectedCategory;
   List<Product> _searchProductList = [];
 
   String get productName => _productName;
-  int get selectedCategory => _selectedCategory;
+  int? get selectedCategory => _selectedCategory;
   List<Product> get searchProductList => _searchProductList;
 
   void setProductName(String productName) {
@@ -28,15 +28,15 @@ class SearchProvider extends ChangeNotifier {
   }
 
   void removeCategory() {
-    _selectedCategory = 0;
+    _selectedCategory = null;
     notifyListeners();
   }
 
 
   Future<void> searchProducts() async {
     try {
-      _searchProductList= await _repository.getSearchedProducts(_productName);
-      print(_searchProductList.first.image);
+      _searchProductList = await _repository.getSearchedProducts(_productName);
+      notifyListeners();
     }
     catch(e) {
       debugPrint('$e');

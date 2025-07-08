@@ -8,13 +8,19 @@ import '../../../core/widgets/search_product_textfield.dart';
 import '../../../models/ListProduct.dart';
 import '../../routes/app_routes.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
+
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  var controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var search = Provider.of<SearchProvider>(context);
-    var controller = TextEditingController();
     final listViewData = [
       Product(
         id: "1",
