@@ -31,7 +31,6 @@ class CartItemCard extends StatelessWidget {
 
     return Container(
       width: 308,
-      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

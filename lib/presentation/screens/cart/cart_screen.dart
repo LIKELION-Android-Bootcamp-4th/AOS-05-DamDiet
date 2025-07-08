@@ -30,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
     final viewModel = context.watch<CartViewModel>();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.gray100,
       appBar: DamdietAppbar(
         title: '장바구니',
         showBackButton: false,
@@ -54,18 +54,21 @@ class _CartScreenState extends State<CartScreen> {
               itemCount: viewModel.cart!.items.length,
               itemBuilder: (context, index) {
                 final item = viewModel.cart!.items[index];
-                return CartItemCard(
-                  item: item,
-                  isSelected: viewModel.selectedItemIds.contains(item.id),
-                  onToggle: viewModel.toggleItemSelection,
-                  onDelete: (selectedItem) {
-                    viewModel.deleteSingleItem(selectedItem);
-                  },
-                  onUpdateQuantity: (selectedItem, newQuantity) {
-                    viewModel.updateQuantity(selectedItem, newQuantity);
-                  },
-                  onOptionChange: () {
-                  },
+                return Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                  child: CartItemCard(
+                    item: item,
+                    isSelected: viewModel.selectedItemIds.contains(item.id),
+                    onToggle: viewModel.toggleItemSelection,
+                    onDelete: (selectedItem) {
+                      viewModel.deleteSingleItem(selectedItem);
+                    },
+                    onUpdateQuantity: (selectedItem, newQuantity) {
+                      viewModel.updateQuantity(selectedItem, newQuantity);
+                    },
+                    onOptionChange: () {
+                    },
+                  ),
                 );
               },
             ),
