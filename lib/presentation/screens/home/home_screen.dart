@@ -132,37 +132,6 @@ class DamDietHomeScreen extends StatelessWidget {
                 title: "판매량 높은 상품",
                 productList: viewModel.salesProducts,
               ),
-
-              Divider(height: 6, color: AppColors.gray100, thickness: 6),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.productDetail);
-                },
-                child: Text(
-                  "제품 상세",
-                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.products);
-                },
-                child: Text(
-                  "제품 목록?",
-                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-                ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.signIn);
-                },
-                child: Text(
-                  "로그인",
-                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-                ),
-              ),
             ],
           ),
         ),
