@@ -61,6 +61,7 @@ class ProductReviewsTab extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Text(
+                          //TODO 오류 수정되면 서버에서 받아온 값으로 수정
                           '5.0',
                           style: TextStyle(
                             fontSize: 24,
@@ -111,8 +112,7 @@ class ProductReviewsTab extends StatelessWidget {
               ),
             ),
 
-            // TODO: 현재는 리뷰 리스트 엠티 검사를 하는데 ImageList 로 검사해서 else 문도 작성 해야함
-            if (reviewList.isNotEmpty) ... [
+            if (allReviewImages.isNotEmpty) ... [
               Padding(
                 padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
                 child: SizedBox(

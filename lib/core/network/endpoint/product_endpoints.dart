@@ -35,10 +35,6 @@ class ProductEndpoints {
   static String getFavorites({required int productId}) =>
       '/api/products/$productId/favorites';
 
-  // 상품 찜 토글
-  static String postFavorites({required int productId}) =>
-      '/api/products/$productId/toggle-favorites';
-
   // 상품 댓글 작성
   static String postComment({required int productId}) =>
       '/api/products/$productId/comments';
