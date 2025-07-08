@@ -1,6 +1,7 @@
 class ApiResponse<T> {
   final bool success;
   final String message;
+  final String? error;
   final T data;
   final Pagination? pagination;
 
@@ -9,16 +10,21 @@ class ApiResponse<T> {
     required this.message,
     required this.data,
     this.pagination,
+    this.error,
   });
 
   factory ApiResponse.fromJson(
       Map<String, dynamic> json,
       T Function(Object? json) fromJsonT,
       ) {
+
     return ApiResponse(
       success: json['success'] ?? false,
       message: json['message'] ?? '',
-      data: fromJsonT(json['data']),
+      error: json['error'],
+      data: json['data'] != null
+          ? fromJsonT(json['data'])
+          : fromJsonT({}),
       pagination: json['pagination'] != null
           ? Pagination.fromJson(json['pagination'])
           : null,
