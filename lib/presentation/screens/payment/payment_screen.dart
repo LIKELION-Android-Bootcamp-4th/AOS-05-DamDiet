@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/product_list_item.dart';
+import '../../../data/models/request/order_request_dto.dart';
 
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  final List<OrderItem> orderItems;
+
+  const PaymentScreen({super.key, required this.orderItems});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -19,6 +22,7 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
+    debugPrint("👍👍${widget.orderItems[0].quantity}");
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -190,9 +194,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
-              SizedBox(height: 14),
               SelectPaymentWidget(),
-              SizedBox(height: 24),
               Divider(thickness: 1, color: AppColors.textSub),
               SizedBox(height: 24),
               PaymentCheckboxWidget(),

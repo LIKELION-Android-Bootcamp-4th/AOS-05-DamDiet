@@ -1,3 +1,4 @@
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,22 +7,23 @@ import '../../../provider/nutrition_provider.dart';
 
 class KcalCheckedItem extends StatelessWidget {
   const KcalCheckedItem(
-      {required this.index, required this.food, required this.cal});
+      {required this.index, required this.food, required this.cal, required this.serving});
 
   final int index;
   final String food;
   final String cal;
+  final String serving;
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<NutritionProvider>(context);
+    var viewModel = context.read<KcalCalculatorViewmodel>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '${food}: ${cal}kcal',
+            '$food: ${cal}kcal * $serving',
             style: TextStyle(
               fontSize: 14,
               fontFamily: 'PretendardRegular',
@@ -31,7 +33,7 @@ class KcalCheckedItem extends StatelessWidget {
 
           TextButton(
             onPressed: () {
-              provider.deleteCalorie(index);
+              viewModel.deleteCalorie(index);
             },
             style: TextButton.styleFrom(
                 minimumSize: Size.zero,

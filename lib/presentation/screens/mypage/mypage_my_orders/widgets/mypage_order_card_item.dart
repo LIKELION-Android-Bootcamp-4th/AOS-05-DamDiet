@@ -3,7 +3,7 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import '../../mypage_my_orders_screen.dart';
 
 class MyPageOrderCardItem extends StatelessWidget {
-  final OrderItem item;
+  final OrderItem1 item;
 
   const MyPageOrderCardItem({super.key, required this.item});
 

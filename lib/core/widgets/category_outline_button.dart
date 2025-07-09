@@ -5,60 +5,53 @@ import 'package:provider/provider.dart';
 import '../../presentation/provider/search_provider.dart';
 import '../theme/appcolor.dart';
 
-
-class CategoryOutlineButton extends StatefulWidget {
-  const CategoryOutlineButton({super.key, required this.index});
-
+class CategoryOutlineButton extends StatelessWidget {
   final int index;
+  final int? selectedIndex;
+  final ValueChanged<int> onSelected;
 
-  @override
-  State<CategoryOutlineButton> createState() => _CategoryOutlineButtonState();
-}
-
-class _CategoryOutlineButtonState extends State<CategoryOutlineButton> {
+  const CategoryOutlineButton({
+    super.key,
+    required this.index,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var search = Provider.of<SearchProvider>(context);
+    final isSelected = selectedIndex == index;
+
     return OutlinedButton(
-      style: _setButtonState(search.selectedCategory),
+      style: _setButtonState(isSelected),
       onPressed: () {
-        setState(() {
-          if(search.selectedCategory != widget.index) {
-            search.setCategory(widget.index);
-          } else  {
-            search.removeCategory();
-          }
-        });
+        onSelected(index);
       },
-      child: Text(appCategories[widget.index].nameKo,
-        style: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium')
+      child: Text(
+        appCategories[index].nameKo,
+        style: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium'),
       ),
     );
-
-
   }
 
-  ButtonStyle _setButtonState(int? selectedIndex) {
-    if(selectedIndex == widget.index) {
+  ButtonStyle _setButtonState(bool isSelected) {
+    if (isSelected) {
       return OutlinedButton.styleFrom(
         padding: EdgeInsets.all(14.0),
         foregroundColor: AppColors.primaryColor,
         side: BorderSide(color: AppColors.primaryColor),
-        textStyle: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium')
+        textStyle: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium'),
       );
-    }
-    else {
+    } else {
       return OutlinedButton.styleFrom(
         padding: EdgeInsets.all(14.0),
         foregroundColor: AppColors.textHint,
         side: BorderSide(color: AppColors.textHint),
-        textStyle: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium')
+        textStyle: TextStyle(fontSize: 14, fontFamily: 'PretendardMedium'),
       );
     }
-
   }
 }
+
 
 
 class CategoryWithDeleteOutlineButton extends StatefulWidget {

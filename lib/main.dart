@@ -1,7 +1,9 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
+import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
 import 'package:damdiet/data/repositories/favorite_repository.dart';
+import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
@@ -13,6 +15,7 @@ import 'package:damdiet/presentation/screens/community/community_write_screen.da
 import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
@@ -31,7 +34,6 @@ import 'package:damdiet/presentation/screens/auth/auth_signup_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_community_screen.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/mypage_my_order_details_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_password_edit_screen.dart';
@@ -44,6 +46,8 @@ import 'package:damdiet/data/datasource/product_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+
+import 'data/models/request/order_request_dto.dart';
 
 
 void main() {
@@ -58,7 +62,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
-          ChangeNotifierProvider(create: (_) => CartViewModel()),
+          ChangeNotifierProvider(create: (_) => CartViewModel(CartRepository(CartDatasource()))),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataResource()))),
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
@@ -99,7 +103,6 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
         AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
         AppRoutes.cart: (context) => CartScreen(),
-        AppRoutes.payment: (context) => PaymentScreen(),
         AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
         AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
         AppRoutes.signIn: (context) => SignInScreen(),
@@ -111,6 +114,12 @@ class DamDietApp extends StatelessWidget {
           final productId = settings.arguments as String;
           return MaterialPageRoute(
             builder: (_) => ProductDetailScreen(productId: productId),
+          );
+        }
+        else if (settings.name == AppRoutes.payment) {
+          final args = settings.arguments as List<OrderItem>;
+          return MaterialPageRoute(
+            builder: (_) => PaymentScreen(orderItems: args),
           );
         }
         return null;

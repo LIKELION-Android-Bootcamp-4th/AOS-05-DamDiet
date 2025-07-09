@@ -1,13 +1,13 @@
-import 'package:damdiet/core/network/api_client.dart';
-import 'package:damdiet/core/network/endpoint/cart_endpoints.dart';
+import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/models/cart/cart.dart';
 
 class CartRepository {
-  final _dio = ApiClient().dio;
+  final CartDatasource _datasource;
+
+  CartRepository(this._datasource);
 
   Future<Cart> fetchCart() async {
-    final response = await _dio.get(CartEndpoints.getCart);
-    return Cart.fromJson(response.data);
+    return await _datasource.fetchCart();
   }
 
   Future<void> addToCart({
@@ -16,20 +16,19 @@ class CartRepository {
     required int unitPrice,
     required Map<String, dynamic> options,
   }) async {
-    await _dio.post(CartEndpoints.postCart, data: {
-      'productId': productId,
-      'quantity': quantity,
-      'unitPrice': unitPrice,
-      'options': options,
-      'discount': null,
-    });
+    await _datasource.addToCart(
+      productId: productId,
+      quantity: quantity,
+      unitPrice: unitPrice,
+      options: options,
+    );
   }
 
   Future<void> removeItems(List<String> cartIds) async {
-    await _dio.delete(CartEndpoints.deleteCart, data: {'cartIds': cartIds});
+    await _datasource.removeItems(cartIds);
   }
 
   Future<void> clearCart() async {
-    await _dio.delete(CartEndpoints.clearCart);
+    await _datasource.clearCart();
   }
 }
