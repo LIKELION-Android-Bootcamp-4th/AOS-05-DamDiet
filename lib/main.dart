@@ -83,7 +83,6 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.search: (context) => SearchScreen(),
         AppRoutes.products: (context) => ProductsScreen(),
-        AppRoutes.productDetail: (context) => ProductDetailScreen(productId: "686b34a13b506684125d08f5",),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
@@ -101,6 +100,15 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.signIn: (context) => SignInScreen(),
         AppRoutes.signUp: (context) => SignUpScreen(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
+      },
+      onGenerateRoute: (settings){
+        if (settings.name == AppRoutes.productDetail) {
+          final productId = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (_) => ProductDetailScreen(productId: productId),
+          );
+        }
+        return null;
       },
     );
   }
