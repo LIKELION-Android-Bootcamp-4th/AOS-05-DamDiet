@@ -23,6 +23,7 @@ class DamdietAppbar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
+      scrolledUnderElevation: 0,
       leading: isHome
           ? Padding(
         padding: const EdgeInsets.only(left: 16),

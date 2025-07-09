@@ -1,6 +1,8 @@
 import 'package:damdiet/data/models/product/product.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/exceptions/quantity_invalid_exception.dart';
+import '../../../data/models/cart/cart_request.dart';
 import '../../../data/models/product/product_nutrition.dart';
 import '../../../data/repositories/product_repository.dart';
 
@@ -81,6 +83,24 @@ class ProductDetailViewmodel extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<void> addToCart() async {
+    if (_quantity <= 0) {
+      throw QuantityInvalidException();
+    }
+
+    try {
+      await _repository.postCart(cartRequest: CartRequest(
+        productId: _product.id,
+        quantity: _quantity,
+        unitPrice: _product.price,
+        discount: _product.discount,
+      ));
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
   }
 
 }

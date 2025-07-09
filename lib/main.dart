@@ -4,11 +4,12 @@ import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
 import 'package:damdiet/presentation/provider/price_range_provider.dart';
-import 'package:damdiet/presentation/provider/search_provider.dart';
 import 'package:damdiet/presentation/screens/auth/signup_viewmodel.dart';
+import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
@@ -54,10 +55,12 @@ void main() {
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
+          ChangeNotifierProvider(create: (_) => CartViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataResource()))),
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
-          ChangeNotifierProvider(create: (_) => NutritionProvider())
+          ChangeNotifierProvider(create: (_) => NutritionProvider()),
+          ChangeNotifierProvider(create: (_) => MypageViewModel()),
         ],
         child: const DamDietApp()
     )
@@ -81,7 +84,6 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.search: (context) => SearchScreen(),
         AppRoutes.products: (context) => ProductsScreen(),
-        AppRoutes.productDetail: (context) => ProductDetailScreen(productId: "686b34a13b506684125d08f5",),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
@@ -99,6 +101,15 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.signIn: (context) => SignInScreen(),
         AppRoutes.signUp: (context) => SignUpScreen(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
+      },
+      onGenerateRoute: (settings){
+        if (settings.name == AppRoutes.productDetail) {
+          final productId = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (_) => ProductDetailScreen(productId: productId),
+          );
+        }
+        return null;
       },
     );
   }

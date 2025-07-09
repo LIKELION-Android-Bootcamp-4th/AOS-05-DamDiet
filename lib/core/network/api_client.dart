@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../constants/constants.dart';
-import 'SessionExpiredException.dart';
+import '../exceptions/session_expired_exception.dart';
 
 class ApiClient {
   static final ApiClient _instance = ApiClient._internal();

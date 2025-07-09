@@ -1,3 +1,4 @@
+import 'package:damdiet/core/exceptions/quantity_invalid_exception.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/product_detail/widgets/product_detail_info.dart';
 import 'package:damdiet/presentation/screens/product_detail/widgets/product_detail_main_info.dart';
@@ -167,7 +168,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Expanded(
               flex: 2, // 비율 2
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    await viewModel.addToCart();
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text('장바구니에 상품을 담았습니다!')));
+                  } catch (e) {
+                    if (e is QuantityInvalidException) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.message)),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('장바구니 담기에 실패했습니다.')),
+                      );
+                    }
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(48),
                   backgroundColor: AppColors.primaryColor,

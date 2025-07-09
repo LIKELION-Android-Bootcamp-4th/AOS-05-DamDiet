@@ -1,5 +1,6 @@
 import 'package:damdiet/data/datasource/product_datasource.dart';
 
+import '../models/cart/cart_request.dart';
 import '../models/product/product.dart';
 
 
@@ -52,5 +53,12 @@ class ProductRepository {
       return isFavorite;
     }
     throw Exception(response.statusMessage);
+  }
+
+  Future<void> postCart({required CartRequest cartRequest}) async {
+    final response = await _datasource.postCart(cartRequest: cartRequest);
+    if (response.statusCode != 201) {
+      throw Exception(response.statusMessage);
+    }
   }
 }

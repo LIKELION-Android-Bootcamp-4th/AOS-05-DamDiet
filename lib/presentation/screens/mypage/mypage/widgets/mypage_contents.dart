@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/appcolor.dart';
+import '../../../../../core/widgets/confirm_dialog.dart';
 import '../../../../routes/app_routes.dart';
+import '../mypage_viewmodel.dart';
 import 'mypage_icon_menu.dart';
 import 'mypage_list_title.dart';
 import 'mypage_section_title.dart';
 
 class MyPageContents extends StatelessWidget {
-  const MyPageContents({super.key});
+  final MypageViewModel viewModel ;
+  const MyPageContents({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,22 @@ class MyPageContents extends StatelessWidget {
               const Divider(indent: 16, endIndent: 16, color: AppColors.gray100),
 
               MyPageListTile('로그아웃', () {
-                // TODO: 로그아웃 다이얼로그 처리
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => ConfirmDialog(
+                    title: '로그아웃',
+                    content: '정말 로그아웃하시겠습니까?',
+                    onCancel: () {
+                      Navigator.of(context).pop();
+                    },
+                    onConfirm: () async {
+                      Navigator.of(context).pop();
+                      await viewModel.logout();
+                      Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+                    },
+                  ),
+                );
               }),
             ],
           ),
