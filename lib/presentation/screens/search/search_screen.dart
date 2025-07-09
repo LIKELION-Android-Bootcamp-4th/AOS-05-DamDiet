@@ -1,20 +1,39 @@
+import 'package:damdiet/core/constants/category_constants.dart';
+import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
+import 'package:damdiet/core/widgets/outline_chip_group.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/constants/category_constants.dart';
 import '../../../core/theme/appcolor.dart';
 import '../../../core/widgets/category_outline_button.dart';
 import '../../../core/widgets/search_product_textfield.dart';
-import '../../provider/price_range_provider.dart';
 import '../../routes/app_routes.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var priceRange = Provider.of<PriceRangeProvider>(context);
-    var controller = TextEditingController();
+    final viewModel = context.watch<SearchViewModel>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -25,50 +44,46 @@ class SearchScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 32),
-              SearchProductTextField(controller: controller, isSearched: false),
-              SizedBox(height: 28),
-              Text(
+              SearchProductTextField(
+                controller: controller,
+                isSearched: false,
+                onChanged: (value) {
+                  viewModel.setProductName(value);
+                },
+                onSearch: () async {
+                  await viewModel.searchProducts();
+                  Navigator.pushNamed(context, AppRoutes.products);
+                },
+              ),
+
+              const SizedBox(height: 28),
+              const Text(
                 "카테고리 별 상품 보기",
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: 'PretendardSemiBold',
-                  color: AppColors.textMain
+                  color: AppColors.textMain,
                 ),
               ),
-              SizedBox(height: 18),
-              Row(
-                children: [
-                  // index: appCategories index
-                  CategoryOutlineButton(index: 0),
-                  SizedBox(width: 16),
-                  CategoryOutlineButton(index: 1),
-                  SizedBox(width: 16),
-                  CategoryOutlineButton(index: 2),
-                  SizedBox(width: 16),
-                  CategoryOutlineButton(index: 3),
-                ],
+              const SizedBox(height: 18),
+              OutlineChipGroup(
+                labels: appCategories.map((e) => e.nameKo).toList(),
+                values: appCategories.map((e) => e.nameEn).toList(),
+                selectedValue: viewModel.selectedCategory, // nameEn
+                onSelected: (value) {
+                  viewModel.setCategory(value!);
+                },
               ),
-              SizedBox(height: 12),
-              Row(
-                children: [
-                  CategoryOutlineButton(index: 4),
-                  SizedBox(width: 16),
-                  CategoryOutlineButton(index: 5),
-                  SizedBox(width: 16),
-                  CategoryOutlineButton(index: 6)
-                ],
-              ),
-
-              SizedBox(height: 26),
-              Text(
+              const SizedBox(height: 26),
+              const Text(
                 "가격대 설정",
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: 'PretendardSemiBold',
-                  color: AppColors.textMain
+                  color: AppColors.textMain,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SliderTheme(
                 data: SliderThemeData(
                   activeTrackColor: AppColors.primaryColor,
@@ -77,13 +92,13 @@ class SearchScreen extends StatelessWidget {
                 child: RangeSlider(
                   min: 3000,
                   max: 12000,
-                  values: priceRange.rangeValues,
+                  values: viewModel.rangeValues,
                   divisions: 9,
                   labels: RangeLabels(
-                    priceRange.rangeValues.start.toString(),
-                    priceRange.rangeValues.end.toString(),
+                    viewModel.rangeValues.start.toString(),
+                    viewModel.rangeValues.end.toString(),
                   ),
-                  onChanged: (v) => priceRange.changeRangeValues(v),
+                  onChanged: (v) => viewModel.changeRangeValues(v),
                 ),
               ),
 

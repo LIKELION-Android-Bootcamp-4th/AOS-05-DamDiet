@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../data/models/product/product.dart';
@@ -9,20 +10,25 @@ class SearchViewModel extends ChangeNotifier {
   SearchViewModel(this._repository);
 
   String _productName = "";
-  int? _selectedCategory;
+  String? _selectedCategory;
   List<Product> _searchProductList = [];
+  RangeValues _rangeValues = const RangeValues(5000, 10000);
+
 
   String get productName => _productName;
-  int? get selectedCategory => _selectedCategory;
+  String? get selectedCategory => _selectedCategory;
   List<Product> get searchProductList => _searchProductList;
+  RangeValues get rangeValues => _rangeValues;
+
+
 
   void setProductName(String productName) {
     _productName = productName;
     notifyListeners();
   }
 
-  void setCategory(int index) {
-    _selectedCategory = index;
+  void setCategory(String category) {
+    _selectedCategory = category;
     notifyListeners();
   }
 
@@ -31,6 +37,10 @@ class SearchViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeRangeValues(RangeValues newRange) {
+    _rangeValues = newRange;
+    notifyListeners();
+  }
 
   Future<void> searchProducts() async {
     try {

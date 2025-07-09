@@ -7,6 +7,7 @@ import '../../../core/widgets/product_list_item.dart';
 import '../../../core/widgets/search_product_textfield.dart';
 import '../../../models/ListProduct.dart';
 import '../../routes/app_routes.dart';
+import '../search/search_viewmodel.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -20,57 +21,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var search = Provider.of<SearchProvider>(context);
-    final listViewData = [
-      Product(
-        id: "1",
-        name: "담다잇 닭가슴살 블랙페퍼맛",
-        price: 5000,
-        discount: 0,
-        rating: 3.5,
-        image: 'assets/images/damdiet_logo_1.png',
-      ),
-      Product(
-        id: "2",
-        name: "담다잇 닭가슴살 블랙페퍼맛",
-        price: 10000,
-        discount: 0,
-        rating: 3.5,
-        image: 'assets/images/damdiet_logo_1.png',
-      ),
-      Product(
-        id: "3",
-        name: "담다잇 닭가슴살 블랙페퍼맛",
-        price: 10000,
-        discount: 30,
-        rating: 4.4,
-        image: 'assets/images/damdiet_logo_2.png',
-      ),
-      Product(
-        id: "4",
-        name: "담다잇 닭가슴살 블랙페퍼맛",
-        price: 10000,
-        discount: 40,
-        rating: 4.4,
-        image: 'assets/images/damdiet_logo_2.png',
-      ),
-      Product(
-        id: "5",
-        name: "p5",
-        price: 10000,
-        discount: 30,
-        rating: 4.4,
-        image: 'assets/images/damdiet_logo_1.png',
-      ),
-      Product(
-        id: "6",
-        name: "p6",
-        price: 10000,
-        discount: 30,
-        rating: 4.4,
-        image: 'assets/images/damdiet_logo_1.png',
-      ),
-    ];
+    var viewModel = Provider.of<SearchViewModel>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -81,7 +32,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 32),
-              SearchProductTextField(controller: controller),
+              SearchProductTextField(
+                controller: controller,
+                onChanged: (value) {
+                  viewModel.setProductName(value);
+                },
+                onSearch: () {
+                  viewModel.searchProducts();
+                },
+              ),
               SizedBox(height: 12),
               Row(
                 children: [
@@ -97,12 +56,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ProductListItem(
-                    name: search.searchProductList[index].name,
-                    price: search.searchProductList[index].price,
-                    discount: search.searchProductList[index].discount,
-                    rating: search.searchProductList[index].rating,
-                    image: search.searchProductList[index].image,
-
+                    name: viewModel.searchProductList[index].name,
+                    price: viewModel.searchProductList[index].price,
+                    discount: viewModel.searchProductList[index].discount,
+                    rating: viewModel.searchProductList[index].rating,
+                    image: viewModel.searchProductList[index].image,
 
                     /*name: listViewData[index].name,
                     price: listViewData[index].price,
@@ -113,7 +71,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 },
                 separatorBuilder: (BuildContext context, int index) =>
                     Divider(color: AppColors.gray100),
-                itemCount: search.searchProductList.length,
+                itemCount: viewModel.searchProductList.length,
                 padding: EdgeInsets.only(right: 12.0),
               ),
             ],
