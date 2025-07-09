@@ -99,11 +99,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 itemBuilder: (context, index) {
                   final product = viewModel.products[index];
                   return ProductListItem(
-                    name: product.name,
-                    price: product.price,
-                    discount: product.discount,
-                    rating: product.rating,
-                    image: product.image,
+                      product: product,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.productDetail,
+                        arguments: product.id,
+                      );
+                    },
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
