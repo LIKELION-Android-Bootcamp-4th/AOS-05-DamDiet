@@ -51,11 +51,31 @@ class CartItemCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(width: 48, ),
+                    const SizedBox(width: 40, ),
                     ClipRRect(
                       child: Container(
                           width: 70, height: 70, color: AppColors.gray100,
-                          child: const Icon(Icons.image, color: AppColors.gray200, size: 55)
+                          child: Image.network(
+                            //TODO 확인
+                            "https://dm.pulmuone.com/upload/img/202408/20240808s0SQaD1ri.jpg",
+                            width: 70,
+                            height: 70,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return SizedBox(
+                                width: 70,
+                                height: 70,
+                                child: Center(child: CircularProgressIndicator()),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return SizedBox(
+                                width: 70,
+                                height: 70,
+                                child: Center(child: Icon(Icons.error)),
+                              );
+                            },
+                          ),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -64,7 +84,22 @@ class CartItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 8),
-                          Text(product.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: Text(
+                                product.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.textMain,
+                                  fontFamily: 'PretendardSemiBold',
+                                ),
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: 8),
                           CartQuantityControl(
                             quantity: item.quantity,

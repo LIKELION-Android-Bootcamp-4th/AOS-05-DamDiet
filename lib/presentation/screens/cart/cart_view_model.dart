@@ -6,7 +6,9 @@ import 'package:damdiet/data/repositories/cart_repository.dart';
 
 
 class CartViewModel with ChangeNotifier {
-  final CartRepository _repository = CartRepository();
+  final CartRepository _repository;
+
+  CartViewModel(this._repository);
 
   Cart? _cart;
   final Set<String> _selectedItemIds = {};
