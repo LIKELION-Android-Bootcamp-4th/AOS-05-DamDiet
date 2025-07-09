@@ -1,5 +1,5 @@
 import 'package:damdiet/core/constants/constants.dart';
-import 'package:damdiet/data/models/kcal/nut_api_item.dart';
+import 'package:damdiet/data/models/kcal/product_nutrition.dart';
 import 'package:damdiet/data/models/response/nut_api_response.dart';
 import 'package:dio/dio.dart';
 

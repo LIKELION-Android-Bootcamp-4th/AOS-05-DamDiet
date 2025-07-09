@@ -1,10 +1,10 @@
-import 'package:damdiet/data/models/kcal/nut_api_item.dart';
+import 'package:damdiet/data/models/kcal/product_nutrition.dart';
 
 class NutApiResponse {
   final int pageNo;
   final int totalCount;
   final int numOfRows;
-  final List<NutApiItem> items;
+  final List<ProductNutrition> items;
 
 
   NutApiResponse({
@@ -19,8 +19,9 @@ class NutApiResponse {
         pageNo: json['body']['pageNo'],
         totalCount: json['body']['totalCount'],
         numOfRows: json['body']['numOfRows'],
-        items: (json['body']['items'] as List)
-            .map((e) => NutApiItem.fromJson(e))
+        items: json['body']['items'] == null ? []
+        : (json['body']['items'] as List)
+            .map((e) => ProductNutrition.fromJson(e))
             .toList()
     );
   }

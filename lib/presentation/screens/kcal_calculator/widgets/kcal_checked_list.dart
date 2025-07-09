@@ -1,3 +1,4 @@
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,7 @@ class KcalCheckedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<NutritionProvider>(context);
+    var viewModel = context.read<KcalCalculatorViewmodel>();
 
     return SizedBox(
       height: 120,
@@ -17,12 +18,13 @@ class KcalCheckedList extends StatelessWidget {
         padding: EdgeInsets.zero,
         itemBuilder: (BuildContext context, int index) {
           return KcalCheckedItem(
-              index: index,
-              food: provider.selectedFoodList[index],
-              cal: provider.selectedCalList[index].toString()
+            index: index,
+            food: viewModel.selectedFoodList[index],
+            cal: viewModel.selectedCalList[index][0].toString(),
+            serving: viewModel.selectedCalList[index][1].toString(),
           );
         },
-        itemCount: provider.selectedFoodList.length,
+        itemCount: viewModel.selectedFoodList.length,
       ),
     );
   }

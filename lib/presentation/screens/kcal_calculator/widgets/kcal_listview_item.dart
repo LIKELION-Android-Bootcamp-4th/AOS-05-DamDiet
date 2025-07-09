@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_nutrition_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,18 +10,18 @@ import '../../../provider/nutrition_provider.dart';
 class KcalListviewItem extends StatelessWidget {
   const KcalListviewItem({
     super.key,
-    required this.name,
-    required this.company,
-    this.calorie = '',
+    required this.index
   });
 
-  final String name;
-  final String company;
-  final String calorie;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<NutritionProvider>(context);
+    var viewModel = context.watch<KcalCalculatorViewmodel>();
+
+    String product = viewModel.searchedFoodList[index].product;
+    String company = viewModel.searchedFoodList[index].company;
+    String calorie = viewModel.searchedFoodList[index].calorie;
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.0),
@@ -32,7 +33,7 @@ class KcalListviewItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                name,
+                product,
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'PretendardSemiBold',
@@ -50,7 +51,7 @@ class KcalListviewItem extends StatelessWidget {
               ),
               SizedBox(height: 6),
               Visibility(
-                visible: calorie != null,
+                visible: calorie != '',
                 maintainState: true,
                 maintainSize: true,
                 maintainAnimation: true,
@@ -71,9 +72,9 @@ class KcalListviewItem extends StatelessWidget {
                 width: 50,
                 height: 28,
                 child: ElevatedButton(
-                  onPressed: calorie == null ? null :
+                  onPressed: calorie == '' ? null :
                       () {
-                    provider.addCalorie(name, int.parse(calorie));
+                    viewModel.addCalorie(product, int.parse(calorie!));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
@@ -104,9 +105,7 @@ class KcalListviewItem extends StatelessWidget {
                     ),
                     builder: (context) {
                       return KcalNutritionDialog(
-                        name: name,
-                        company: company,
-                        calorie: int.parse(calorie),
+                        index: index
                       );
                     },
                   );

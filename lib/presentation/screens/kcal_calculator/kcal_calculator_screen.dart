@@ -20,18 +20,11 @@ class KcalCalculatorScreen extends StatefulWidget {
 }
 
 class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
-  var searchProductNutList = [
-    ProductNutrition(name: '신라면', company: '농심', calorie: 1000),
-    ProductNutrition(name: '진라면', company: '오뚜기', calorie: 1000),
-    ProductNutrition(name: '신라면', company: '농심', ),
-  ];
-
   var productTextController = TextEditingController();
   var companyTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var nutrition = Provider.of<NutritionProvider>(context);
     var viewModel = context.watch<KcalCalculatorViewmodel>();
 
     return Scaffold(
@@ -77,22 +70,33 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
                   SizedBox(height: 20),
                   Divider(thickness: 6, color: AppColors.gray100),
 
-                  Text(
-                    '검색결과',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'PretendardSemiBold',
-                      color: AppColors.textMain,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '검색결과',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'PretendardSemiBold',
+                          color: AppColors.textMain,
+                        ),
+                      ),
+                      Visibility(
+                        visible: viewModel.isSearching,
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        )
+                      )
+
+                    ],
                   ),
+
                   SizedBox(
                     height: 260,
                     child: ListView.separated(
                       itemBuilder: (context, index) {
                         return KcalListviewItem(
-                          name: viewModel.searchedFoodList[index].product,
-                          company: viewModel.searchedFoodList[index].company,
-                          calorie: viewModel.searchedFoodList[index].calorie,
+                          index: index,
                           /*name: searchProductNutList[index].name,
                           company: searchProductNutList[index].company,
                           calorie: searchProductNutList[index].calorie,*/
@@ -122,7 +126,7 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '계산된 칼로리 양은 ${nutrition.selectedCalSum} kcal 입니다.',
+                    '계산된 칼로리 양은 ${viewModel.selectedCalSum} kcal 입니다.',
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'PretendardSemiBold',
@@ -134,12 +138,7 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
               SizedBox(height: 24),
               BottomCTAButton(text: '커뮤니티에 공유', onPressed: () {}),
               SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("뒤로 가기"),
-              ),
+
             ],
           ),
         ),
