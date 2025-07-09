@@ -61,35 +61,35 @@ class KcalNutritionDialog extends StatelessWidget {
               ),
             ),
             Visibility(
-              visible: list.protein != null,
+              visible: list.protein != null && list.protein != '',
               child: Text(
                 '단백질: ${list.protein}g',
                 style: nutDetailTextStyle
               ),
             ),
             Visibility(
-              visible: list.fat != null,
+              visible: list.fat != null && list.fat != '',
               child: Text(
                   '지방: ${list.fat}g',
                   style: nutDetailTextStyle
               ),
             ),
             Visibility(
-              visible: list.carbs != null,
+              visible: list.carbs != null && list.carbs != '',
               child: Text(
                   '탄수화물: ${list.carbs}g',
                   style: nutDetailTextStyle
               ),
             ),
             Visibility(
-              visible: list.sugar != null,
+              visible: list.sugar != null && list.sugar != '',
               child: Text(
                   '당류: ${list.sugar}g',
                   style: nutDetailTextStyle
               ),
             ),
             Visibility(
-              visible: list.sodium != null,
+              visible: list.sodium != null && list.sodium != '',
               child: Text(
                   '나트륨: ${list.sodium}mg',
                   style: nutDetailTextStyle
