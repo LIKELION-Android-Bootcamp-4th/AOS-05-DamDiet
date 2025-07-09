@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/appcolor.dart';
+import '../../../data/models/request/order_request_dto.dart';
+import '../../routes/app_routes.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String productId;
@@ -207,7 +209,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Expanded(
               flex: 2, // 비율 2
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (viewModel.quantity <= 0) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('수량을 선택해주세요.')),
+                    );
+                    return;
+                  }
+
+                  final orderItem = OrderItem(
+                    product: viewModel.product.id,
+                    quantity: viewModel.quantity,
+                    unitPrice: hasDiscount
+                        ? (viewModel.product.price * (1 - viewModel.product.discount / 100)).round()
+                        : viewModel.product.price,
+                  );
+
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.payment,
+                    arguments: [orderItem],
+                  );
+
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(48),
                   backgroundColor: AppColors.primaryColor,
