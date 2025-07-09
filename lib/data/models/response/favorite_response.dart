@@ -1,4 +1,4 @@
-import '../../../models/FavoriteProduct.dart';
+import 'package:damdiet/data/models/favorite_product/favorite_product.dart';
 
 class FavoriteProductResponse {
   final List<FavoriteProduct> items;
