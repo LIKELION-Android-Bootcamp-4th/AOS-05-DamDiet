@@ -8,9 +8,12 @@ import '../../presentation/provider/search_provider.dart';
 import '../../presentation/routes/app_routes.dart';
 
 class SearchProductTextField extends StatefulWidget {
-  const SearchProductTextField({super.key, required this.controller, this.isSearched = true});
+  const SearchProductTextField({super.key, required this.controller, this.isSearched = true, required this.onChanged, required this.onSearch});
 
   final TextEditingController controller;
+  final Function(String) onChanged;
+  final VoidCallback onSearch;
+
   final bool isSearched;
 
   @override
@@ -21,7 +24,6 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
 
   @override
   Widget build(BuildContext context) {
-    var search = Provider.of<SearchProvider>(context);
 
     return TextField(
       controller: widget.controller,
@@ -42,8 +44,7 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
               Fluttertoast.showToast(msg: '상품명을 입력하세요.');
               return;
             }
-
-            search.searchProducts();
+            widget.onSearch();
             if(widget.isSearched == false) {
               Navigator.pushNamed(context, AppRoutes.products);
             }
@@ -52,7 +53,7 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
         ),
       ),
       onChanged: (value) {
-        search.setProductName(widget.controller.text);
+        widget.onChanged(value);  // 여기를 수정했어요
       },
     );
   }

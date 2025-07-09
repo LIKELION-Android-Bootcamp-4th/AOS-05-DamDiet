@@ -7,8 +7,8 @@ class PriceRangeProvider extends ChangeNotifier {
   RangeValues get rangeValues => _rangeValues;
 
   void changeRangeValues(RangeValues rangeValues) {
-     _rangeValues = rangeValues;
-     notifyListeners();
+    _rangeValues = rangeValues;
+    notifyListeners();
   }
 
 }
