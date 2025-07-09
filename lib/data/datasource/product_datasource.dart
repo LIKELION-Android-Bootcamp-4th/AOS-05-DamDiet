@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import '../../core/network/api_client.dart';
+import '../../core/network/endpoint/cart_endpoints.dart';
 import '../../core/network/endpoint/favorite_products_endpoints.dart';
 import '../../core/network/endpoint/product_endpoints.dart';
+import '../models/cart/cart_request.dart';
 import '../models/response/api_response.dart';
 import '../models/response/product_list_response.dart';
 
@@ -62,4 +64,19 @@ class ProductDatasource {
       );
     }
   }
+
+  Future<Response> postCart({required CartRequest cartRequest}) async {
+    final uri = CartEndpoints.postCart;
+    final response = await dio.post(uri, data: cartRequest.toJson());
+    if (response.statusCode == 201) {
+      return response;
+    } else {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: 'API 호출 실패: ${response.statusCode}',
+      );
+    }
+  }
+
 }
