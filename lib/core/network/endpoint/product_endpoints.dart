@@ -3,7 +3,8 @@ class ProductEndpoints {
   static const String getProducts = '/api/products';
 
   static Uri getProductsUri({required Map<String, dynamic> queryParameters}) {
-    return Uri.parse('/api/products').replace(queryParameters: queryParameters);
+    final stringParams = queryParameters.map((key, value) => MapEntry(key, value.toString()));
+    return Uri.parse('/api/products').replace(queryParameters: stringParams);
   }
 
   // 상품 상세 조회

@@ -11,29 +11,7 @@ class ProductRepository {
 
   ProductRepository(this._datasource);
 
-  // 신제품
-  Future<List<Product>> getLatestProducts() async {
-    final query = ProductQuery(sortBy: 'latest');
-    final response = await _datasource.getProducts(query: query);
-    if (!response.success) {
-      throw Exception(response.message);
-    }
-    return response.data.items;
-  }
-
-  // 인기순
-  Future<List<Product>> getPopularProducts() async {
-    final query = ProductQuery(sortBy: 'popular');
-    final response = await _datasource.getProducts(query: query);
-    if (!response.success) {
-      throw Exception(response.message);
-    }
-    return response.data.items;
-  }
-
-  // 판매량
-  Future<List<Product>> getSalesProducts() async {
-    final query = ProductQuery(sortBy: 'sales');
+  Future<List<Product>> getProducts({required ProductQuery query}) async {
     final response = await _datasource.getProducts(query: query);
     if (!response.success) {
       throw Exception(response.message);

@@ -1,6 +1,7 @@
 import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
+import 'package:damdiet/data/models/product/product_query.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
@@ -15,6 +16,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
+import 'package:damdiet/presentation/screens/products/products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
@@ -65,6 +67,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => MypageViewModel()),
+          ChangeNotifierProvider(create: (_) => ProductsViewModel(ProductRepository(ProductDatasource())))
         ],
         child: const DamDietApp()
     )
@@ -87,7 +90,6 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.splash: (context) => SplashScreen(),
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.search: (context) => SearchScreen(),
-        AppRoutes.products: (context) => ProductsScreen(),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
@@ -105,20 +107,30 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.signUp: (context) => SignUpScreen(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
       },
-      onGenerateRoute: (settings){
-        if (settings.name == AppRoutes.productDetail) {
-          final productId = settings.arguments as String;
-          return MaterialPageRoute(
-            builder: (_) => ProductDetailScreen(productId: productId),
-          );
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case AppRoutes.productDetail:
+              final productId = settings.arguments as String;
+              return MaterialPageRoute(
+                builder: (_) => ProductDetailScreen(productId: productId),
+              );
+
+          case AppRoutes.payment:
+              final orderItems = settings.arguments as List<OrderItem>;
+              return MaterialPageRoute(
+                builder: (_) => PaymentScreen(orderItems: orderItems),
+              );
+
+          case AppRoutes.products:
+            final args = settings.arguments;
+            final query = args is ProductQuery ? args : ProductQuery();
+            return MaterialPageRoute(
+                builder: (_) => ProductsScreen( productQuery: query,)
+        );
+
+          default:
+            return null;
         }
-        else if (settings.name == AppRoutes.payment) {
-          final args = settings.arguments as List<OrderItem>;
-          return MaterialPageRoute(
-            builder: (_) => PaymentScreen(orderItems: args),
-          );
-        }
-        return null;
       },
     );
   }
