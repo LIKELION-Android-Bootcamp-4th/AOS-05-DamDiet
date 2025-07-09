@@ -1,21 +1,28 @@
 import 'package:animations/animations.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class KcalNutritionDialog extends StatelessWidget {
   const KcalNutritionDialog({
     super.key,
-    required this.name,
-    required this.company,
-    this.calorie,
+    required this.index
   });
 
-  final String name;
-  final String company;
-  final int? calorie;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = context.watch<KcalCalculatorViewmodel>();
+    var list = viewModel.searchedFoodList[index];
+
+    var nutDetailTextStyle = TextStyle(
+      fontSize: 14,
+      fontFamily: 'PretendardRegular',
+      color: AppColors.textSub,
+    );
+
     return AlertDialog(
       title: Center(
         child: Text(
@@ -33,52 +40,62 @@ class KcalNutritionDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '제품명: $name',
+              '제품명: ${list.product}',
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'PretendardMedium',
                 color: AppColors.textMain,
-              ),
+              )
             ),
             SizedBox(height: 8),
             Text(
-              '제조사: $company',
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: 'PretendardRegular',
-                color: AppColors.textSub,
-              ),
+              '제조사: ${list.company}',
+              style: nutDetailTextStyle
             ),
             SizedBox(height: 8),
             Visibility(
-              visible: calorie != null,
+              visible: list.calorie != '',
               child: Text(
-                '열량: ${calorie}kcal',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'PretendardRegular',
-                  color: AppColors.textSub,
-                ),
+                '열량: ${list.calorie}kcal',
+                style: nutDetailTextStyle
               ),
             ),
-            SizedBox(height: 32),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                minimumSize: Size.zero,
-                padding: EdgeInsets.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
+            Visibility(
+              visible: list.protein != null && list.protein != '',
               child: Text(
-                '사이트로 이동',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'PretendardRegular',
-                  color: AppColors.textMain,
-                  decoration: TextDecoration.underline,
-                ),
+                '단백질: ${list.protein}g',
+                style: nutDetailTextStyle
               ),
             ),
+            Visibility(
+              visible: list.fat != null && list.fat != '',
+              child: Text(
+                  '지방: ${list.fat}g',
+                  style: nutDetailTextStyle
+              ),
+            ),
+            Visibility(
+              visible: list.carbs != null && list.carbs != '',
+              child: Text(
+                  '탄수화물: ${list.carbs}g',
+                  style: nutDetailTextStyle
+              ),
+            ),
+            Visibility(
+              visible: list.sugar != null && list.sugar != '',
+              child: Text(
+                  '당류: ${list.sugar}g',
+                  style: nutDetailTextStyle
+              ),
+            ),
+            Visibility(
+              visible: list.sodium != null && list.sodium != '',
+              child: Text(
+                  '나트륨: ${list.sodium}mg',
+                  style: nutDetailTextStyle
+              ),
+            ),
+
           ],
         ),
       ),

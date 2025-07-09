@@ -1,4 +1,4 @@
-class NutApiItem {
+class ProductNutrition {
   final String product;  // 상품 명
   final String company;  // 제조시 명
   final String calorie;  // 열량
@@ -8,10 +8,10 @@ class NutApiItem {
   final String? sugar;    // 당류
   final String? sodium;   // 나트륨
 
-  NutApiItem({
+  ProductNutrition({
     required this.product,
-    this.company = '',
-    this.calorie = '',
+    required this.company,
+    required this.calorie,
     this.protein,
     this.fat,
     this.carbs,
@@ -19,16 +19,16 @@ class NutApiItem {
     this.sodium
   });
 
-  factory NutApiItem.fromJson(Map<String, dynamic> json) {
-    return NutApiItem(
+  factory ProductNutrition.fromJson(Map<String, dynamic> json) {
+    return ProductNutrition(
       product: json['FOOD_NM_KR'],
-      company: json['MAKER_NM'],
-      calorie: json['AMT_NUM1'],
+      company: json['MAKER_NM'] ?? '',
+      calorie: (json['AMT_NUM1'] as String).split('.').first ?? '',
       protein: json['AMT_NUM3'],
-      fat: json['AMT_NUM4'],
-      carbs: json['AMT_NUM6'],
-      sugar: json['AMT_NUM7'],
-      sodium: json['AMT_NUM13'],
+      fat: json['AMT_NUM4'] ,
+      carbs: json['AMT_NUM6'] ,
+      sugar: json['AMT_NUM7'] ?? '',
+      sodium: json['AMT_NUM13'] ?? '',
 
     );
   }

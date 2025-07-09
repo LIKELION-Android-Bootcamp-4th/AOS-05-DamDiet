@@ -1,7 +1,9 @@
+import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
 import 'package:damdiet/data/models/product/product_query.dart';
+import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
@@ -32,6 +34,7 @@ import 'package:damdiet/presentation/screens/auth/email_verification_screen.dart
 import 'package:damdiet/presentation/screens/auth/auth_signin_screen.dart';
 import 'package:damdiet/presentation/screens/auth/auth_signup_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/mypage_my_order_details_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
@@ -67,7 +70,8 @@ void main() {
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => MypageViewModel()),
-          ChangeNotifierProvider(create: (_) => ProductsViewModel(ProductRepository(ProductDatasource())))
+          ChangeNotifierProvider(create: (_) => ProductsViewModel(ProductRepository(ProductDatasource()))),
+          ChangeNotifierProvider(create: (_) => MyPageFavoriteProductsViewModel(FavoriteRepository(FavoriteDatasource()))),
         ],
         child: const DamDietApp()
     )
