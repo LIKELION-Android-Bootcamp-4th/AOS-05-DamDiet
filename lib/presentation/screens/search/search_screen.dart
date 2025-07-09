@@ -51,8 +51,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   viewModel.setProductName(value);
                 },
                 onSearch: () async {
-                  await viewModel.searchProducts();
-                  Navigator.pushNamed(context, AppRoutes.products);
+                  final query = await viewModel.toQuery();
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.products,
+                    arguments: query,
+                  );
                 },
               ),
 
@@ -88,25 +92,19 @@ class _SearchScreenState extends State<SearchScreen> {
                 data: SliderThemeData(
                   activeTrackColor: AppColors.primaryColor,
                   thumbColor: AppColors.primaryColor,
+                  inactiveTrackColor: AppColors.primaryColorLight, // 선택 안된 구간 색상
                 ),
                 child: RangeSlider(
-                  min: 3000,
-                  max: 12000,
+                  min: 0,
+                  max: 15000,
                   values: viewModel.rangeValues,
-                  divisions: 9,
+                  divisions: 15,
                   labels: RangeLabels(
-                    viewModel.rangeValues.start.toString(),
-                    viewModel.rangeValues.end.toString(),
+                    viewModel.rangeValues.start.toInt().toString(),
+                    viewModel.rangeValues.end.toInt().toString(),
                   ),
                   onChanged: (v) => viewModel.changeRangeValues(v),
                 ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.products);
-                },
-                child: Text("검색 결과"),
               ),
             ],
           ),

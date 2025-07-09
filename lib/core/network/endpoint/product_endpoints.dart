@@ -2,17 +2,9 @@ class ProductEndpoints {
   // 상품 목록 검색
   static const String getProducts = '/api/products';
 
-  static Uri getProductsUri({
-    String? sortBy,
-    String? category,
-  }) {
-    return Uri(
-      path: '/api/products',
-      queryParameters: {
-        if (sortBy != null) 'sortBy': sortBy,
-        if (category != null) 'category': category
-      },
-    );
+  static Uri getProductsUri({required Map<String, dynamic> queryParameters}) {
+    final stringParams = queryParameters.map((key, value) => MapEntry(key, value.toString()));
+    return Uri.parse('/api/products').replace(queryParameters: stringParams);
   }
 
   // 상품 상세 조회
