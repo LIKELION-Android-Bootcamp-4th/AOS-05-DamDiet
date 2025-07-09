@@ -1,5 +1,7 @@
+import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
+import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
@@ -55,7 +57,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
-          ChangeNotifierProvider(create: (_) => CartViewModel()),
+          ChangeNotifierProvider(create: (_) => CartViewModel(CartRepository(CartDatasource()))),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataResource()))),
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
