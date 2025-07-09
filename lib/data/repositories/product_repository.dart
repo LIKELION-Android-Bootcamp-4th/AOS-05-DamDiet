@@ -2,6 +2,7 @@ import 'package:damdiet/data/datasource/product_datasource.dart';
 
 import '../models/cart/cart_request.dart';
 import '../models/product/product.dart';
+import '../models/product/product_query.dart';
 
 
 
@@ -12,7 +13,8 @@ class ProductRepository {
 
   // 신제품
   Future<List<Product>> getLatestProducts() async {
-    final response = await _datasource.getProducts(sortBy: 'latest');
+    final query = ProductQuery(sortBy: 'latest');
+    final response = await _datasource.getProducts(query: query);
     if (!response.success) {
       throw Exception(response.message);
     }
@@ -21,7 +23,8 @@ class ProductRepository {
 
   // 인기순
   Future<List<Product>> getPopularProducts() async {
-    final response = await _datasource.getProducts(sortBy: 'popular');
+    final query = ProductQuery(sortBy: 'popular');
+    final response = await _datasource.getProducts(query: query);
     if (!response.success) {
       throw Exception(response.message);
     }
@@ -30,7 +33,8 @@ class ProductRepository {
 
   // 판매량
   Future<List<Product>> getSalesProducts() async {
-    final response = await _datasource.getProducts(sortBy: 'sales');
+    final query = ProductQuery(sortBy: 'sales');
+    final response = await _datasource.getProducts(query: query);
     if (!response.success) {
       throw Exception(response.message);
     }
