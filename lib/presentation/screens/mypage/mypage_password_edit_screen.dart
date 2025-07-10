@@ -63,12 +63,11 @@ class _MyPagePasswordEditScreen extends State<MyPagePasswordEditScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: DamdietAppbar(
-        title: '내가 작성한 리뷰',
+        title: '비밀번호 변경',
         showBackButton: true,
       ),
       body: Container(
         padding: EdgeInsets.all(16),
-        child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min, // Column 높이 최소화
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +105,6 @@ class _MyPagePasswordEditScreen extends State<MyPagePasswordEditScreen> {
             ],
           ),
         ),
-      ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
