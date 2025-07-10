@@ -83,8 +83,9 @@ void main() {
           // 앱 전역에서 사용하는 뷰모델 냅두기
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
-          ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),)
-          
+          ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),),
+
+          ChangeNotifierProvider(create: (_) => MyPageMyReviewsViewModel(ReviewRepository(ReviewDatasource()))),
         ],
         child: const DamDietApp()
     )
