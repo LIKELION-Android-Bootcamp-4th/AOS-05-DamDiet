@@ -7,6 +7,23 @@ import 'package:damdiet/presentation/screens/cart/widgets/cart_order_summary.dar
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/appcolor.dart';
+import '../../../data/repositories/cart_repository.dart';
+
+class CartScreenWrapper extends StatelessWidget {
+  const CartScreenWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final repository = Provider.of<CartRepository>(context, listen: false);
+
+    return ChangeNotifierProvider<CartViewModel>(
+      create: (_) => CartViewModel(repository),
+      builder: (context, child) {
+        return const CartScreen();
+      },
+    );
+  }
+}
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -64,7 +81,7 @@ class _CartScreenState extends State<CartScreen> {
                       viewModel.deleteSingleItem(selectedItem);
                     },
                     onUpdateQuantity: (selectedItem, newQuantity) {
-                      viewModel.updateQuantity(selectedItem, newQuantity);
+                      viewModel.updateQuantity(selectedItem.id, newQuantity);
                     },
                     onOptionChange: () {
                     },

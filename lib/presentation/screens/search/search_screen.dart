@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../core/theme/appcolor.dart';
 import '../../../core/widgets/category_outline_button.dart';
 import '../../../core/widgets/search_product_textfield.dart';
+import '../../../data/repositories/search_repository.dart';
 import '../../routes/app_routes.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -23,6 +24,40 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ChangeNotifierProvider(
+      create: (_) => SearchViewModel(),
+      child: _SearchScreenContent(),
+    );
+  }
+}
+
+class _SearchScreenContent extends StatefulWidget {
+  const _SearchScreenContent({Key? key}) : super(key: key);
+
+  @override
+  State<_SearchScreenContent> createState() => _SearchScreenContentState();
+
+}
+
+class _SearchScreenContentState extends State<_SearchScreenContent> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = context.read<SearchViewModel>();
+    controller = TextEditingController(text: viewModel.productName);
   }
 
   @override
@@ -51,8 +86,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   viewModel.setProductName(value);
                 },
                 onSearch: () async {
-                  await viewModel.searchProducts();
-                  Navigator.pushNamed(context, AppRoutes.products);
+                  final query = await viewModel.toQuery();
+                  if (!mounted) return;
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.products,
+                    arguments: query,
+                  );
                 },
               ),
 
@@ -88,25 +128,20 @@ class _SearchScreenState extends State<SearchScreen> {
                 data: SliderThemeData(
                   activeTrackColor: AppColors.primaryColor,
                   thumbColor: AppColors.primaryColor,
+                  inactiveTrackColor: AppColors
+                      .primaryColorLight, // 선택 안된 구간 색상
                 ),
                 child: RangeSlider(
-                  min: 3000,
-                  max: 12000,
+                  min: 0,
+                  max: 15000,
                   values: viewModel.rangeValues,
-                  divisions: 9,
+                  divisions: 15,
                   labels: RangeLabels(
-                    viewModel.rangeValues.start.toString(),
-                    viewModel.rangeValues.end.toString(),
+                    viewModel.rangeValues.start.toInt().toString(),
+                    viewModel.rangeValues.end.toInt().toString(),
                   ),
                   onChanged: (v) => viewModel.changeRangeValues(v),
                 ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.products);
-                },
-                child: Text("검색 결과"),
               ),
             ],
           ),

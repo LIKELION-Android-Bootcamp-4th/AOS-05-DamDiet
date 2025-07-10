@@ -10,7 +10,21 @@ import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
+import '../../../data/repositories/nutrition_repository.dart';
 import '../../provider/nutrition_provider.dart';
+
+class KcalCalculatorScreenWrapper extends StatelessWidget {
+  const KcalCalculatorScreenWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final repo = Provider.of<NutritionRepository>(context, listen: false);
+    return ChangeNotifierProvider(
+      create: (_) => KcalCalculatorViewmodel(repo),
+      child: const KcalCalculatorScreen(),
+    );
+  }
+}
 
 class KcalCalculatorScreen extends StatefulWidget {
   const KcalCalculatorScreen({super.key});
@@ -97,9 +111,7 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
                       itemBuilder: (context, index) {
                         return KcalListviewItem(
                           index: index,
-                          /*name: searchProductNutList[index].name,
-                          company: searchProductNutList[index].company,
-                          calorie: searchProductNutList[index].calorie,*/
+                          viewModel: viewModel,
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>

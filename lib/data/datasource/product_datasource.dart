@@ -4,6 +4,7 @@ import '../../core/network/endpoint/cart_endpoints.dart';
 import '../../core/network/endpoint/favorite_products_endpoints.dart';
 import '../../core/network/endpoint/product_endpoints.dart';
 import '../models/cart/cart_request.dart';
+import '../models/product/product_query.dart';
 import '../models/response/api_response.dart';
 import '../models/response/product_list_response.dart';
 
@@ -11,13 +12,9 @@ class ProductDatasource {
   final dio = ApiClient().dio;
 
   Future<ApiResponse<ProductListResponse>> getProducts({
-    String? sortBy,
-    String? category,
+    required ProductQuery query,
   }) async {
-    final uri = ProductEndpoints.getProductsUri(
-      sortBy: sortBy,
-      category: category,
-    );
+    final uri = ProductEndpoints.getProductsUri(queryParameters: query.toJson());
 
     final response = await dio.getUri(uri);
 

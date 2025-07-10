@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../../../data/datasource/mypage_datasource.dart';
+import '../../../../data/repositories/mypage_repository.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -12,7 +14,7 @@ class MyPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MypageViewModel(),
+      create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: Stack(

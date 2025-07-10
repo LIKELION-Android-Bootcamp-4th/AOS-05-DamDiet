@@ -31,4 +31,8 @@ class CartRepository {
   Future<void> clearCart() async {
     await _datasource.clearCart();
   }
+
+  Future<void> updataQuantity({required String cartId, required int quantity}) async {
+    await _datasource.updataQuantity(cartId: cartId, quantity: quantity);
+  }
 }

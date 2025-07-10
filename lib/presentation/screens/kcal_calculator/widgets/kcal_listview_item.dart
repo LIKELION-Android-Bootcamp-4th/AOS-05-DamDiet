@@ -10,15 +10,14 @@ import '../../../provider/nutrition_provider.dart';
 class KcalListviewItem extends StatelessWidget {
   const KcalListviewItem({
     super.key,
-    required this.index
+    required this.index, required this.viewModel
   });
 
   final int index;
+  final KcalCalculatorViewmodel viewModel;
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = context.watch<KcalCalculatorViewmodel>();
-
     String product = viewModel.searchedFoodList[index].product;
     String company = viewModel.searchedFoodList[index].company;
     String calorie = viewModel.searchedFoodList[index].calorie;
@@ -29,42 +28,46 @@ class KcalListviewItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                product,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'PretendardSemiBold',
-                  color: AppColors.textMain,
-                ),
-              ),
-              // SizedBox(height: 6),
-              Text(
-                company,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'PretendardMedium',
-                  color: AppColors.textSub,
-                ),
-              ),
-              SizedBox(height: 6),
-              Visibility(
-                visible: calorie != '',
-                maintainState: true,
-                maintainSize: true,
-                maintainAnimation: true,
-                child: Text(
-                  "${calorie}kcal",
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                   Text(
+                    product,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PretendardSemiBold',
+                      color: AppColors.textMain,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                // SizedBox(height: 6),
+                Text(
+                  company,
                   style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'PretendardRegular',
-                    color: AppColors.textMain,
+                    fontFamily: 'PretendardMedium',
+                    color: AppColors.textSub,
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 6),
+                Visibility(
+                  visible: calorie != '',
+                  maintainState: true,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  child: Text(
+                    "${calorie}kcal",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: 'PretendardRegular',
+                      color: AppColors.textMain,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Column(
             children: [
@@ -105,7 +108,8 @@ class KcalListviewItem extends StatelessWidget {
                     ),
                     builder: (context) {
                       return KcalNutritionDialog(
-                        index: index
+                        index: index,
+                        viewModel: viewModel,
                       );
                     },
                   );

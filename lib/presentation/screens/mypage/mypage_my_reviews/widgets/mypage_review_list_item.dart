@@ -1,4 +1,4 @@
-import 'package:damdiet/models/MyReview.dart';
+import 'package:damdiet/data/models/review/my_review.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -34,7 +34,7 @@ class MypageReviewListItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 6.0),
                 child: UnderlineText(
-                  text: '${myReview.product.name!}',
+                  text: myReview.product.name,
                   textStyle: TextStyle(
                     fontFamily: 'PretendardSemiBold',
                     fontSize: 16,
@@ -111,7 +111,7 @@ class MypageReviewListItem extends StatelessWidget {
                 ),
               ),
               RatingBarIndicator(
-                rating: myReview.rating,
+                rating: myReview.rating.toDouble(),
                 itemBuilder: (context, index) =>
                     Icon(Icons.star, color: Colors.amber),
                 itemCount: 5,
