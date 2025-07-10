@@ -30,7 +30,7 @@ class ProductDetailViewmodel extends ChangeNotifier {
   );
   Product get product => _product;
 
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool get isLoading => _isLoading;
 
   int _quantity = 0;
@@ -76,6 +76,8 @@ class ProductDetailViewmodel extends ChangeNotifier {
 
     try {
       _product = await _repository.getProductDetail(id: id);
+      notifyListeners();
+
     } catch (e) {
       print('Error fetching product detail: $e');
     }
