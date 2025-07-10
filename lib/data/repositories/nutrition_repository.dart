@@ -1,9 +1,9 @@
-import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
+import 'package:damdiet/data/datasource/nutrition_datasource.dart';
 
 import '../models/kcal/product_nutrition.dart';
 
 class NutritionRepository {
-  final NutritionDataResource _dataResource;
+  final NutritionDataSource _dataResource;
 
   NutritionRepository(this._dataResource);
 

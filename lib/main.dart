@@ -1,10 +1,12 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
-import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
+import 'package:damdiet/data/datasource/mypage_datasource.dart';
+import 'package:damdiet/data/datasource/nutrition_datasource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
 import 'package:damdiet/data/models/product/product_query.dart';
 import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
+import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
@@ -70,10 +72,10 @@ void main() {
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => CartViewModel(CartRepository(CartDatasource()))),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
-          ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataResource()))),
+          ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataSource()))),
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
-          ChangeNotifierProvider(create: (_) => MypageViewModel()),
+          ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),)
           ChangeNotifierProvider(create: (_) => ProductsViewModel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => MyPageFavoriteProductsViewModel(FavoriteRepository(FavoriteDatasource()))),
         ],
