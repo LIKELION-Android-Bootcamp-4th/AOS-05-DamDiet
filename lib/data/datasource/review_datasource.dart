@@ -23,8 +23,10 @@ class ReviewDatasource {
     final endporint = ReviewEndpoints.deleteReview(reviewId: reviewId);
     final response = await dio.delete(endporint);
 
-    if(response.statusCode == 200){
-      throw Exception('리뷰 삭제에 실패했습니다.');
+    if(response.statusCode == 200 && response.data['success'] == true){
+      return;
+    }else {
+    throw Exception('리뷰 삭제에 실패했습니다.: ${response.data['message']}');
     }
   }
 }
