@@ -8,6 +8,18 @@ import 'package:provider/provider.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../routes/app_routes.dart';
 
+class SignUpScreenWrapper extends StatelessWidget {
+  const SignUpScreenWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<SignUpViewModel>(
+      create: (_) => SignUpViewModel(),
+      child: const SignUpScreen(),
+    );
+  }
+}
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 

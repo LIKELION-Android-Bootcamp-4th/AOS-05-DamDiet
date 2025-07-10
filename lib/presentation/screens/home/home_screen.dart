@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_nav_bar.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
+import '../../../data/repositories/product_repository.dart';
 import '../mypage/mypage/mypage_screen.dart';
 import 'home_viewmodel.dart';
 import '../../routes/app_routes.dart';
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SearchScreen(),
     CommunityHomeScreen(),
     DamDietHomeScreen(),
-    CartScreen(),
+    CartScreenWrapper(),
     MyPageScreen(),
   ];
 
@@ -85,6 +86,22 @@ class DamDietHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productRepository = Provider.of<ProductRepository>(
+        context, listen: false);
+
+    return ChangeNotifierProvider(
+      create: (_) =>
+      HomeViewmodel(productRepository)
+        ..getHomeProducts(),
+      child: _DamDietHomeScreenContent(),
+    );
+  }
+}
+
+class _DamDietHomeScreenContent extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
     final viewModel = context.watch<HomeViewmodel>();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -131,6 +148,37 @@ class DamDietHomeScreen extends StatelessWidget {
               ProductList(
                 title: "판매량 높은 상품",
                 productList: viewModel.salesProducts,
+              ),
+
+              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.productDetail);
+                },
+                child: Text(
+                  "제품 상세",
+                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.products);
+                },
+                child: Text(
+                  "제품 목록?",
+                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+                ),
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.signIn);
+                },
+                child: Text(
+                  "로그인",
+                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
+                ),
               ),
             ],
           ),

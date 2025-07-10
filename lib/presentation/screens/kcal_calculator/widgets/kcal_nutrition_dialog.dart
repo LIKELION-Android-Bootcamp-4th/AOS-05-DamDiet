@@ -7,14 +7,15 @@ import 'package:provider/provider.dart';
 class KcalNutritionDialog extends StatelessWidget {
   const KcalNutritionDialog({
     super.key,
-    required this.index
+    required this.index, required this.viewModel
   });
 
   final int index;
+  final KcalCalculatorViewmodel viewModel;
+
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = context.watch<KcalCalculatorViewmodel>();
     var list = viewModel.searchedFoodList[index];
 
     var nutDetailTextStyle = TextStyle(
@@ -24,6 +25,7 @@ class KcalNutritionDialog extends StatelessWidget {
     );
 
     return AlertDialog(
+      backgroundColor: Colors.white, // 배경색 변경
       title: Center(
         child: Text(
           '영양 상세',

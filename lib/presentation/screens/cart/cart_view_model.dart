@@ -68,6 +68,7 @@ class CartViewModel with ChangeNotifier {
       final index = _cart?.items.indexWhere((item) => item.id == cartId);
       if (index != null && index != -1) {
         _cart!.items[index].quantity = newQuantity;
+        fetchCart();
       }
 
     } catch (e) {
