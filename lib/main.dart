@@ -55,12 +55,16 @@ import 'data/models/request/order_request_dto.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final productDatasource = ProductDatasource();
+  final productRepository = ProductRepository(productDatasource);
+
   runApp(
     MultiProvider(
         providers: [
+          Provider<ProductRepository>(create: (_) => productRepository),
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
-          ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
+          //ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),

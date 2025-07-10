@@ -10,32 +10,39 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/appcolor.dart';
 import '../../../data/models/request/order_request_dto.dart';
+import '../../../data/repositories/product_repository.dart';
 import '../../routes/app_routes.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+
+
+class ProductDetailScreen extends StatelessWidget {
   final String productId;
 
   const ProductDetailScreen({super.key, required this.productId});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => ProductDetailViewmodel(
+        context.read<ProductRepository>(),
+      )..getProductDetail(id: productId),
+      child: _ProductDetailContent(),
+    );
+  }
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  @override
-  void initState() {
-    super.initState();
 
-    Future.microtask(() {
-      context.read<ProductDetailViewmodel>().getProductDetail(
-        id: widget.productId,
-      );
-    });
-  }
+class _ProductDetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final viewModel = context.watch<ProductDetailViewmodel>();
+
+    if (viewModel.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     final hasDiscount = viewModel.product.discount > 0;
 
     final int price = hasDiscount

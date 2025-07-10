@@ -18,14 +18,23 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json) {
     final user = json['user'] as Map<String, dynamic>?;
 
+    final rawImages = json['images'];
+    List<String> parsedImages = [];
+
+    if (rawImages is List) {
+      parsedImages = rawImages
+          .whereType<Map>() // Map 타입만 필터링
+          .map((e) => e['url']?.toString() ?? '')
+          .where((url) => url.isNotEmpty)
+          .toList();
+    }
+
     return Review(
       id: json['id'] as String,
       nickname: user?['nickName'] as String? ?? '',
       comment: json['comment'] as String,
       rating: (json['rating'] as num).toDouble(),
-      images: json['images'] != null
-          ? List<String>.from(json['images'] as List)
-          : [],
+      images: parsedImages,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }
