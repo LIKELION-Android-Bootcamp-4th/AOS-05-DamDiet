@@ -1,0 +1,21 @@
+import 'package:damdiet/data/datasource/mypage_datasource.dart';
+
+class MyPageRepository {
+  final MyPageDataSource _dataSource;
+
+  MyPageRepository(this._dataSource);
+
+  Future<bool> changeDeliAddress({
+    required Map<String, String> address
+  }) async{
+    final response = await _dataSource.patchDeliAddress(
+        address: address
+    );
+    if(response.statusCode != 200) {
+      throw Exception(response.statusMessage);
+    }
+    else {
+      return true;
+    }
+  }
+}

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 import '../../core/network/nut_api_client.dart';
 
-class NutritionDataResource {
+class NutritionDataSource {
   final dio = NutApiClient().dio;
 
   Future<NutApiResponse> searchNutrition(String foodName, String? company) async {

@@ -1,10 +1,12 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
-import 'package:damdiet/data/datasource/nutrition_dataresource.dart';
+import 'package:damdiet/data/datasource/mypage_datasource.dart';
+import 'package:damdiet/data/datasource/nutrition_datasource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
 import 'package:damdiet/data/models/product/product_query.dart';
 import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
+import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
@@ -60,7 +62,7 @@ void main() {
           Provider(create: (_) => ProductDatasource()),
           Provider(create: (_) => CartDatasource()),
           Provider(create: (_) => FavoriteDatasource()),
-          Provider(create: (_) => NutritionDataResource()),
+          Provider(create: (_) => NutritionDataSource()),
 
           ProxyProvider<ProductDatasource, ProductRepository>(
             update: (_, datasource, __) => ProductRepository(datasource),
@@ -71,13 +73,15 @@ void main() {
           ProxyProvider<FavoriteDatasource, FavoriteRepository>(
             update: (_, datasource, __) => FavoriteRepository(datasource),
           ),
-          ProxyProvider<NutritionDataResource, NutritionRepository>(
+          ProxyProvider<NutritionDataSource, NutritionRepository>(
             update: (_, datasource, __) => NutritionRepository(datasource),
           ),
 
           // 앱 전역에서 사용하는 뷰모델 냅두기
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
+          ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),)
+
         ],
         child: const DamDietApp()
     )
