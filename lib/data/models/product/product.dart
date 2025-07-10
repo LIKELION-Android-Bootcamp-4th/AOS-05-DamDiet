@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:damdiet/data/models/product/product_nutrition.dart';
 import 'package:damdiet/data/models/review/review.dart';
 
@@ -14,7 +16,6 @@ class Product {
   final double rating;
   final ProductNutrition attributes;
   final List<Review>? reviews;
-  final List<String>? options;
 
   Product({
     required this.id,
@@ -27,21 +28,40 @@ class Product {
     required this.rating,
     required this.attributes,
     this.reviews,
-    this.options,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'] as String,
       name: json['name'] as String,
-      image: json['image'] as String,
+      image: json['thumbnailImageUrl'] as String,
       price: json['price'] is int
           ? json['price'] as int
           : int.tryParse(json['price']?.toString() ?? '') ?? 0,
       isFavorite: json['isFavorite'] as bool? ?? false,
-      discount: json['discount'] as int,
+      discount: (() {
+        final raw = json['discount'];
+
+        if (raw is int) {
+          return raw;
+        } else if (raw is String) {
+          try {
+            final parsed = jsonDecode(raw);
+            if (parsed is Map && parsed['value'] != null) {
+              return int.tryParse(parsed['value'].toString()) ?? 0;
+            }
+          } catch (e) {
+            return int.tryParse(raw) ?? 0;
+          }
+          return 0;
+        } else if (raw is Map && raw['value'] != null) {
+          return int.tryParse(raw['value'].toString()) ?? 0;
+        } else {
+          return 0;
+        }
+      })(),
       category: json['category'] as String?,
-      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      rating: (json['reviewStats']?['averageRating'] as num?)?.toDouble() ?? 0.0,
       attributes: ProductNutrition.fromJson(
         json['attributes'] as Map<String, dynamic>,
       ),
@@ -49,9 +69,6 @@ class Product {
           ? (json['reviews'] as List)
           .map((e) => Review.fromJson(e as Map<String, dynamic>))
           .toList()
-          : null,
-      options: json['options'] != null
-          ? List<String>.from(json['options'] as List)
           : null,
     );
   }
@@ -72,7 +89,6 @@ extension ProductCopyWith on Product {
       rating: rating,
       attributes: attributes,
       reviews: reviews,
-      options: options,
     );
   }
 }

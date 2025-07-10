@@ -27,7 +27,6 @@ class ProductDetailViewmodel extends ChangeNotifier {
       fat: "",
     ),
     reviews: [],
-    options: [],
   );
   Product get product => _product;
 
