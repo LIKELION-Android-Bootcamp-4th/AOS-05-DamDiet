@@ -64,7 +64,7 @@ class _CartScreenState extends State<CartScreen> {
                       viewModel.deleteSingleItem(selectedItem);
                     },
                     onUpdateQuantity: (selectedItem, newQuantity) {
-                      viewModel.updateQuantity(selectedItem, newQuantity);
+                      viewModel.updateQuantity(selectedItem.id, newQuantity);
                     },
                     onOptionChange: () {
                     },

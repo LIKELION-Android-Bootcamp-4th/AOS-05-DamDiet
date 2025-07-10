@@ -1,7 +1,10 @@
+import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/datasource/mypage_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_datasource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
+import 'package:damdiet/data/models/product/product_query.dart';
+import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
@@ -17,6 +20,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
+import 'package:damdiet/presentation/screens/products/products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
@@ -32,6 +36,7 @@ import 'package:damdiet/presentation/screens/auth/email_verification_screen.dart
 import 'package:damdiet/presentation/screens/auth/auth_signin_screen.dart';
 import 'package:damdiet/presentation/screens/auth/auth_signup_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/mypage_my_order_details_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
@@ -52,12 +57,16 @@ import 'data/models/request/order_request_dto.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final productDatasource = ProductDatasource();
+  final productRepository = ProductRepository(productDatasource);
+
   runApp(
     MultiProvider(
         providers: [
+          Provider<ProductRepository>(create: (_) => productRepository),
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
-          ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
+          //ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
           ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
           ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
@@ -67,6 +76,8 @@ void main() {
           ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => NutritionProvider()),
           ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),)
+          ChangeNotifierProvider(create: (_) => ProductsViewModel(ProductRepository(ProductDatasource()))),
+          ChangeNotifierProvider(create: (_) => MyPageFavoriteProductsViewModel(FavoriteRepository(FavoriteDatasource()))),
         ],
         child: const DamDietApp()
     )
@@ -89,7 +100,6 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.splash: (context) => SplashScreen(),
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.search: (context) => SearchScreen(),
-        AppRoutes.products: (context) => ProductsScreen(),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
@@ -107,20 +117,30 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.signUp: (context) => SignUpScreen(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
       },
-      onGenerateRoute: (settings){
-        if (settings.name == AppRoutes.productDetail) {
-          final productId = settings.arguments as String;
-          return MaterialPageRoute(
-            builder: (_) => ProductDetailScreen(productId: productId),
-          );
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case AppRoutes.productDetail:
+              final productId = settings.arguments as String;
+              return MaterialPageRoute(
+                builder: (_) => ProductDetailScreen(productId: productId),
+              );
+
+          case AppRoutes.payment:
+              final orderItems = settings.arguments as List<OrderItem>;
+              return MaterialPageRoute(
+                builder: (_) => PaymentScreen(orderItems: orderItems),
+              );
+
+          case AppRoutes.products:
+            final args = settings.arguments;
+            final query = args is ProductQuery ? args : ProductQuery();
+            return MaterialPageRoute(
+                builder: (_) => ProductsScreen( productQuery: query,)
+        );
+
+          default:
+            return null;
         }
-        else if (settings.name == AppRoutes.payment) {
-          final args = settings.arguments as List<OrderItem>;
-          return MaterialPageRoute(
-            builder: (_) => PaymentScreen(orderItems: args),
-          );
-        }
-        return null;
       },
     );
   }

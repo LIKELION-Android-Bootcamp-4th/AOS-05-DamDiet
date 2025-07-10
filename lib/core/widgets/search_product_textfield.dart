@@ -40,20 +40,13 @@ class _SearchProductTextFieldState extends State<SearchProductTextField> {
         ),
         suffixIcon: IconButton(
           onPressed: () async {
-            if(widget.controller.text == "") {
-              Fluttertoast.showToast(msg: '상품명을 입력하세요.');
-              return;
-            }
+            widget.onChanged(widget.controller.text);
             widget.onSearch();
-            if(widget.isSearched == false) {
-              Navigator.pushNamed(context, AppRoutes.products);
-            }
           },
           icon: SvgPicture.asset('assets/icons/ic_search_outline.svg'),
         ),
       ),
       onChanged: (value) {
-        widget.onChanged(value);  // 여기를 수정했어요
       },
     );
   }

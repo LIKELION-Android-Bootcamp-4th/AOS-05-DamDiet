@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import '../../../data/models/product/product.dart';
+import '../../../data/models/product/product_query.dart';
 import '../../../data/repositories/product_repository.dart';
+
 class HomeViewmodel extends ChangeNotifier {
   final ProductRepository _repository;
 
@@ -8,18 +10,22 @@ class HomeViewmodel extends ChangeNotifier {
 
   // 최신순 상품
   List<Product> _latestProducts = [];
+
   List<Product> get latestProducts => _latestProducts;
 
   // 인기순 상품
   List<Product> _popularProducts = [];
+
   List<Product> get popularProducts => _popularProducts;
 
   // 판매량 순 상품
   List<Product> _salesProducts = [];
+
   List<Product> get salesProducts => _salesProducts;
 
   // 로딩 상태
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   Future<void> getHomeProducts() async {
@@ -27,9 +33,15 @@ class HomeViewmodel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _latestProducts = await _repository.getLatestProducts();
-      _popularProducts = await _repository.getPopularProducts();
-      _salesProducts = await _repository.getSalesProducts();
+      _latestProducts = await _repository.getProducts(
+        query: ProductQuery(sortBy: 'latest'),
+      );
+      _popularProducts = await _repository.getProducts(
+        query: ProductQuery(sortBy: 'popular'),
+      );
+      _salesProducts = await _repository.getProducts(
+        query: ProductQuery(sortBy: 'sales'),
+      );
     } catch (e) {
       print('Error fetching products: $e');
     }

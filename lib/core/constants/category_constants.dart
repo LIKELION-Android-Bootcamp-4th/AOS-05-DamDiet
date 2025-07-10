@@ -47,3 +47,13 @@ const List<AppCategory> appCategories = [
     imagePath: 'assets/images/damdiet_logo_7.png',
   ),
 ];
+
+final Map<String, AppCategory> _categoryMap = {
+  for (final cat in appCategories) cat.nameEn: cat,
+};
+
+extension AppCategoryExtension on String {
+  String toKoCategory() {
+    return _categoryMap[this]!.nameKo;
+  }
+}

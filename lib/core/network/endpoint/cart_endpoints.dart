@@ -13,4 +13,7 @@ class CartEndpoints {
 
   // 장바구니 상품으로 주문 생성
   static const cartCheckOut = '/api/cart/checkout';
+
+  // 장바구니 수량 변경
+  static String updateCartItemQuantity(String cartId) => '/api/cart/$cartId';
 }
