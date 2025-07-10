@@ -17,6 +17,7 @@ class ProductListItem extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: (){
+        debugPrint("😇 ${product.id }");
         Navigator.pushNamed(
           context,
           AppRoutes.productDetail,
