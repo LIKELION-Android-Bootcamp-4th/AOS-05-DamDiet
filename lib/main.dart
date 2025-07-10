@@ -1,5 +1,6 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
+import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/datasource/mypage_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_datasource.dart';
 import 'package:damdiet/data/datasource/search_service.dart';
@@ -8,6 +9,7 @@ import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
+import 'package:damdiet/data/repositories/review_repository.dart';
 import 'package:damdiet/data/repositories/search_repository.dart';
 import 'package:damdiet/presentation/provider/nutrition_provider.dart';
 import 'package:damdiet/presentation/provider/price_range_provider.dart';
@@ -19,6 +21,7 @@ import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_vie
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_viewmodel.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/products/products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
@@ -81,7 +84,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),)
-
+          
         ],
         child: const DamDietApp()
     )
