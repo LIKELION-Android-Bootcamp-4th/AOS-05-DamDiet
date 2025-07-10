@@ -3,7 +3,7 @@ import 'cart_product.dart';
 class CartItem {
   final String id;
   final CartProduct product;
-  final int quantity;
+  int quantity;
   final int totalPrice;
   final DateTime createdAt;
 

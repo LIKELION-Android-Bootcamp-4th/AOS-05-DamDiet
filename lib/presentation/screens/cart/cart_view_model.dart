@@ -57,19 +57,19 @@ class CartViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateQuantity(CartItem item, int newQuantity) async {
+  Future<void> updateQuantity(String cartId, int newQuantity) async {
     if (newQuantity < 1) {
       print("수량은 1 이상이어야 합니다.");
       return;
     }
     try {
-      await _repository.addToCart(
-        productId: item.product.id,
-        quantity: newQuantity,
-        unitPrice: item.product.unitPrice,
-        options: item.product.options,
-      );
-      await fetchCart();
+      await _repository.updataQuantity(cartId: cartId, quantity: newQuantity,);
+
+      final index = _cart?.items.indexWhere((item) => item.id == cartId);
+      if (index != null && index != -1) {
+        _cart!.items[index].quantity = newQuantity;
+      }
+
     } catch (e) {
       print('수량 변경 중 오류 발생: $e');
     }
