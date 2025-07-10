@@ -54,28 +54,30 @@ import 'data/models/request/order_request_dto.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final productDatasource = ProductDatasource();
-  final productRepository = ProductRepository(productDatasource);
-
   runApp(
     MultiProvider(
         providers: [
-          Provider<ProductRepository>(create: (_) => productRepository),
+          Provider(create: (_) => ProductDatasource()),
+          Provider(create: (_) => CartDatasource()),
+          Provider(create: (_) => FavoriteDatasource()),
+          Provider(create: (_) => NutritionDataResource()),
+
+          ProxyProvider<ProductDatasource, ProductRepository>(
+            update: (_, datasource, __) => ProductRepository(datasource),
+          ),
+          ProxyProvider<CartDatasource, CartRepository>(
+            update: (_, datasource, __) => CartRepository(datasource),
+          ),
+          ProxyProvider<FavoriteDatasource, FavoriteRepository>(
+            update: (_, datasource, __) => FavoriteRepository(datasource),
+          ),
+          ProxyProvider<NutritionDataResource, NutritionRepository>(
+            update: (_, datasource, __) => NutritionRepository(datasource),
+          ),
+
+          // 앱 전역에서 사용하는 뷰모델 냅두기
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
-          ChangeNotifierProvider(create: (_) => HomeViewmodel(ProductRepository(ProductDatasource()))),
-          //ChangeNotifierProvider(create: (_) => ProductDetailViewmodel(ProductRepository(ProductDatasource()))),
-          ChangeNotifierProvider(create: (_) => PriceRangeProvider()),
-          ChangeNotifierProvider(create: (_) => SearchViewModel(SearchRepository(SearchService()))),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
-          ChangeNotifierProvider(create: (_) => CartViewModel(CartRepository(CartDatasource()))),
-          ChangeNotifierProvider(create: (_) => NutritionProvider()),
-          ChangeNotifierProvider(create: (_) => KcalCalculatorViewmodel(NutritionRepository(NutritionDataResource()))),
-          ChangeNotifierProvider(create: (_) => SignUpViewModel()),
-          ChangeNotifierProvider(create: (_) => NutritionProvider()),
-          ChangeNotifierProvider(create: (_) => MypageViewModel()),
-          ChangeNotifierProvider(create: (_) => ProductsViewModel(ProductRepository(ProductDatasource()))),
-          ChangeNotifierProvider(create: (_) => MyPageFavoriteProductsViewModel(FavoriteRepository(FavoriteDatasource()))),
         ],
         child: const DamDietApp()
     )
@@ -98,12 +100,12 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.splash: (context) => SplashScreen(),
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.search: (context) => SearchScreen(),
-        AppRoutes.kcalCalculator: (context) => KcalCalculatorScreen(),
+        AppRoutes.kcalCalculator: (context) => KcalCalculatorScreenWrapper(),
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
         AppRoutes.profileEdit: (context) => MyPageAddressEditScreen(),
         AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
-        AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreen(),
+        AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
@@ -112,7 +114,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
         AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
         AppRoutes.signIn: (context) => SignInScreen(),
-        AppRoutes.signUp: (context) => SignUpScreen(),
+        AppRoutes.signUp: (context) => SignUpScreenWrapper(),
         AppRoutes.emailVerification: (context) => EmailVerificationScreen(),
       },
       onGenerateRoute: (settings) {
@@ -133,7 +135,7 @@ class DamDietApp extends StatelessWidget {
             final args = settings.arguments;
             final query = args is ProductQuery ? args : ProductQuery();
             return MaterialPageRoute(
-                builder: (_) => ProductsScreen( productQuery: query,)
+                builder: (_) => ProductsScreenWrapper( productQuery: query,)
         );
 
           default:
