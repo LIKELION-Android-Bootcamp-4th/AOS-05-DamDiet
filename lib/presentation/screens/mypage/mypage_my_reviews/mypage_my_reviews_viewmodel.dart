@@ -30,4 +30,15 @@ class MyPageMyReviewsViewModel with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> deleteReview(String reviewId) async {
+    try {
+      await _repository.deleteReview(reviewId);
+      _reviews.removeWhere((review) => review.id == reviewId);
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+      print('리뷰 삭제중 오류가 발생했습니다.: $e');
+    }
+  }
 }

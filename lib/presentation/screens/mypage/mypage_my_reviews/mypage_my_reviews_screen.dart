@@ -62,7 +62,7 @@ class _MyPageMyReviewsScreen extends State<MyPageMyReviewsScreen> {
             Navigator.pushNamed(context, AppRoutes.reviewEdit, arguments: review.id);
           },
           onTapDelete: () {
-            // 리뷰 삭제
+            viewModel.deleteReview(review.id);
           },
         );
       },

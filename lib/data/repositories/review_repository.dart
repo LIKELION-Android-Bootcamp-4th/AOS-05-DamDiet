@@ -15,4 +15,13 @@ class ReviewRepository {
       rethrow;
     }
   }
+
+  Future<void> deleteReview(String reviewId) async {
+    try {
+      await _datasource.deleteReview(reviewId);
+    } catch (e) {
+      print('ReviewRepository - deleteReview 오류: $e');
+      rethrow;
+    }
+  }
 }
