@@ -2,6 +2,7 @@ import 'package:damdiet/data/models/response/api_response.dart';
 import 'package:dio/dio.dart';
 
 import '../../core/network/api_client.dart';
+import '../../core/network/endpoint/mypage_endpoints.dart';
 import '../../core/network/endpoint/order_endpoints.dart';
 import '../models/order/my_order_detail.dart';
 import '../models/response/my_orders_response.dart';
@@ -10,7 +11,7 @@ class OrderDataSource {
   final dio = ApiClient().dio;
 
   Future<ApiResponse<MyOrdersResponse>> getOrders() async {
-    final response = await dio.get(OrderEndpoints.getOrders);
+    final response = await dio.get(MyPageEndpoints.getOrders);
 
     if (response.statusCode == 200) {
       return ApiResponse.fromJson(
@@ -27,7 +28,7 @@ class OrderDataSource {
   }
 
   Future<ApiResponse<MyOrderDetail>> getOrderDetail(String orderId) async {
-    final response = await dio.get(OrderEndpoints.getOrderDetail(orderId));
+    final response = await dio.get(MyPageEndpoints.getOrderDetail(orderId: orderId));
     if (response.statusCode == 200) {
       return ApiResponse.fromJson(
         response.data,
