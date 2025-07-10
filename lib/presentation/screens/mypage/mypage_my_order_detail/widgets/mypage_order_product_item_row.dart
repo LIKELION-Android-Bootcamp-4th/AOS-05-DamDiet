@@ -1,10 +1,11 @@
+import 'package:damdiet/data/models/order/my_order_item.dart';
 import 'package:flutter/material.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/routes/app_routes.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/order_item.dart';
 
 class MyPageOrderProductItemRow extends StatelessWidget {
-  final OrderItem item;
+  final OrderProduct item;
 
   const MyPageOrderProductItemRow({super.key, required this.item});
 
@@ -27,9 +28,6 @@ class MyPageOrderProductItemRow extends StatelessWidget {
                 style: const TextStyle(fontSize: 14, color: AppColors.textMain, fontFamily: 'PretendardMedium', height: 1.6),
                 children: [
                   TextSpan(text: '${item.name}\n'),
-                  if (item.optionName != null)
-                    TextSpan(text: item.optionName, style: const TextStyle(fontSize: 12, color: AppColors.textSub, fontFamily: 'PretendardMedium')
-                    ),
                 ],
               ),
             ),
@@ -38,7 +36,9 @@ class MyPageOrderProductItemRow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              if (!item.hasReview)
+              //TODO API 요청
+              //if (!item.hasReview)
+              if(true)
                 ElevatedButton(
                   onPressed: () { Navigator.pushNamed(context, AppRoutes.reviewWrite); },
                   style: ElevatedButton.styleFrom(
@@ -57,7 +57,9 @@ class MyPageOrderProductItemRow extends StatelessWidget {
               Text.rich(
                 TextSpan(style: const TextStyle(color: AppColors.textHint, fontSize: 12, fontFamily: 'PretendardMedium'),
                     children: [
-                      TextSpan(text: '${item.quantity}개  '),
+                      // TODO 각 상품 수량은 어디에.. ? API 요청 ,,,
+                      //TextSpan(text: '${item.quantity}개  '),
+                      TextSpan(text: '1개  '),
                       TextSpan(text: '${item.price}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium'),
                       ),
                     ]

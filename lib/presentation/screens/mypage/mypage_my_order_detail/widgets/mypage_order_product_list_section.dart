@@ -3,8 +3,10 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/order_item.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_product_item_row.dart';
 
+import '../../../../../data/models/order/my_order_item.dart';
+
 class MyPageOrderProductListSection extends StatelessWidget {
-  final List<OrderItem> items;
+  final List<OrderProduct> items;
 
   const MyPageOrderProductListSection({super.key, required this.items});
 

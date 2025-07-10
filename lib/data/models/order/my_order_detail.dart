@@ -9,7 +9,6 @@ class MyOrderDetail {
   final String status;
   final String createdAt;
   final String updatedAt;
-  final String memo;
   final ShippingInfo shippingInfo;
   final List<StatusHistory> statusHistory;
   final List<OrderProduct> products;
@@ -23,7 +22,6 @@ class MyOrderDetail {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
-    required this.memo,
     required this.shippingInfo,
     required this.statusHistory,
     required this.products,
@@ -39,7 +37,6 @@ class MyOrderDetail {
       status: json['status'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      memo: json['memo'],
       shippingInfo: ShippingInfo.fromJson(json['shippingInfo']),
       statusHistory: (json['statusHistory'] as List<dynamic>?)
           ?.map((e) => StatusHistory.fromJson(e))
