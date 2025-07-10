@@ -65,4 +65,17 @@ class CartDatasource {
       );
     }
   }
+
+  Future<void> updataQuantity({required String cartId, required int quantity}) async {
+    final endpoint = CartEndpoints.updateCartItemQuantity(cartId);
+    final response = await dio.patch(endpoint, data: {'quantity': quantity});
+
+    if (response.statusCode != 200) {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: '장바구니 수량 변경 실패: ${response.statusCode}',
+      );
+    }
+  }
 }
