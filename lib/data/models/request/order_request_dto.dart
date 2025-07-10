@@ -4,11 +4,13 @@ class OrderItem {
   final String product;
   final int quantity;
   final int unitPrice;
+  final String image;
 
   OrderItem({
     required this.product,
     required this.quantity,
     required this.unitPrice,
+    required this.image
   });
 
   Map<String, dynamic> toJson() {

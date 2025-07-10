@@ -223,6 +223,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     unitPrice: hasDiscount
                         ? (viewModel.product.price * (1 - viewModel.product.discount / 100)).round()
                         : viewModel.product.price,
+                    image: viewModel.product.image
                   );
 
                   Navigator.pushNamed(

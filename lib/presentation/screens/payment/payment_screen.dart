@@ -129,12 +129,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               ProductListItem(
-
-                  name: "담다잇 닭가슴살 블랙페퍼맛",
-                  price: 10000,
+                  name: widget.orderItems[0].product,
+                  price: widget.orderItems[0].unitPrice,
                   discount: 30,
-                  image: 'assets/images/damdiet_logo_1.png',
-
+                  image: widget.orderItems[0].image,
               ),
               Divider(thickness: 6, color: AppColors.gray100),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '3,500 원'),
