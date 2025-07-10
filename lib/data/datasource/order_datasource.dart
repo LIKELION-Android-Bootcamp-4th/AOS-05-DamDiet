@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 
 import '../../core/network/api_client.dart';
 import '../../core/network/endpoint/order_endpoints.dart';
+import '../models/order/my_order_detail.dart';
 import '../models/response/my_orders_response.dart';
 
 class OrderDataSource {
@@ -24,6 +25,20 @@ class OrderDataSource {
       );
     }
   }
+
+  Future<ApiResponse<MyOrderDetail>> getOrderDetail(String orderId) async {
+    final response = await dio.get(OrderEndpoints.getOrderDetail(orderId));
+    if (response.statusCode == 200) {
+      return ApiResponse.fromJson(
+        response.data,
+            (json) => MyOrderDetail.fromJson(json as Map<String, dynamic>),
+      );
+    } else {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: '내 주문 목록 불러오기 실패: ${response.statusCode}',
+      );
+    }
+  }
 }
-
-

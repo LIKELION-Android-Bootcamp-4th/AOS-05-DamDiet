@@ -6,6 +6,6 @@ class OrderEndpoints {
   static String getOrders = '/api/orders';
 
   // 주문 상세 조회
-  static String getOrderDetail({required int orderId}) => '/api/orders/$orderId';
+  static String getOrderDetail(String orderId) => '/api/orders/$orderId';
 
 }

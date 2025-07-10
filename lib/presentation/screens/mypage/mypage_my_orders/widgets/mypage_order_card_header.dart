@@ -6,8 +6,9 @@ import 'package:damdiet/presentation/routes/app_routes.dart';
 
 class MyPageOrderCardHeader extends StatelessWidget {
   final String orderDate;
+  final String orderId;
 
-  const MyPageOrderCardHeader({super.key, required this.orderDate});
+  const MyPageOrderCardHeader({super.key, required this.orderDate, required this.orderId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,11 @@ class MyPageOrderCardHeader extends StatelessWidget {
       children: [
         Text(extractDate(orderDate), style: const TextStyle(fontSize: 12,color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
         TextButton(
-          onPressed: () { Navigator.pushNamed(context, AppRoutes.myOrderDetail); },
+          onPressed: () { Navigator.pushNamed(
+            context,
+            AppRoutes.myOrderDetail,
+            arguments: orderId,
+          ); },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: const Size(50, 30),

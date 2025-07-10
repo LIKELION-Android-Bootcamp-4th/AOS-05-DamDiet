@@ -8,12 +8,38 @@ import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widge
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_product_list_section.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_section.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_row.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../data/repositories/order_repository.dart';
+import 'order_detail_viewmodel.dart';
+
+class MyPageMyOrderDetailsScreenWrapper extends StatelessWidget {
+  final String orderId;
+
+  const MyPageMyOrderDetailsScreenWrapper({super.key, required this.orderId});
+
+  @override
+  Widget build(BuildContext context) {
+    final repository = Provider.of<OrderRepository>(context, listen: false);
+
+    return ChangeNotifierProvider<OrderDetailViewModel>(
+      create: (_) => OrderDetailViewModel(repository)..getOrderDetail(orderId),
+      child: const MyPageMyOrderDetailsScreen(),
+    );
+  }
+}
 
 class MyPageMyOrderDetailsScreen extends StatelessWidget {
   const MyPageMyOrderDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<OrderDetailViewModel>();
+
+    if (viewModel.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     const String orderDate = '25.06.18';
     final List<OrderItem> items = [
       OrderItem(imageUrl: '',

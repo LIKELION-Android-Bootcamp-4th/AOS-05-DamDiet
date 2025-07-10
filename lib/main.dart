@@ -125,7 +125,6 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreenWrapper(),
-        AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
         AppRoutes.cart: (context) => CartScreenWrapper(),
         AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
         AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
@@ -154,6 +153,11 @@ class DamDietApp extends StatelessWidget {
                 builder: (_) => ProductsScreenWrapper( productQuery: query,)
         );
 
+          case AppRoutes.myOrderDetail: // ✅ 주문 상세 라우트 추가!
+            final orderId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (_) => MyPageMyOrderDetailsScreenWrapper(orderId: orderId),
+            );
           default:
             return null;
         }
