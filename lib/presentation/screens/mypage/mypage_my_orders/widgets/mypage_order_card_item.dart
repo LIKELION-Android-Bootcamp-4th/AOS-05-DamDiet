@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
-import '../../mypage_my_orders_screen.dart';
+import '../mypage_my_orders_screen.dart';
 
 class MyPageOrderCardItem extends StatelessWidget {
   final OrderItem1 item;

@@ -1,5 +1,6 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
+import 'package:damdiet/data/datasource/order_datasource.dart';
 import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/datasource/mypage_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_datasource.dart';
@@ -20,7 +21,7 @@ import 'package:damdiet/presentation/screens/community/community_write_screen.da
 import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_viewmodel.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/products/products_viewmodel.dart';
@@ -55,6 +56,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'data/models/request/order_request_dto.dart';
+import 'data/repositories/order_repository.dart';
 
 
 void main() {
@@ -66,6 +68,7 @@ void main() {
           Provider(create: (_) => CartDatasource()),
           Provider(create: (_) => FavoriteDatasource()),
           Provider(create: (_) => NutritionDataSource()),
+          Provider(create: (_) => OrderDataSource()),
 
           ProxyProvider<ProductDatasource, ProductRepository>(
             update: (_, datasource, __) => ProductRepository(datasource),
@@ -79,6 +82,11 @@ void main() {
           ProxyProvider<NutritionDataSource, NutritionRepository>(
             update: (_, datasource, __) => NutritionRepository(datasource),
           ),
+          ProxyProvider<OrderDataSource, OrderRepository>(
+            update: (_, datasource, __) => OrderRepository(datasource),
+          ),
+
+
 
           // 앱 전역에서 사용하는 뷰모델 냅두기
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
@@ -116,7 +124,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
-        AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
+        AppRoutes.myOrders: (context) => MyPageMyOrdersScreenWrapper(),
         AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
         AppRoutes.cart: (context) => CartScreenWrapper(),
         AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),

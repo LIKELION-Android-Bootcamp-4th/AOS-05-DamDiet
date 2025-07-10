@@ -3,7 +3,7 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/widgets/mypage_order_card_header.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/widgets/mypage_order_card_item.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/widgets/mypage_order_card_bottom.dart';
-import '../../mypage_my_orders_screen.dart';
+import '../mypage_my_orders_screen.dart';
 
 class MyPageOrderCard extends StatelessWidget {
   final Order order;
