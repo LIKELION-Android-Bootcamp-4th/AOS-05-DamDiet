@@ -18,4 +18,15 @@ class MyPageRepository {
       return true;
     }
   }
+
+  Future<Map<String, dynamic>> getDeliAddress() async {
+    final response = await _dataSource.getProfile();
+
+    if(response.statusCode != 200) {
+      throw Exception(response.statusMessage);
+    }
+    else {
+      return response.data['data']['address'];
+    }
+  }
 }
