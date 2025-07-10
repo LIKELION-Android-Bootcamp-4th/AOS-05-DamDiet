@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SearchScreen(),
     CommunityHomeScreen(),
     DamDietHomeScreen(),
-    CartScreen(),
+    CartScreenWrapper(),
     MyPageScreen(),
   ];
 
