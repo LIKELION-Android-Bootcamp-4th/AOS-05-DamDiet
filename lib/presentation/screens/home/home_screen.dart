@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_nav_bar.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
+import '../../../data/models/product/product_query.dart';
 import '../../../data/repositories/product_repository.dart';
 import '../mypage/mypage/mypage_screen.dart';
 import 'home_viewmodel.dart';
@@ -127,9 +128,12 @@ class _DamDietHomeScreenContent extends StatelessWidget {
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
               CategoryList(onCategorySelected: (category){
-                print(category);
-                //TODO Products 화면에 category 넘기는 작업
-                Navigator.pushNamed(context, AppRoutes.products);
+                final query = ProductQuery(category: category);
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.products,
+                  arguments: query,
+                );
               }),
 
               Divider(height: 6, color: AppColors.gray100, thickness: 6),
