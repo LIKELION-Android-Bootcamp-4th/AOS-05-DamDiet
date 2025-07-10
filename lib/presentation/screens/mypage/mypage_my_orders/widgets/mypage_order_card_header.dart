@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/extract_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
@@ -13,7 +14,7 @@ class MyPageOrderCardHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(orderDate, style: const TextStyle(fontSize: 12,color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
+        Text(extractDate(orderDate), style: const TextStyle(fontSize: 12,color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
         TextButton(
           onPressed: () { Navigator.pushNamed(context, AppRoutes.myOrderDetail); },
           style: TextButton.styleFrom(

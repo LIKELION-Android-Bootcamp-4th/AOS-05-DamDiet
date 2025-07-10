@@ -3,10 +3,10 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/widgets/mypage_order_card_header.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/widgets/mypage_order_card_item.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/widgets/mypage_order_card_bottom.dart';
-import '../mypage_my_orders_screen.dart';
+import '../../../../../data/models/order/my_order_item.dart';
 
 class MyPageOrderCard extends StatelessWidget {
-  final Order order;
+  final MyOrderItem order;
 
   const MyPageOrderCard({super.key, required this.order});
 
@@ -23,15 +23,15 @@ class MyPageOrderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MyPageOrderCardHeader(orderDate: order.orderDate),
+            MyPageOrderCardHeader(orderDate: order.createdAt),
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 16),
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: order.items.length,
+              itemCount: order.products.length,
               itemBuilder: (context, index) {
-                final item = order.items[index];
+                final item = order.products[index];
                 return MyPageOrderCardItem(item: item);
               },
               separatorBuilder: (context, index) {
