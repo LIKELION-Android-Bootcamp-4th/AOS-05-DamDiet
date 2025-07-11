@@ -20,8 +20,21 @@ class _MyPageAddressEditScreenState extends State<MyPageAddressEditScreen> {
   var addressDetailController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      var viewModel = context.read<MypageViewModel>();
+      viewModel.getDeliAddress();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var viewModel = context.watch<MypageViewModel>();
+    zipCodeController.text = viewModel.zipCode;
+    addressController.text = viewModel.address;
+    addressDetailController.text = viewModel.addressDetail;
+
     return Scaffold(
       appBar: DamdietAppbar(
         title: '기본 배송지 변경',

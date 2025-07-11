@@ -28,4 +28,18 @@ class MyPageDataSource {
     }
   }
 
+  Future<Response> getProfile() async {
+    final response = await dio.get(MyPageEndpoints.getProfile);
+    if(response.statusCode != 200) {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: '프로필 불러오기 실패: ${response.statusCode}',
+      );
+    }
+    else {
+      return response;
+    }
+  }
+
 }
