@@ -1,4 +1,5 @@
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/core/widgets/network_image.dart';
 import 'package:damdiet/core/widgets/underline_text.dart';
 import 'package:damdiet/data/models/product/product.dart';
 import 'package:flutter/material.dart';
@@ -31,25 +32,9 @@ class ProductListItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              product.image,
-              width: 100,
-              height: 100,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              },
-              errorBuilder: (context, error, stackTrace) {
-                return SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: Center(child: Icon(Icons.error)),
-                );
-              },
+            CommonNetworkImage(
+              url: product.image,
+              size: 100,
             ),
             SizedBox(width: 14),
 

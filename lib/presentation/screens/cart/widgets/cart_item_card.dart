@@ -1,6 +1,7 @@
 import 'package:damdiet/data/models/cart/cart_item.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/appcolor.dart';
+import '../../../../core/widgets/network_image.dart';
 import 'cart_option_row.dart';
 import 'cart_price_info.dart';
 import 'cart_quantity_control.dart';
@@ -55,26 +56,10 @@ class CartItemCard extends StatelessWidget {
                     ClipRRect(
                       child: Container(
                           width: 70, height: 70, color: AppColors.gray100,
-                          child: Image.network(
+                          child: CommonNetworkImage(
                             //TODO 확인
-                            "https://dm.pulmuone.com/upload/img/202408/20240808s0SQaD1ri.jpg",
-                            width: 70,
-                            height: 70,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return SizedBox(
-                                width: 70,
-                                height: 70,
-                                child: Center(child: CircularProgressIndicator()),
-                              );
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return SizedBox(
-                                width: 70,
-                                height: 70,
-                                child: Center(child: Icon(Icons.error)),
-                              );
-                            },
+                            url: "https://dm.pulmuone.com/upload/img/202408/20240808s0SQaD1ri.jpg",
+                            size: 70,
                           ),
                       ),
                     ),
