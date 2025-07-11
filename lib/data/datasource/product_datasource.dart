@@ -1,3 +1,4 @@
+import 'package:damdiet/data/models/product/product.dart';
 import 'package:dio/dio.dart';
 import '../../core/network/api_client.dart';
 import '../../core/network/endpoint/cart_endpoints.dart';
@@ -32,13 +33,16 @@ class ProductDatasource {
     }
   }
 
-  Future<Response> getProductsDetail({required String id}) async {
+  Future<ApiResponse<Product>> getProductsDetail({required String id}) async {
     final uri = ProductEndpoints.getProductDetail(productId: id);
 
     final response = await dio.get(uri);
 
     if (response.statusCode == 200) {
-      return response;
+      return ApiResponse<Product>.fromJson(
+        response.data,
+            (json) => Product.fromJson(json as Map<String, dynamic>),
+      );
     } else {
       throw DioException(
         requestOptions: response.requestOptions,

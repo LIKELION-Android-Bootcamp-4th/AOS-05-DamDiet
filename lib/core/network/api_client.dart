@@ -17,8 +17,8 @@ class ApiClient {
     dio = Dio(
       BaseOptions(
         baseUrl: BASE_URL,
-        connectTimeout: const Duration(seconds: 5),
-        receiveTimeout: const Duration(seconds: 3),
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 10),
         headers: {
           'X-Company-Code': X_COMPANY_CODE,
         },
@@ -26,12 +26,10 @@ class ApiClient {
     );
 
 
-    dio.interceptors.add(
-      InterceptorsWrapper(
+    dio.interceptors
+      ..add(InterceptorsWrapper(
           onRequest: (options, handler) async {
             final accessToken = await UserSecureStorage.getAccessToken();
-
-            print('🔑 Stored accessToken: $accessToken');
 
             if (accessToken != null) {
               options.headers['Authorization'] = 'Bearer $accessToken';
@@ -39,12 +37,12 @@ class ApiClient {
 
             return handler.next(options);
           },
-          //TODO 추후에 accessToken 갱신은 이어서 진행
-          // AccessToken 만료 시, 갱신 후 이전 요청 다시 보내도록
+
           onError: (error, handler) async {
             final response = error.response;
 
-            if (response?.statusMessage == 'AUTH_TOKEN_EXPIRED'){
+            if (response?.statusCode == 403 &&
+                (response?.data['message'] == 'Invalid or expired token')){
               final refreshToken = await UserSecureStorage.getRefreshToken();
 
               final refreshResponse = await dio.post('/api/auth/refresh', data: {
@@ -52,13 +50,24 @@ class ApiClient {
               });
 
               if (refreshResponse.statusCode == 200) {
-                final newAccessToken = refreshResponse.data['accessToken'];
+                final newAccessToken = refreshResponse.data['data']['accessToken'];
                 await UserSecureStorage.saveAccessToken(newAccessToken);
 
                 final retryRequest = error.requestOptions;
-                retryRequest.headers['Authorization'] = 'Bearer $newAccessToken';
 
-                final retryResponse = await dio.fetch(retryRequest);
+                final updatedHeaders = Map<String, dynamic>.from(retryRequest.headers);
+                updatedHeaders['Authorization'] = 'Bearer $newAccessToken';
+
+                final retryResponse = await dio.request(
+                  retryRequest.path,
+                  data: retryRequest.data,
+                  queryParameters: retryRequest.queryParameters,
+                  options: Options(
+                    method: retryRequest.method,
+                    headers: updatedHeaders,
+                    extra: {'isRetry': true},
+                  ),
+                );
 
                 return handler.resolve(retryResponse);
               } else {
@@ -74,11 +83,8 @@ class ApiClient {
             }
             return handler.next(error);
           }
-      ),
-    );
-
-    dio.interceptors.add(
-      PrettyDioLogger(
+      ),)
+      ..add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
         responseBody: true,
@@ -89,6 +95,5 @@ class ApiClient {
         enabled: kDebugMode,
       ),
     );
-
   }
 }
