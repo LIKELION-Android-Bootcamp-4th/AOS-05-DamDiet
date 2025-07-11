@@ -55,6 +55,7 @@ void main() {
           Provider(create: (_) => CartDatasource()),
           Provider(create: (_) => FavoriteDatasource()),
           Provider(create: (_) => NutritionDataSource()),
+          Provider(create: (_) => MyPageDataSource()),
 
           ProxyProvider<ProductDatasource, ProductRepository>(
             update: (_, datasource, __) => ProductRepository(datasource),
@@ -67,6 +68,9 @@ void main() {
           ),
           ProxyProvider<NutritionDataSource, NutritionRepository>(
             update: (_, datasource, __) => NutritionRepository(datasource),
+          ),
+          ProxyProvider<MyPageDataSource, MyPageRepository>(
+            update: (_, datasource, __) => MyPageRepository(datasource),
           ),
 
           // 앱 전역에서 사용하는 뷰모델 냅두기
@@ -103,7 +107,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
         AppRoutes.profileEdit: (context) => MyPageAddressEditScreen(),
         AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
-        AppRoutes.nicknameEdit: (context) => MyPageNicknameEditScreen(),
+        AppRoutes.nicknameEdit: (context) => MyPageNicknameEditScreenWrapper(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),

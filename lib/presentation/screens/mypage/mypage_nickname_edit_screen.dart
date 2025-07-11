@@ -1,31 +1,37 @@
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
+import '../../../data/repositories/mypage_repository.dart';
 import '../auth/widgets/custom_textfield.dart';
+import 'mypage_nickname_edit_viewmodel.dart';
 
-class MyPageNicknameEditScreen extends StatefulWidget {
-  const MyPageNicknameEditScreen({super.key});
-
-  @override
-  State<MyPageNicknameEditScreen> createState() => _MyPageNicknameEditScreen();
-}
-
-class _MyPageNicknameEditScreen extends State<MyPageNicknameEditScreen> {
-  final _newNnController = TextEditingController();
-
-  String? _errorMessage;
-
-  @override
-  void dispose() {
-    _newNnController.dispose();
-
-    super.dispose();
-  }
+class MyPageNicknameEditScreenWrapper extends StatelessWidget {
+  const MyPageNicknameEditScreenWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final repository = Provider.of<MyPageRepository>(context, listen: false);
+
+    return ChangeNotifierProvider<NicknameEditViewModel>(
+      create: (_) => NicknameEditViewModel(repository),
+      builder: (context, child) {
+        return MyPageNicknameEditScreen();
+      },
+    );
+  }
+}
+
+
+class MyPageNicknameEditScreen extends StatelessWidget {
+  MyPageNicknameEditScreen({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = context.watch<NicknameEditViewModel>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: DamdietAppbar(
@@ -41,18 +47,24 @@ class _MyPageNicknameEditScreen extends State<MyPageNicknameEditScreen> {
               CustomTextField(
                 hintText: '새로운 닉네임',
                 isPassword: false,
-                controller: _newNnController,
+                controller: viewModel.nicknameController,
+                onChanged: (_) {
+                  if (viewModel.errorMessage != null) {
+                    viewModel.errorMessage = null;
+                    viewModel.notifyListeners();
+                  }
+                },
               ),
               SizedBox(height: 16,),
-              if (_errorMessage != null)
+              if (viewModel.errorMessage != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    _errorMessage!,
-                    style: TextStyle(
-                        color: AppColors.errorRed,
-                        fontSize: 14,
-                        fontFamily: 'PretendardMedium'
+                    viewModel.errorMessage!,
+                    style: const TextStyle(
+                      color: AppColors.errorRed,
+                      fontSize: 14,
+                      fontFamily: 'PretendardMedium',
                     ),
                   ),
                 ),
@@ -62,8 +74,19 @@ class _MyPageNicknameEditScreen extends State<MyPageNicknameEditScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
-            child: BottomCTAButton(text: '닉네임 변경', onPressed:
-            (){},)
+            child: BottomCTAButton(
+              text: viewModel.isLoading ? '변경 중...' : '닉네임 변경',
+              onPressed: viewModel.isLoading
+                  ? null
+                  : () async {
+                final success = await viewModel.submitNickname();
+                if (success) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('닉네임이 변경되었습니다.')),
+                  );
+                }
+              },
+            ),
         ),
       ),
     );
