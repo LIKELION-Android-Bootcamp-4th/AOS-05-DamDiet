@@ -68,10 +68,6 @@ class ApiClient {
                     extra: {'isRetry': true},
                   ),
                 );
-                print('path: ${retryRequest.path}');
-                print('method: ${retryRequest.method}');
-                print('data: ${retryRequest.data}');
-                print('queryParams: ${retryRequest.queryParameters}');
 
                 return handler.resolve(retryResponse);
               } else {
