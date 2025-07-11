@@ -2,6 +2,7 @@ import 'package:damdiet/presentation/screens/product_detail/widgets/product_revi
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../../../core/widgets/network_image.dart';
 import '../../../../data/models/review/review.dart';
 
 class ProductReviewsTab extends StatelessWidget {
@@ -125,12 +126,7 @@ class ProductReviewsTab extends StatelessWidget {
                       final imageUrl = allReviewImages[index];
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          imageUrl,
-                          width: 70,
-                          height: 70,
-                          fit: BoxFit.cover,
-                        ),
+                        child: CommonNetworkImage(url: imageUrl, size: 70,)
                       );
                     },
                   ),

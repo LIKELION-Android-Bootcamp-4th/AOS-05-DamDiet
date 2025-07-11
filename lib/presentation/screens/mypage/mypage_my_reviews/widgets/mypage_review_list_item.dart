@@ -5,10 +5,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../../../core/theme/appcolor.dart';
 import '../../../../../core/widgets/confirm_dialog.dart';
+import '../../../../../core/widgets/network_image.dart';
 import '../../../../../core/widgets/underline_text.dart';
 
 class MypageReviewListItem extends StatelessWidget {
-  const MypageReviewListItem({super.key, required this.myReview, required this.onTapEdit, required this.onTapDelete});
+  const MypageReviewListItem({
+    super.key,
+    required this.myReview,
+    required this.onTapEdit,
+    required this.onTapDelete,
+  });
 
   final MyReview myReview;
   final VoidCallback onTapEdit;
@@ -52,18 +58,18 @@ class MypageReviewListItem extends StatelessWidget {
                       break;
                     case 'delete':
                       showDialog(
-                          context: context,
-                          builder: (context) => ConfirmDialog(
-                              title: '해당 리뷰를 삭제하시겠습니까?',
-                              content: '삭제된 리뷰는 복구할 수 없습니다.',
-                              onCancel: (){
-                                Navigator.of(context).pop();
-                              },
-                              onConfirm: (){
-                                Navigator.of(context).pop();
-                                onTapDelete();
-                              }
-                          )
+                        context: context,
+                        builder: (context) => ConfirmDialog(
+                          title: '해당 리뷰를 삭제하시겠습니까?',
+                          content: '삭제된 리뷰는 복구할 수 없습니다.',
+                          onCancel: () {
+                            Navigator.of(context).pop();
+                          },
+                          onConfirm: () {
+                            Navigator.of(context).pop();
+                            onTapDelete();
+                          },
+                        ),
                       );
                       break;
                   }
@@ -95,8 +101,8 @@ class MypageReviewListItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                ]
-              )
+                ],
+              ),
             ],
           ),
           Row(
@@ -141,17 +147,9 @@ class MypageReviewListItem extends StatelessWidget {
                 separatorBuilder: (_, __) => SizedBox(width: 10),
                 itemBuilder: (context, index) => ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    myReview.images![index],
-                    width: 50,
-                    height: 50,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(child: CircularProgressIndicator());
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.error);
-                    },
+                  child: CommonNetworkImage(
+                    url: myReview.images![index],
+                    size: 50,
                   ),
                 ),
               ),

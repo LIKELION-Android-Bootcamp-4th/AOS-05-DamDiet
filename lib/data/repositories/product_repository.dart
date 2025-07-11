@@ -20,13 +20,14 @@ class ProductRepository {
   }
 
   Future<Product> getProductDetail({required String id}) async {
-    final response = await _datasource.getProductsDetail(id: id);
-    if (response.statusCode != 200) {
-      throw Exception(response.statusMessage);
+    final apiResponse = await _datasource.getProductsDetail(id: id);
+
+    if (!apiResponse.success) {
+      throw Exception(apiResponse.message);
     }
-    print(response.data);
-    return Product.fromJson(response.data['data']);
+    return apiResponse.data;
   }
+
 
   Future<bool> toggleFavorite({required String id}) async {
     final response = await _datasource.toggleFavorite(id: id);
