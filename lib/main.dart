@@ -115,7 +115,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
         AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
         AppRoutes.cart: (context) => CartScreen(),
-        AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
+        // AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
         AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
         AppRoutes.signIn: (context) => SignInScreen(),
         AppRoutes.signUp: (context) => SignUpScreen(),

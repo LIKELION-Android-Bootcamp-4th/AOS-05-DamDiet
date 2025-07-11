@@ -1,16 +1,22 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/appcolor.dart';
 
 class ReviewPhotoSection extends StatelessWidget {
-  final List<String> attachedPhotos;
+  final List<String> existingImageUrls;
+  final List<XFile> newlyAddedImages;
   final VoidCallback onAddPhoto;
-  final Function(int) onRemovePhoto;
+  final Function(int) onRemoveExisting;
+  final Function(int) onRemoveNew;
 
   const ReviewPhotoSection({
     super.key,
-    required this.attachedPhotos,
+    required this.existingImageUrls,
+    required this.newlyAddedImages,
     required this.onAddPhoto,
-    required this.onRemovePhoto,
+    required this.onRemoveExisting,
+    required this.onRemoveNew,
   });
 
   @override
@@ -22,18 +28,47 @@ class ReviewPhotoSection extends StatelessWidget {
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: 'PretendardRegular',
-                color: AppColors.textMain)),
+                color: AppColors.textMain)
+        ),
         const SizedBox(height: 12),
         SizedBox(
           height: 80,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: attachedPhotos.length + 1,
+            itemCount: 1 + existingImageUrls.length + newlyAddedImages.length,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return _buildAddPhotoButton();
+                if (existingImageUrls.length + newlyAddedImages.length < 5) {
+                  return _buildAddPhotoButton();
+                } else {
+                  return const SizedBox.shrink();
+                }
               }
-              return _buildPhotoThumbnail(index);
+              int existingImageIndex = index - 1;
+              if (existingImageIndex < existingImageUrls.length) {
+                // 기존 이미지
+                return _buildPhotoThumbnail(
+                  onRemove: () => onRemoveExisting(existingImageIndex),
+                  child: Image.network(
+                    existingImageUrls[existingImageIndex],
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Icon(Icons.error),
+                  ),
+                );
+              }
+
+              int newImageIndex = index - 1 - existingImageUrls.length;
+              if (newImageIndex < newlyAddedImages.length) {
+                // 추가한 이미지
+                return _buildPhotoThumbnail(
+                  onRemove: () => onRemoveNew(newImageIndex),
+                  child: Image.file(
+                    File(newlyAddedImages[newImageIndex].path),
+                    fit: BoxFit.cover,
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
             },
             separatorBuilder: (context, index) => const SizedBox(width: 12),
           ),
@@ -46,34 +81,51 @@ class ReviewPhotoSection extends StatelessWidget {
     return GestureDetector(
       onTap: onAddPhoto,
       child: Container(
-        width: 70,
-        height: 70,
+        width: 80,
+        height: 80,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.gray100),
+          border: Border.all(color: AppColors.gray200),
+          borderRadius: BorderRadius.circular(5),
         ),
-        child: const Icon(Icons.add, color: AppColors.textHint, size: 20),
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.camera_alt, color: AppColors.textHint, size: 24),
+            SizedBox(height: 4),
+            Text("사진 추가", style: TextStyle(fontSize: 12, color: AppColors.textHint)),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildPhotoThumbnail(int index) {
+  Widget _buildPhotoThumbnail({
+    required Widget child,
+    required VoidCallback onRemove,
+  }) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
         ClipRRect(
-          child: Container(
+          borderRadius: BorderRadius.circular(5),
+          child: SizedBox(
             width: 80,
             height: 80,
-            color: AppColors.gray100,
-            child: const Icon(Icons.image, color: Colors.grey, size: 40),
+            child: child,
           ),
         ),
         Positioned(
-          top: 4,
-          right: 4,
+          top: -4,
+          right: -4,
           child: GestureDetector(
-            onTap: () => onRemovePhoto(index),
-            child: const Icon(Icons.close, color: AppColors.textMain, size: 16),
+            onTap: onRemove,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.black54,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.close, color: Colors.white, size: 16),
+            ),
           ),
         ),
       ],
