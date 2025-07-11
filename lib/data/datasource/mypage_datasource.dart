@@ -63,5 +63,30 @@ class MyPageDataSource {
     }
   }
 
+  Future<Response> patchPassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    final response = await dio.patch(
+      MyPageEndpoints.patchChangePassword,
+      data: {
+        "currentPassword": currentPassword,
+        "newPassword": newPassword,
+        "confirmPassword": confirmPassword,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: '비밀번호 변경 실패: ${response.statusCode}',
+      );
+    } else {
+      return response;
+    }
+  }
+
 
 }

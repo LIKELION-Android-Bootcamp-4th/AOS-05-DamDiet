@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/models/auth/profile_update_payload.dart';
-import '../../../data/repositories/mypage_repository.dart';
+import '../../../../data/models/auth/profile_update_payload.dart';
+import '../../../../data/repositories/mypage_repository.dart';
 
 class NicknameEditViewModel extends ChangeNotifier {
   final MyPageRepository _repository;
@@ -10,23 +10,31 @@ class NicknameEditViewModel extends ChangeNotifier {
 
   final TextEditingController nicknameController = TextEditingController();
 
-  String? errorMessage;
-  bool isLoading = false;
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  void clearErrorMessage() {
+    _errorMessage = null;
+    notifyListeners();
+  }
 
   bool validateNickname() {
     final nickname = nicknameController.text.trim();
     if (nickname.isEmpty) {
-      errorMessage = '닉네임을 입력해주세요.';
+      _errorMessage = '닉네임을 입력해주세요.';
       notifyListeners();
       return false;
     }
     if (nickname.length < 2) {
-      errorMessage = '닉네임은 2글자 이상이어야 합니다.';
+      _errorMessage = '닉네임은 2글자 이상이어야 합니다.';
       notifyListeners();
       return false;
     }
 
-    errorMessage = null;
+    _errorMessage = null;
     notifyListeners();
     return true;
   }
@@ -34,7 +42,7 @@ class NicknameEditViewModel extends ChangeNotifier {
   Future<bool> submitNickname() async {
     if (!validateNickname()) return false;
 
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
 
     try {
@@ -42,10 +50,10 @@ class NicknameEditViewModel extends ChangeNotifier {
       final success = await _repository.changeProfile(payload: payload);
       return success;
     } catch (e) {
-      errorMessage = '닉네임 변경에 실패했습니다.';
+      _errorMessage = '닉네임 변경에 실패했습니다.';
       return false;
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }

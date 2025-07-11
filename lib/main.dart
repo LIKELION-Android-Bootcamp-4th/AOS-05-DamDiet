@@ -15,7 +15,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_viewmodel.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_nickname_edit_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_nickname_edit/mypage_nickname_edit_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
@@ -32,7 +32,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypa
 import 'package:damdiet/presentation/screens/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/mypage_my_order_details_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_password_edit_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_password_edit/mypage_password_edit_screen.dart';
 import 'package:damdiet/presentation/screens/payment/payment_screen.dart';
 import 'package:damdiet/presentation/screens/review/review_edit_screen.dart';
 import 'package:damdiet/presentation/screens/review/review_write_screen.dart';
@@ -106,7 +106,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
         AppRoutes.profileEdit: (context) => MyPageAddressEditScreen(),
-        AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
+        AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreenWrapper(),
         AppRoutes.nicknameEdit: (context) => MyPageNicknameEditScreenWrapper(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),

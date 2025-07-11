@@ -43,4 +43,22 @@ class MyPageRepository {
       return response.data['data']['address'];
     }
   }
+
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    final response = await _dataSource.patchPassword(
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(response.statusMessage);
+    } else {
+      return true;
+    }
+  }
 }

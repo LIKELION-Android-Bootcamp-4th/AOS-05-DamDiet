@@ -2,10 +2,10 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/widgets/bottom_cta_button.dart';
-import '../../../core/widgets/damdiet_appbar.dart';
-import '../../../data/repositories/mypage_repository.dart';
-import '../auth/widgets/custom_textfield.dart';
+import '../../../../core/widgets/bottom_cta_button.dart';
+import '../../../../core/widgets/damdiet_appbar.dart';
+import '../../../../data/repositories/mypage_repository.dart';
+import '../../auth/widgets/custom_textfield.dart';
 import 'mypage_nickname_edit_viewmodel.dart';
 
 class MyPageNicknameEditScreenWrapper extends StatelessWidget {
@@ -27,7 +27,7 @@ class MyPageNicknameEditScreenWrapper extends StatelessWidget {
 
 class MyPageNicknameEditScreen extends StatelessWidget {
   MyPageNicknameEditScreen({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<NicknameEditViewModel>();
@@ -50,8 +50,7 @@ class MyPageNicknameEditScreen extends StatelessWidget {
                 controller: viewModel.nicknameController,
                 onChanged: (_) {
                   if (viewModel.errorMessage != null) {
-                    viewModel.errorMessage = null;
-                    viewModel.notifyListeners();
+                    viewModel.clearErrorMessage();
                   }
                 },
               ),
