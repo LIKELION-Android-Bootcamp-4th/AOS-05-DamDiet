@@ -2,7 +2,7 @@ import 'package:damdiet/core/widgets/bottom_cta_button.dart';
 import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/models/review/my_review.dart';
 import 'package:damdiet/data/repositories/review_repository.dart';
-import 'package:damdiet/presentation/screens/review/widgets/review_edit_viewmodel.dart';
+import 'package:damdiet/presentation/screens/review/review_edit_viewmodel.dart';
 import 'package:damdiet/presentation/screens/review/widgets/review_photo_section.dart';
 import 'package:damdiet/presentation/screens/review/widgets/review_product_info.dart';
 import 'package:damdiet/presentation/screens/review/widgets/review_rating_section.dart';
@@ -40,8 +40,9 @@ class ReviewEditView extends StatefulWidget {
 class _ReviewEditViewState extends State<ReviewEditView> {
   late final TextEditingController _textController;
   late double _currentRating;
-  late List<String> _existingImageUrls;
+  late List<ReviewImage> _existingImages;
   final List<XFile> _newlyAddedImages = [];
+  final List<String> _removedExistingImageUrls = [];
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -50,7 +51,7 @@ class _ReviewEditViewState extends State<ReviewEditView> {
     final initialReview = context.read<ReviewEditViewModel>().review;
     _textController = TextEditingController(text: initialReview.content);
     _currentRating = initialReview.rating.toDouble();
-    _existingImageUrls  = List<String>.from(initialReview.images ?? []);
+    _existingImages = List<ReviewImage>.from(initialReview.images);
   }
 
   @override
@@ -87,8 +88,9 @@ class _ReviewEditViewState extends State<ReviewEditView> {
           child: BottomCTAButton(
             text: '리뷰 수정',
             onPressed: () async {
-              final keepImageIds = _existingImageUrls
-                  .map((url) => url.split('/').last.split('.').first)
+              final keepImageIds = _existingImages
+                  .where((image) => !_removedExistingImageUrls.contains(image.url))
+                  .map((image) => image.id)
                   .toList();
               final success = await viewModel.updateReview(
                 content: _textController.text,
@@ -115,6 +117,10 @@ class _ReviewEditViewState extends State<ReviewEditView> {
 
   Widget _buildBody(ReviewEditViewModel viewModel) {
     final review = viewModel.review;
+    final visibleExistingUrls = _existingImages
+        .where((image) => !_removedExistingImageUrls.contains(image.url))
+        .map((image) => image.url)
+        .toList();
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
@@ -130,12 +136,13 @@ class _ReviewEditViewState extends State<ReviewEditView> {
 
           const SizedBox(height: 8),
           ReviewPhotoSection(
-            existingImageUrls: _existingImageUrls,
+            existingImageUrls: visibleExistingUrls,
             newlyAddedImages: _newlyAddedImages,
             onAddPhoto: _pickImages,
             onRemoveExisting: (index) {
+              final urlToRemove = visibleExistingUrls[index];
               setState(() {
-                _existingImageUrls.removeAt(index);
+                _removedExistingImageUrls.add(urlToRemove);
               });
             },
             onRemoveNew: (index) {

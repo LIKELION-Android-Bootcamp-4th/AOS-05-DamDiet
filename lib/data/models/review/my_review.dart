@@ -1,11 +1,25 @@
 import 'package:damdiet/data/models/product/review_summary_product.dart';
 
+class ReviewImage {
+  final String id;
+  final String url;
+
+  ReviewImage({required this.id, required this.url});
+
+  factory ReviewImage.fromJson(Map<String, dynamic> json) {
+    return ReviewImage(
+      id: json['id'] ?? '',
+      url: json['url'] ?? '',
+    );
+  }
+}
+
 class MyReview {
   final String id;
   final ReviewSummaryProduct product;
   final int rating;
   final String content;
-  final List<String>? images;
+  final List<ReviewImage> images;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -14,18 +28,17 @@ class MyReview {
     required this.product,
     required this.rating,
     required this.content,
-    this.images,
+    required this.images,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory MyReview.fromJson(Map<String, dynamic> json) {
-
-    List<String>? imageList;
+    var imageList = <ReviewImage>[];
     if (json['images'] != null) {
-      imageList = (json['images'] as List)
-          .map((image) => image['url'] as String)
-          .toList();
+      json['images'].forEach((v) {
+        imageList.add(ReviewImage.fromJson(v));
+      });
     }
 
     return MyReview(
