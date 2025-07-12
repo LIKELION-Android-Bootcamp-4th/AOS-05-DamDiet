@@ -75,4 +75,36 @@ class ReviewDatasource {
       throw Exception('리뷰 수정에 실패했습니다: ${response.data['message']}');
     }
   }
+
+  Future<void> createReview({
+    required String productId,
+    required String orderId,
+    required String content,
+    required double rating,
+    required List<XFile> images,
+  }) async {
+    final endpoint = ProductEndpoints.postReview(productId: productId);
+
+    final formData = FormData.fromMap({
+      'orderId': orderId,
+      'rating': rating,
+      'comment': content,
+    });
+
+    for (var imageFile in images) {
+      formData.files.add(MapEntry(
+        'images',
+        await MultipartFile.fromFile(imageFile.path),
+      ));
+    }
+
+    final response = await dio.post(
+      endpoint,
+      data: formData,
+    );
+
+    if (response.statusCode != 201) {
+      throw Exception('리뷰 등록에 실패했습니다: ${response.data?['message']}');
+    }
+  }
 }

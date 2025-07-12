@@ -12,7 +12,7 @@ class ProductEndpoints {
       '/api/products/$productId';
 
   // 리뷰 작성
-  static String postReview({required int productId}) =>
+  static String postReview({required String productId}) =>
       '/api/products/$productId/reviews';
 
   // 리뷰 조회
