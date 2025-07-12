@@ -2,13 +2,13 @@ class FavoriteSummaryProduct {
   final String id;
   final String name;
   final int price;
-  final String? thumbnailImageUrl;
+  final String thumbnailImageUrl;
 
   FavoriteSummaryProduct({
     required this.id,
     required this.name,
     required this.price,
-    this.thumbnailImageUrl,
+    required this.thumbnailImageUrl,
   });
 
   factory FavoriteSummaryProduct.fromJson(Map<String, dynamic> json) {
@@ -16,9 +16,8 @@ class FavoriteSummaryProduct {
       id: json['id'],
       name: json['name'],
       price: json['price'],
-      thumbnailImageUrl: json['thumbnailImage'] != null
-          ? json['thumbnailImage']['url']
-          : null,
+      thumbnailImageUrl: json['thumbnailImage']['url']
+
     );
   }
 
