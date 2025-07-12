@@ -52,6 +52,9 @@ class MyPageContents extends StatelessWidget {
               MyPageListTile('배송지 변경', () {
                 Navigator.pushNamed(context, AppRoutes.profileEdit);
               }),
+              MyPageListTile('닉네임 변경', () {
+                Navigator.pushNamed(context, AppRoutes.nicknameEdit);
+              }),
               MyPageListTile('비밀번호 변경', () {
                 Navigator.pushNamed(context, AppRoutes.passwordEdit);
               }),

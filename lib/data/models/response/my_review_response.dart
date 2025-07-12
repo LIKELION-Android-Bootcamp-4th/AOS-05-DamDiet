@@ -1,5 +1,5 @@
+import 'package:damdiet/data/models/response/pagination.dart';
 import '../review/my_review.dart';
-import 'api_response.dart';
 
 class MyReviewResponse {
   final List<MyReview> items;
