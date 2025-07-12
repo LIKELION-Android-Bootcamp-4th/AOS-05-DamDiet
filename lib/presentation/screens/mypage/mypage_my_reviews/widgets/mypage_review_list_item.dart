@@ -148,7 +148,7 @@ class MypageReviewListItem extends StatelessWidget {
                 itemBuilder: (context, index) => ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CommonNetworkImage(
-                    url: myReview.images![index],
+                    url: myReview.images![index].url,
                     size: 50,
                   ),
                 ),
