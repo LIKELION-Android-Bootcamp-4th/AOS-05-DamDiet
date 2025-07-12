@@ -8,27 +8,62 @@ import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widge
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_product_list_section.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_section.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_row.dart';
+import 'package:provider/provider.dart';
 
-class MyPageMyOrderDetailsScreen extends StatelessWidget {
-  const MyPageMyOrderDetailsScreen({super.key});
+import '../../../../core/utils/extract_date.dart';
+import '../../../../data/repositories/order_repository.dart';
+import 'order_detail_viewmodel.dart';
+
+class MyPageMyOrderDetailsScreenWrapper extends StatelessWidget {
+  final String orderId;
+
+  const MyPageMyOrderDetailsScreenWrapper({super.key, required this.orderId});
 
   @override
   Widget build(BuildContext context) {
-    const String orderDate = '25.06.18';
-    final List<OrderItem> items = [
-      OrderItem(imageUrl: '',
-          name: '담다잇 닭가슴살 블랙페퍼',
-          quantity: 2,
-          price: 7000,
-          hasReview: false),
-      OrderItem(imageUrl: '',
-          name: '담다잇 닭가슴살',
-          optionName: '볼케이노 맛',
-          quantity: 2,
-          price: 6300,
-          hasReview: true),
-    ];
-    const int totalAmount = 19600;
+    final repository = Provider.of<OrderRepository>(context, listen: false);
+
+    return ChangeNotifierProvider<OrderDetailViewModel>(
+      create: (_) => OrderDetailViewModel(repository),
+      builder: (context, child) {
+        return MyPageMyOrderDetailsScreen(orderId: orderId,);
+      },
+    );
+  }
+}
+
+class MyPageMyOrderDetailsScreen extends StatefulWidget {
+  final String orderId;
+
+  const MyPageMyOrderDetailsScreen({super.key, required this.orderId});
+
+  @override
+  State<MyPageMyOrderDetailsScreen> createState() => _MyPageMyOrderDetailsScreenState();
+}
+
+class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask((){
+      final viewModel = context.read<OrderDetailViewModel>();
+      viewModel.getOrderDetail(widget.orderId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = context.watch<OrderDetailViewModel>();
+
+    final order = viewModel.orderDetail;
+    if (order == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (viewModel.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -43,7 +78,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: Text(orderDate, style: const TextStyle(
+              child: Text(extractDate(order.createdAt), style: const TextStyle(
                   color: AppColors.textMain,
                   fontSize: 12,
                   fontFamily: 'PretendardSemiBold')),
@@ -51,7 +86,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 12),
 
-            MyPageOrderProductListSection(items: items),
+            MyPageOrderProductListSection(items: order.products),
 
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 16),
@@ -60,11 +95,11 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
               title: '배송 정보',
               child: Column(
                 children: [
-                  MyPageOrderInfoRow(label: '수령인', value: '김멋사'),
-                  MyPageOrderInfoRow(label: '휴대폰', value: '010-1234-5678'),
+                  MyPageOrderInfoRow(label: '수령인', value: order.shippingInfo.recipient),
+                  MyPageOrderInfoRow(label: '휴대폰', value: order.shippingInfo.phone),
                   MyPageOrderInfoRow(
                       label: '주소',
-                      value: '경기도 00시 00구 00-0 000아파트\n00동 000호',
+                      value: order.shippingInfo.address,
                       crossAxisAlignment: CrossAxisAlignment.start),
                 ],
               ),
@@ -82,7 +117,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('상품 금액', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-                        Text('${totalAmount}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
+                        Text('${order.totalAmount}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
                         ),
                       ],
                     ),
@@ -93,6 +128,7 @@ class MyPageMyOrderDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('결제 방법', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
+                        //TODO payment 추가
                         const Text('토스페이', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
                       ],
                     ),

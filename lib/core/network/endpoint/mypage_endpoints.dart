@@ -24,7 +24,7 @@ class MyPageEndpoints {
   static const String getOrders = '/api/mypage/orders';
 
   // 내 주문 상세 조회
-  static String getOrderDetail({required int orderId}) =>
+  static String getOrderDetail({required String orderId}) =>
       '/api/mypage/orders/$orderId';
 
   // 최근 본 상품 조회

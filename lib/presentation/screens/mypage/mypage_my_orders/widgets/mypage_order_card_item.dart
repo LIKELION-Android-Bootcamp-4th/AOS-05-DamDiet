@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
-import '../../mypage_my_orders_screen.dart';
+import '../../../../../data/models/order/my_order_item.dart';
 
 class MyPageOrderCardItem extends StatelessWidget {
-  final OrderItem1 item;
+  final OrderProduct item;
 
   const MyPageOrderCardItem({super.key, required this.item});
 
@@ -12,13 +12,25 @@ class MyPageOrderCardItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ClipRRect(
-          child: Container(
-            width: 70,
-            height: 70,
-            color: AppColors.gray100,
-            child: const Icon(Icons.image, color: Colors.grey),
-          ),
+        Image.network(
+          item.thumbnailImageUrl,
+          width: 70,
+          height: 70,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return SizedBox(
+              width: 70,
+              height: 70,
+              child: Center(child: CircularProgressIndicator()),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return SizedBox(
+              width: 70,
+              height: 70,
+              child: Center(child: Icon(Icons.error)),
+            );
+          },
         ),
         const SizedBox(width: 9),
         Expanded(
@@ -30,11 +42,6 @@ class MyPageOrderCardItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(item.name, style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardSemiBold')),
-                  if (item.optionName != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(item.optionName!, style: const TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-                    ),
                 ],
               ),
               Padding(
@@ -44,7 +51,7 @@ class MyPageOrderCardItem extends StatelessWidget {
                   children: [
                     Text('${item.quantity}개', style: const TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
                     const SizedBox(width: 16),
-                    Text('${item.price}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium')),
+                    Text('${item.totalPrice}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium')),
                   ],
                 ),
               ),
