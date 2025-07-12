@@ -1,6 +1,10 @@
+import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../../../data/models/payment/payment_item.dart';
+import '../../../../data/models/request/order_request_dto.dart';
 import '../../../routes/app_routes.dart';
 
 class CartOrderSummary extends StatelessWidget {
@@ -15,6 +19,7 @@ class CartOrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = context.watch<CartViewModel>();
     return Container(
       color: Colors.white,
       padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).padding.bottom + 12),
@@ -36,7 +41,29 @@ class CartOrderSummary extends StatelessWidget {
           const SizedBox(height: 16,),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.payment);
+              final List<OrderItem> orderItems = [];
+              final List<PaymentItem> paymentItems = [];
+              for(int index = 0; index < viewModel.cart!.items.length; index++) {
+                var orderItem = OrderItem(
+                  product: viewModel.cart!.items[index].product.id,
+                  quantity: viewModel.cart!.items[index].quantity,
+                  unitPrice: viewModel.cart!.items[index].product.unitPrice
+                );
+                var paymentItem = PaymentItem(
+                  name: viewModel.cart!.items[index].product.name,
+                  price: viewModel.cart!.items[index].product.unitPrice,
+                  discount: 0,
+                  image: viewModel.cart!.items[index].product.thumbnailImage
+                );
+                orderItems.add(orderItem);
+                paymentItems.add(paymentItem);
+              }
+
+              Navigator.pushNamed(
+                context,
+                AppRoutes.payment,
+                arguments: [orderItems, paymentItems]
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,

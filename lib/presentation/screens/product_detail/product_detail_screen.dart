@@ -1,4 +1,5 @@
 import 'package:damdiet/core/exceptions/quantity_invalid_exception.dart';
+import 'package:damdiet/data/models/payment/payment_item.dart';
 import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
 import 'package:damdiet/presentation/screens/product_detail/widgets/product_detail_info.dart';
 import 'package:damdiet/presentation/screens/product_detail/widgets/product_detail_main_info.dart';
@@ -229,13 +230,19 @@ class _ProductDetailContent extends StatelessWidget {
                     quantity: viewModel.quantity,
                     unitPrice: hasDiscount
                         ? (viewModel.product.price * (1 - viewModel.product.discount / 100)).round()
-                        : viewModel.product.price,
+                        : viewModel.product.price
+                  );
+                  final paymentItem = PaymentItem(
+                      name: viewModel.product.name,
+                      price: viewModel.product.price,
+                      discount: viewModel.product.discount,
+                      image: viewModel.product.image
                   );
 
                   Navigator.pushNamed(
                     context,
                     AppRoutes.payment,
-                    arguments: [orderItem],
+                    arguments: [[orderItem], [paymentItem]]
                   );
 
                 },
