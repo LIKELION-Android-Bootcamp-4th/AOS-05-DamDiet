@@ -42,7 +42,7 @@ class MyOrderDetail {
           ?.map((e) => StatusHistory.fromJson(e))
           .toList() ??
           [],
-      products: (json['products'] as List<dynamic>?)
+      products: (json['items'] as List<dynamic>?)
           ?.map((e) => OrderProduct.fromJson(e))
           .toList() ??
           [],

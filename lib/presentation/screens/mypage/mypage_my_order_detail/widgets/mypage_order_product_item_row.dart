@@ -57,10 +57,8 @@ class MyPageOrderProductItemRow extends StatelessWidget {
               Text.rich(
                 TextSpan(style: const TextStyle(color: AppColors.textHint, fontSize: 12, fontFamily: 'PretendardMedium'),
                     children: [
-                      // TODO 각 상품 수량은 어디에.. ? API 요청 ,,,
-                      //TextSpan(text: '${item.quantity}개  '),
-                      TextSpan(text: '1개  '),
-                      TextSpan(text: '${item.price}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium'),
+                      TextSpan(text: '${item.quantity}개  '),
+                      TextSpan(text: '${item.totalPrice}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium'),
                       ),
                     ]
                 ),

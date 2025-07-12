@@ -6,7 +6,7 @@ class MyOrderItem {
   final String status;
   final String createdAt;
   final String orderNumber;
-  final List<OrderProduct> products;
+  final List<OrderProduct> items;
   final String id;
 
   MyOrderItem({
@@ -16,7 +16,7 @@ class MyOrderItem {
     required this.status,
     required this.createdAt,
     required this.orderNumber,
-    required this.products,
+    required this.items,
     required this.id,
   });
 
@@ -28,7 +28,7 @@ class MyOrderItem {
       status: json['status'],
       createdAt: json['createdAt'],
       orderNumber: json['orderNumber'],
-      products: (json['products'] as List<dynamic>?)
+      items: (json['items'] as List<dynamic>?)
           ?.map((e) => OrderProduct.fromJson(e))
           .toList() ?? [],
       id: json['id'],
@@ -39,24 +39,27 @@ class MyOrderItem {
 class OrderProduct {
   final String id;
   final String name;
-  final String category;
-  final int price;
+  final int quantity;
+  final int unitPrice;
+  final int totalPrice;
   final String thumbnailImageUrl;
 
   OrderProduct({
     required this.id,
     required this.name,
-    required this.category,
-    required this.price,
+    required this.quantity,
+    required this.unitPrice,
+    required this.totalPrice,
     required this.thumbnailImageUrl,
   });
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
     return OrderProduct(
       id: json['id'] as String,
-      name: json['name'] as String,
-      category: json['category'] as String? ?? '',
-      price: json['price'] as int,
+      name: json['productName'] as String,
+      quantity: json['quantity'] as int,
+      unitPrice: json['unitPrice'] as int,
+      totalPrice: json['totalPrice'] as int,
       thumbnailImageUrl: json['thumbnailImageUrl'] as String? ?? '',
     );
   }

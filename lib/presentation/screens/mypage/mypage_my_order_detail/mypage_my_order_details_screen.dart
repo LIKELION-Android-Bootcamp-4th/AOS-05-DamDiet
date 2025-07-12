@@ -24,20 +24,43 @@ class MyPageMyOrderDetailsScreenWrapper extends StatelessWidget {
     final repository = Provider.of<OrderRepository>(context, listen: false);
 
     return ChangeNotifierProvider<OrderDetailViewModel>(
-      create: (_) => OrderDetailViewModel(repository)..getOrderDetail(orderId),
-      child: const MyPageMyOrderDetailsScreen(),
+      create: (_) => OrderDetailViewModel(repository),
+      builder: (context, child) {
+        return MyPageMyOrderDetailsScreen(orderId: orderId,);
+      },
     );
   }
 }
 
-class MyPageMyOrderDetailsScreen extends StatelessWidget {
-  const MyPageMyOrderDetailsScreen({super.key});
+class MyPageMyOrderDetailsScreen extends StatefulWidget {
+  final String orderId;
+
+  const MyPageMyOrderDetailsScreen({super.key, required this.orderId});
+
+  @override
+  State<MyPageMyOrderDetailsScreen> createState() => _MyPageMyOrderDetailsScreenState();
+}
+
+class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask((){
+      final viewModel = context.read<OrderDetailViewModel>();
+      viewModel.getOrderDetail(widget.orderId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<OrderDetailViewModel>();
-    final order = viewModel.orderDetail!;
 
+    final order = viewModel.orderDetail;
+    if (order == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
     if (viewModel.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }

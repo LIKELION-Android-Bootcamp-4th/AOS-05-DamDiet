@@ -29,9 +29,9 @@ class MyPageOrderCard extends StatelessWidget {
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: order.products.length,
+              itemCount: order.items.length,
               itemBuilder: (context, index) {
-                final item = order.products[index];
+                final item = order.items[index];
                 return MyPageOrderCardItem(item: item);
               },
               separatorBuilder: (context, index) {

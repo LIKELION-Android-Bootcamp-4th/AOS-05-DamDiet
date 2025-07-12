@@ -49,9 +49,9 @@ class MyPageOrderCardItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    //Text('${item.quantity}개', style: const TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
+                    Text('${item.quantity}개', style: const TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
                     const SizedBox(width: 16),
-                    Text('${item.price}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium')),
+                    Text('${item.totalPrice}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium')),
                   ],
                 ),
               ),

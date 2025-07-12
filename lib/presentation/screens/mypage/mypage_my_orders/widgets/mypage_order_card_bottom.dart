@@ -16,7 +16,7 @@ class MyPageOrderCardBottom extends StatelessWidget {
           children: [
             const Text('주문금액', style: TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardSemiBold')),
             const SizedBox(width: 18),
-            Text('${order.products.length}건', style: const TextStyle(color: AppColors.textHint, fontSize: 14, fontFamily: 'PretendardMedium')),
+            Text('${order.items.length}건', style: const TextStyle(color: AppColors.textHint, fontSize: 14, fontFamily: 'PretendardMedium')),
           ],
         ),
         Text(
