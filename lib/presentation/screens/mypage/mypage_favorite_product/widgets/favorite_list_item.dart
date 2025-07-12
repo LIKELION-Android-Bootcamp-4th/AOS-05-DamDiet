@@ -1,4 +1,5 @@
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/core/widgets/network_image.dart';
 import 'package:damdiet/data/models/favorite_product/favorite_product.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,8 @@ class FavoriteListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       borderRadius: BorderRadius.circular(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,9 +31,21 @@ class FavoriteListItem extends StatelessWidget {
                 aspectRatio: 1,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    "https://image6.coupangcdn.com/image/retail/images/2882595627829337-dda8fe4b-040f-4d3a-9fc2-fa00a275ecf3.jpg",
+                  child:
+                  Image.network(
+                    favoriteProduct.entity.thumbnailImageUrl,
                     fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return SizedBox(
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return SizedBox(
+                        child: const Center(child: Icon(Icons.error)),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -45,7 +60,7 @@ class FavoriteListItem extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            favoriteProduct.product.name,
+            favoriteProduct.entity.name,
             style: const TextStyle(
                 fontFamily: 'PretendardSemiBold',
                 fontSize: 14,
@@ -67,7 +82,7 @@ class FavoriteListItem extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                '${favoriteProduct.product.price} 원',
+                '${favoriteProduct.entity.price} 원',
                 style: TextStyle(
                   fontFamily: 'PretendardMedium',
                   fontSize: 14,
