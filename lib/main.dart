@@ -1,5 +1,6 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
+import 'package:damdiet/data/datasource/order_datasource.dart';
 import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/datasource/mypage_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_datasource.dart';
@@ -13,7 +14,7 @@ import 'package:damdiet/presentation/screens/community/community_detail_screen.d
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_my_orders_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_nickname_edit/mypage_nickname_edit_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
@@ -44,6 +45,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'data/models/request/order_request_dto.dart';
+import 'data/repositories/order_repository.dart';
 
 
 void main() {
@@ -55,6 +57,7 @@ void main() {
           Provider(create: (_) => CartDatasource()),
           Provider(create: (_) => FavoriteDatasource()),
           Provider(create: (_) => NutritionDataSource()),
+          Provider(create: (_) => OrderDataSource()),
           Provider(create: (_) => MyPageDataSource()),
 
           ProxyProvider<ProductDatasource, ProductRepository>(
@@ -69,6 +72,11 @@ void main() {
           ProxyProvider<NutritionDataSource, NutritionRepository>(
             update: (_, datasource, __) => NutritionRepository(datasource),
           ),
+          ProxyProvider<OrderDataSource, OrderRepository>(
+            update: (_, datasource, __) => OrderRepository(datasource),
+          ),
+
+
           ProxyProvider<MyPageDataSource, MyPageRepository>(
             update: (_, datasource, __) => MyPageRepository(datasource),
           ),
@@ -111,8 +119,7 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
-        AppRoutes.myOrders: (context) => MyPageMyOrdersScreen(),
-        AppRoutes.myOrderDetail: (context) => MyPageMyOrderDetailsScreen(),
+        AppRoutes.myOrders: (context) => MyPageMyOrdersScreenWrapper(),
         AppRoutes.cart: (context) => CartScreenWrapper(),
         // AppRoutes.reviewWrite: (context) => ReviewWriteScreen(),
         AppRoutes.reviewEdit: (context) => ReviewEditScreen(),
@@ -141,6 +148,11 @@ class DamDietApp extends StatelessWidget {
                 builder: (_) => ProductsScreenWrapper( productQuery: query,)
         );
 
+          case AppRoutes.myOrderDetail: 
+            final orderId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (_) => MyPageMyOrderDetailsScreenWrapper(orderId: orderId),
+            );
           default:
             return null;
         }

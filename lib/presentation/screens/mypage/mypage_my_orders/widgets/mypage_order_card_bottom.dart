@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
-import '../../mypage_my_orders_screen.dart';
+import '../../../../../data/models/order/my_order_item.dart';
 
 class MyPageOrderCardBottom extends StatelessWidget {
-  final Order order;
+  final MyOrderItem order;
 
   const MyPageOrderCardBottom({super.key, required this.order});
 
