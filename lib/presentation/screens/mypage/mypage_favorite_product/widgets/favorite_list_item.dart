@@ -45,7 +45,7 @@ class FavoriteListItem extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            favoriteProduct.product.name,
+            favoriteProduct.entity.name,
             style: const TextStyle(
                 fontFamily: 'PretendardSemiBold',
                 fontSize: 14,
@@ -67,7 +67,7 @@ class FavoriteListItem extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                '${favoriteProduct.product.price} 원',
+                '${favoriteProduct.entity.price} 원',
                 style: TextStyle(
                   fontFamily: 'PretendardMedium',
                   fontSize: 14,

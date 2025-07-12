@@ -16,7 +16,10 @@ class FavoriteSummaryProduct {
       id: json['id'],
       name: json['name'],
       price: json['price'],
-      thumbnailImageUrl: json['thumbnailImageUrl'],
+      thumbnailImageUrl: json['thumbnailImage'] != null
+          ? json['thumbnailImage']['url']
+          : null,
     );
   }
+
 }

@@ -80,12 +80,12 @@ class _MyPageFavoriteProductsScreenState extends State<MyPageFavoriteProductsScr
             return FavoriteListItem(
               favoriteProduct: favoriteProduct,
               // 찜 취소
-              onRemove: () => viewModel.unfavoriteProduct(favoriteProduct.product.id),
+              onRemove: () => viewModel.unfavoriteProduct(favoriteProduct.entity.id),
               // 상품 상세 이동
               onTap: () => Navigator.pushNamed(
                 context,
                 AppRoutes.productDetail,
-                arguments: favoriteProduct.product.id,
+                arguments: favoriteProduct.entity.id,
               ),
             );
           },

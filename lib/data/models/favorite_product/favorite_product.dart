@@ -4,20 +4,18 @@ import 'package:damdiet/data/models/product/favorite_summary_product.dart';
 
 class FavoriteProduct {
   final String id;
-  final FavoriteSummaryProduct product;
-  final DateTime createdAt;
+  final FavoriteSummaryProduct entity;
+
 
   FavoriteProduct({
     required this.id,
-    required this.product,
-    required this.createdAt,
+    required this.entity,
   });
 
   factory FavoriteProduct.fromJson(Map<String, dynamic> json) {
     return FavoriteProduct(
       id: json['id'],
-      product: FavoriteSummaryProduct.fromJson(json['entity']),
-      createdAt: DateTime.parse(json['createdAt']),
+      entity: FavoriteSummaryProduct.fromJson(json['entity']),
     );
   }
 }
