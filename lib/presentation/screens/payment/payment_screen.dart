@@ -1,4 +1,6 @@
 import 'package:damdiet/data/models/product/product.dart';
+import 'package:damdiet/data/repositories/payment_repository.dart';
+import 'package:damdiet/presentation/screens/payment/payment_viewmodel.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/payment_list_item.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/payment_textfield.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
@@ -6,11 +8,33 @@ import 'package:damdiet/presentation/screens/payment/widgets/payment_checkbox_wi
 import 'package:damdiet/presentation/screens/payment/widgets/payment_spacebetween_widget.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/select_payment._widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../data/models/payment/payment_item.dart';
 import '../../../data/models/request/order_request_dto.dart';
+
+class PaymentScreenWrapper extends StatelessWidget {
+  const PaymentScreenWrapper({super.key,
+    required this.orderItems,
+    required this.paymentItems
+  });
+
+  final List<OrderItem> orderItems;
+  final List<PaymentItem> paymentItems;
+
+  @override
+  Widget build(BuildContext context) {
+    final repo = Provider.of<PaymentRepository>(context, listen: false);
+    return ChangeNotifierProvider(
+      create: (_) => PaymentViewmodel(repo),
+      builder: (context, child) {
+        return PaymentScreen(orderItems: orderItems, paymentItems: paymentItems);
+      },
+    );
+  }
+}
 
 
 class PaymentScreen extends StatefulWidget {
@@ -25,9 +49,9 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   var nameCtrl = TextEditingController();
+  var postCtrl = TextEditingController();
   var addressCtrl = TextEditingController();
-  var addressDetailFirstCtrl = TextEditingController();
-  var addressDetailSecondCtrl = TextEditingController();
+  var addressDetailCtrl = TextEditingController();
   var phoneFirstCtrl = TextEditingController();
   var phoneSecondCtrl = TextEditingController();
   var phoneThirdCtrl = TextEditingController();
@@ -39,8 +63,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
       productTotalPrice += (widget.orderItems[n].unitPrice * widget.orderItems[n].quantity);
     }
     int paymentPrice = productTotalPrice + 3000;
+    var viewModel = context.watch<PaymentViewmodel>();
 
-    debugPrint("👍👍${widget.orderItems[0].quantity}");
+    // debugPrint("👍👍${widget.orderItems[1].product}");
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -88,7 +113,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                   ),
-                  PaymentTextField(flex: 2, hintText: '우편주소', controller: addressCtrl),
+                  PaymentTextField(flex: 2, hintText: '우편주소', controller: postCtrl),
                   SizedBox(width: 10),
                   Expanded(
                     flex: 1,
@@ -105,14 +130,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField(hintText: '상세주소', controller: addressDetailFirstCtrl),
+                  PaymentTextField(hintText: '상세주소', controller: addressCtrl),
                 ],
               ),
               SizedBox(height: 8),
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField(controller: addressDetailSecondCtrl)
+                  PaymentTextField(controller: addressDetailCtrl)
                 ],
               ),
               SizedBox(height: 8),
@@ -147,8 +172,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
+              SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return PaymentListItem(paymentItem: widget.paymentItems[index]);
+                  },
+                  itemCount: widget.paymentItems.length,
 
-              PaymentListItem(paymentItem: widget.paymentItems[0]),
+                ),
+              ),
+
+
               Divider(thickness: 6, color: AppColors.gray100),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '3,000 원'),
               Divider(thickness: 1, color: AppColors.textSub),
@@ -214,8 +249,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
               SizedBox(height: 36),
               BottomCTAButton(
                 text: "주문하기",
-                onPressed: () {
-                  Navigator.pop(context);
+                onPressed: () async {
+                  if(await viewModel.doPayment(
+                      orderItem: widget.orderItems,
+                      recipient: nameCtrl.text,
+                      address: "${postCtrl.text} ${addressCtrl.text} ${addressDetailCtrl.text}",
+                      phone: "${phoneFirstCtrl.text}-${phoneSecondCtrl.text}-${phoneThirdCtrl.text}"
+                  )) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("주문 성공")));
+                  }
+                  else {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("주문 실패")));
+                  }
+                  // Navigator.pop(context);
                   //Navigator.pushNamed(context, AppRoutes.home);
                 },
               ),

@@ -1,5 +1,6 @@
 import 'package:damdiet/data/datasource/favorite_datasource.dart';
 import 'package:damdiet/data/datasource/cart_datasource.dart';
+import 'package:damdiet/data/datasource/payment_service.dart';
 import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/datasource/mypage_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_datasource.dart';
@@ -8,6 +9,7 @@ import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
+import 'package:damdiet/data/repositories/payment_repository.dart';
 import 'package:damdiet/data/repositories/review_repository.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
@@ -57,6 +59,7 @@ void main() {
           Provider(create: (_) => FavoriteDatasource()),
           Provider(create: (_) => NutritionDataSource()),
           Provider(create: (_) => MyPageDataSource()),
+          Provider(create: (_) => PaymentService()),
 
           ProxyProvider<ProductDatasource, ProductRepository>(
             update: (_, datasource, __) => ProductRepository(datasource),
@@ -72,6 +75,9 @@ void main() {
           ),
           ProxyProvider<MyPageDataSource, MyPageRepository>(
             update: (_, datasource, __) => MyPageRepository(datasource),
+          ),
+          ProxyProvider<PaymentService, PaymentRepository>(
+            update: (_, datasource, __) => PaymentRepository(datasource),
           ),
 
           // 앱 전역에서 사용하는 뷰모델 냅두기
@@ -132,7 +138,7 @@ class DamDietApp extends StatelessWidget {
           case AppRoutes.payment:
               final arguments = settings.arguments as List<List<Object>>;
               return MaterialPageRoute(
-                builder: (_) => PaymentScreen(
+                builder: (_) => PaymentScreenWrapper(
                   orderItems: arguments[0] as List<OrderItem>,
                   paymentItems: arguments[1] as List<PaymentItem>
                 ),
