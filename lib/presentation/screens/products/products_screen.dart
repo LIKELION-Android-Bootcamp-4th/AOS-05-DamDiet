@@ -1,16 +1,33 @@
 import 'package:damdiet/core/constants/category_constants.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/data/models/product/product_query.dart';
-import 'package:damdiet/presentation/provider/search_provider.dart';
 import 'package:damdiet/presentation/screens/products/products_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/category_outline_button.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../core/widgets/search_product_textfield.dart';
-import '../../../models/ListProduct.dart';
+import '../../../data/repositories/product_repository.dart';
 import '../../routes/app_routes.dart';
-import '../search/search_viewmodel.dart';
+
+class ProductsScreenWrapper extends StatelessWidget {
+  final ProductQuery productQuery;
+
+  const ProductsScreenWrapper({Key? key, required this.productQuery}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final repository = Provider.of<ProductRepository>(context, listen: false);
+
+    return ChangeNotifierProvider(
+      create: (_) => ProductsViewModel(repository),
+      builder: (context, child) {
+        return ProductsScreen(productQuery: productQuery);
+      },    );
+  }
+}
+
+
 
 class ProductsScreen extends StatefulWidget {
   final ProductQuery productQuery;
@@ -27,11 +44,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
+    controller = TextEditingController();
+
+    Future.microtask(() {
       final vm = context.read<ProductsViewModel>();
-      await vm.setInitialQuery(widget.productQuery);
+      vm.setInitialQuery(widget.productQuery);
     });
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

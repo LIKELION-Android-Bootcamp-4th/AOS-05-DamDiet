@@ -6,9 +6,7 @@ import '../../../data/models/product/product_query.dart';
 import '../../../data/repositories/search_repository.dart';
 
 class SearchViewModel extends ChangeNotifier {
-  final SearchRepository _repository;
-
-  SearchViewModel(this._repository);
+  SearchViewModel();
 
   String _productName = "";
   String? _selectedCategory;
@@ -41,16 +39,6 @@ class SearchViewModel extends ChangeNotifier {
   void changeRangeValues(RangeValues newRange) {
     _rangeValues = newRange;
     notifyListeners();
-  }
-
-  Future<void> searchProducts() async {
-    try {
-      _searchProductList = await _repository.getSearchedProducts(_productName);
-      notifyListeners();
-    }
-    catch(e) {
-      debugPrint('$e');
-    }
   }
 
   ProductQuery toQuery() {

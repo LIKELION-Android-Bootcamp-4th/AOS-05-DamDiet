@@ -75,7 +75,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ? IconButton(
           icon: const Icon(
             Icons.cancel,
-            color: Colors.blueAccent,
+            color: AppColors.primaryColor,
             size: 20,
           ),
           onPressed: () {

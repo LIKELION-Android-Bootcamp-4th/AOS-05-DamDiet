@@ -3,7 +3,21 @@ import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/widg
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/widgets/damdiet_appbar.dart';
+import '../../../../data/repositories/favorite_repository.dart';
 import '../../../routes/app_routes.dart';
+
+class MyPageFavoriteProductsScreenWrapper extends StatelessWidget {
+  const MyPageFavoriteProductsScreenWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final repository = Provider.of<FavoriteRepository>(context, listen: false);
+    return ChangeNotifierProvider(
+      create: (_) => MyPageFavoriteProductsViewModel(repository),
+      child: const MyPageFavoriteProductsScreen(),
+    );
+  }
+}
 
 class MyPageFavoriteProductsScreen extends StatefulWidget {
   const MyPageFavoriteProductsScreen({super.key});
