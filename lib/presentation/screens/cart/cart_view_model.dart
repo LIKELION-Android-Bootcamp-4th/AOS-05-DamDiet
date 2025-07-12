@@ -63,12 +63,11 @@ class CartViewModel with ChangeNotifier {
       return;
     }
     try {
-      await _repository.updataQuantity(cartId: cartId, quantity: newQuantity,);
-
-      final index = _cart?.items.indexWhere((item) => item.id == cartId);
-      if (index != null && index != -1) {
-        _cart!.items[index].quantity = newQuantity;
-      }
+      await _repository.updataQuantity(
+        cartId: cartId,
+        quantity: newQuantity,
+      );
+      await fetchCart();
 
     } catch (e) {
       print('수량 변경 중 오류 발생: $e');
