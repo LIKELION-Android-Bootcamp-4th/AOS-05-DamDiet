@@ -15,6 +15,8 @@ class PaymentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var discountedPrice = (paymentItem.price * (100 - paymentItem.discount) / 100).toInt();
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -77,7 +79,7 @@ class PaymentListItem extends StatelessWidget {
                     SizedBox(height: 10),
 
                     Visibility(
-                      visible:  paymentItem.discount != 0,
+                      visible: paymentItem.discount != 0,
                       child: Text(
                         "${paymentItem.price} 원",
                         style: TextStyle(
@@ -108,7 +110,7 @@ class PaymentListItem extends StatelessWidget {
 
                         SizedBox(width: 14),
                         Text(
-                          "원",
+                          "$discountedPrice원",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'PretendardBold',

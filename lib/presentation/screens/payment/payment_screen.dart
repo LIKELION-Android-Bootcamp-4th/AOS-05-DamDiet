@@ -1,4 +1,5 @@
 import 'package:damdiet/data/models/product/product.dart';
+import 'package:damdiet/presentation/screens/payment/widgets/payment_list_item.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/payment_textfield.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/payment_checkbox_widget.dart';
@@ -8,22 +9,39 @@ import 'package:flutter/material.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/product_list_item.dart';
+import '../../../data/models/payment/payment_item.dart';
 import '../../../data/models/request/order_request_dto.dart';
 
 
 class PaymentScreen extends StatefulWidget {
   final List<OrderItem> orderItems;
+  final List<PaymentItem> paymentItems;
 
-  const PaymentScreen({super.key, required this.orderItems});
+  const PaymentScreen({super.key, required this.orderItems, required this.paymentItems});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  var nameCtrl = TextEditingController();
+  var addressCtrl = TextEditingController();
+  var addressDetailFirstCtrl = TextEditingController();
+  var addressDetailSecondCtrl = TextEditingController();
+  var phoneFirstCtrl = TextEditingController();
+  var phoneSecondCtrl = TextEditingController();
+  var phoneThirdCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    int productTotalPrice = 0;
+    for(int n = 0; n < widget.orderItems.length; n++) {
+      productTotalPrice += (widget.orderItems[n].unitPrice * widget.orderItems[n].quantity);
+    }
+    int paymentPrice = productTotalPrice + 3000;
+
     debugPrint("👍👍${widget.orderItems[0].quantity}");
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -53,7 +71,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                   ),
-                  PaymentTextField()
+                  PaymentTextField(controller: nameCtrl)
                 ],
               ),
               SizedBox(height: 8),
@@ -70,7 +88,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                   ),
-                  PaymentTextField(flex: 2, hintText: '우편주소'),
+                  PaymentTextField(flex: 2, hintText: '우편주소', controller: addressCtrl),
                   SizedBox(width: 10),
                   Expanded(
                     flex: 1,
@@ -87,14 +105,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField(hintText: '상세주소'),
+                  PaymentTextField(hintText: '상세주소', controller: addressDetailFirstCtrl),
                 ],
               ),
               SizedBox(height: 8),
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField()
+                  PaymentTextField(controller: addressDetailSecondCtrl)
                 ],
               ),
               SizedBox(height: 8),
@@ -111,11 +129,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                   ),
-                  PaymentTextField(flex: 3),
+                  PaymentTextField(flex: 3, controller: phoneFirstCtrl),
                   SizedBox(width: 14),
-                  PaymentTextField(flex: 4),
+                  PaymentTextField(flex: 4, controller: phoneSecondCtrl),
                   SizedBox(width: 14),
-                  PaymentTextField(flex: 4),
+                  PaymentTextField(flex: 4, controller: phoneThirdCtrl),
                 ],
               ),
               SizedBox(height: 26),
@@ -129,27 +147,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
-              /*ProductListItem(
-                product: Product(
-                  id: id,
-                  name: widget.orderItems[0].,
-                  image: image,
-                  price: price,
-                  isFavorite: isFavorite,
-                  discount: discount,
-                  rating: rating,
-                  attributes: attributes
-                ),
-                onTap: () {},
 
-
-                  *//*name: widget.orderItems[0].product,
-                  price: widget.orderItems[0].unitPrice,
-                  discount: 30,
-                  image: widget.orderItems[0].image,*//*
-              ),*/
+              PaymentListItem(paymentItem: widget.paymentItems[0]),
               Divider(thickness: 6, color: AppColors.gray100),
-              PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '3,500 원'),
+              PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '3,000 원'),
               Divider(thickness: 1, color: AppColors.textSub),
               SizedBox(height: 20),
               Text(
@@ -161,7 +162,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               SizedBox(height: 12),
-              PaymentSpaceBetweenWidget(leftText: '주문상품', rightText: '16,000원'),
+              PaymentSpaceBetweenWidget(leftText: '주문상품', rightText: '$productTotalPrice원'),
               SizedBox(height: 12),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '+3,000원'),
               SizedBox(height: 36),
@@ -177,7 +178,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   ),
                   Text(
-                    '19,000원',
+                    '$paymentPrice원',
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PretendardBold',

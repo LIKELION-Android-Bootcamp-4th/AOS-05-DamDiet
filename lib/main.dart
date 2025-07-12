@@ -43,6 +43,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
+import 'data/models/payment/payment_item.dart';
 import 'data/models/request/order_request_dto.dart';
 
 
@@ -129,9 +130,12 @@ class DamDietApp extends StatelessWidget {
               );
 
           case AppRoutes.payment:
-              final orderItems = settings.arguments as List<OrderItem>;
+              final arguments = settings.arguments as List<List<Object>>;
               return MaterialPageRoute(
-                builder: (_) => PaymentScreen(orderItems: orderItems),
+                builder: (_) => PaymentScreen(
+                  orderItems: arguments[0] as List<OrderItem>,
+                  paymentItems: arguments[1] as List<PaymentItem>
+                ),
               );
 
           case AppRoutes.products:
