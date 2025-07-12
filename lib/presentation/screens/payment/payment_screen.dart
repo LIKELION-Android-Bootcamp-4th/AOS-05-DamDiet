@@ -1,3 +1,4 @@
+import 'package:damdiet/data/models/product/product.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/payment_textfield.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/payment_checkbox_widget.dart';
@@ -128,12 +129,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
-              ProductListItem(
-                  name: widget.orderItems[0].product,
+              /*ProductListItem(
+                product: Product(
+                  id: id,
+                  name: widget.orderItems[0].,
+                  image: image,
+                  price: price,
+                  isFavorite: isFavorite,
+                  discount: discount,
+                  rating: rating,
+                  attributes: attributes
+                ),
+                onTap: () {},
+
+
+                  *//*name: widget.orderItems[0].product,
                   price: widget.orderItems[0].unitPrice,
                   discount: 30,
-                  image: widget.orderItems[0].image,
-              ),
+                  image: widget.orderItems[0].image,*//*
+              ),*/
               Divider(thickness: 6, color: AppColors.gray100),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '3,500 원'),
               Divider(thickness: 1, color: AppColors.textSub),

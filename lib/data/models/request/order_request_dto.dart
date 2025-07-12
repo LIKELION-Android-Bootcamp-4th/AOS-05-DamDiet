@@ -10,7 +10,7 @@ class OrderItem {
     required this.product,
     required this.quantity,
     required this.unitPrice,
-    required this.image
+    this.image = ''
   });
 
   Map<String, dynamic> toJson() {
