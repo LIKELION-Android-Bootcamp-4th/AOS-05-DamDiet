@@ -33,7 +33,7 @@ class MyPageFavoriteProductsViewModel with ChangeNotifier {
       final isNowFavorite = await _repository.toggleFavorite(productId: productId);
 
       if (!isNowFavorite) {
-        _favorites.removeWhere((fav) => fav.product.id == productId);
+        _favorites.removeWhere((fav) => fav.entity.id == productId);
         notifyListeners();
       }
     } catch (e) {
