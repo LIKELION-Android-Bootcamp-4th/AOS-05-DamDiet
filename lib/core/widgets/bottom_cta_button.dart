@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class BottomCTAButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const BottomCTAButton({
     super.key,

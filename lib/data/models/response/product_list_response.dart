@@ -1,23 +1,22 @@
+import 'package:damdiet/data/models/response/pagination.dart';
+
 import '../product/product.dart';
 
 class ProductListResponse {
   final List<Product> items;
-  //final int total;
-  //final String sort;
+  final Pagination pagination;
 
   ProductListResponse({
     required this.items,
-    //required this.total,
-    //required this.sort,
+    required this.pagination,
   });
 
   factory ProductListResponse.fromJson(Map<String, dynamic> json) {
     return ProductListResponse(
-      items: (json['items'] as List)
-          .map((e) => Product.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      //total: json['total'] as int,
-      //sort: json['sort'] as String,
+      items: List<Product>.from(
+        json['items'].map((item) => Product.fromJson(item)),
+      ),
+      pagination: Pagination.fromJson(json['pagination']),
     );
   }
 }

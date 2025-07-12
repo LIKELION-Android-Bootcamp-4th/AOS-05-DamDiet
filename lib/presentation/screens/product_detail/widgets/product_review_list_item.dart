@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../../../core/widgets/network_image.dart';
 
 class ProductReviewListItem extends StatelessWidget {
   const ProductReviewListItem({super.key, required this.review});
@@ -76,18 +77,8 @@ class ProductReviewListItem extends StatelessWidget {
               separatorBuilder: (_, __) => SizedBox(width: 10),
               itemBuilder: (context, index) => ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  review.images![index],  width: 50,
-                  height: 50,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(Icons.error);
-                  },),
+                child: CommonNetworkImage(
+                  url: review.images![index],  size: 50,)
               ),
             ),
           )else ... [

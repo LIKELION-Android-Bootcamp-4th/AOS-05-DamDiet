@@ -39,14 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
     MyPageScreen(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-
-    Future.microtask(() {
-      context.read<HomeViewmodel>().getHomeProducts();
-    });
-  }
 
   void _onItemTapped(int index) {
     setState(() {

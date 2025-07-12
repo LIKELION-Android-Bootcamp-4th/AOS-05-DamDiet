@@ -4,32 +4,22 @@ import 'package:damdiet/data/datasource/order_datasource.dart';
 import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/datasource/mypage_datasource.dart';
 import 'package:damdiet/data/datasource/nutrition_datasource.dart';
-import 'package:damdiet/data/datasource/search_service.dart';
 import 'package:damdiet/data/models/product/product_query.dart';
 import 'package:damdiet/data/repositories/favorite_repository.dart';
 import 'package:damdiet/data/repositories/cart_repository.dart';
 import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/review_repository.dart';
-import 'package:damdiet/data/repositories/search_repository.dart';
-import 'package:damdiet/presentation/provider/nutrition_provider.dart';
-import 'package:damdiet/presentation/provider/price_range_provider.dart';
-import 'package:damdiet/presentation/screens/auth/signup_viewmodel.dart';
-import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
 import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
-import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/mypage_my_orders_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_viewmodel.dart';
-import 'package:damdiet/presentation/screens/product_detail/product_detail_viewmodel.dart';
-import 'package:damdiet/presentation/screens/products/products_viewmodel.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_nickname_edit/mypage_nickname_edit_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
-import 'package:damdiet/presentation/screens/search/search_viewmodel.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
-import 'package:damdiet/presentation/screens/home/home_viewmodel.dart';
 import 'package:damdiet/presentation/screens/auth/signin_viewmodel.dart';
 import 'package:damdiet/data/repositories/product_repository.dart';
 import 'package:damdiet/presentation/routes/app_routes.dart';
@@ -40,11 +30,10 @@ import 'package:damdiet/presentation/screens/auth/email_verification_screen.dart
 import 'package:damdiet/presentation/screens/auth/auth_signin_screen.dart';
 import 'package:damdiet/presentation/screens/auth/auth_signup_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_screen.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_community_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/mypage_my_order_details_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_reviews_screen.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_password_edit_screen.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_password_edit/mypage_password_edit_screen.dart';
 import 'package:damdiet/presentation/screens/payment/payment_screen.dart';
 import 'package:damdiet/presentation/screens/review/review_edit_screen.dart';
 import 'package:damdiet/presentation/screens/review/review_write_screen.dart';
@@ -69,6 +58,7 @@ void main() {
           Provider(create: (_) => FavoriteDatasource()),
           Provider(create: (_) => NutritionDataSource()),
           Provider(create: (_) => OrderDataSource()),
+          Provider(create: (_) => MyPageDataSource()),
 
           ProxyProvider<ProductDatasource, ProductRepository>(
             update: (_, datasource, __) => ProductRepository(datasource),
@@ -87,6 +77,9 @@ void main() {
           ),
 
 
+          ProxyProvider<MyPageDataSource, MyPageRepository>(
+            update: (_, datasource, __) => MyPageRepository(datasource),
+          ),
 
           // 앱 전역에서 사용하는 뷰모델 냅두기
           ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
@@ -107,6 +100,7 @@ class DamDietApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'DamDiet',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -120,7 +114,8 @@ class DamDietApp extends StatelessWidget {
         AppRoutes.comDetail: (context) => CommunityDetailScreen(),
         AppRoutes.comWrite: (context) => CommunityWriteScreen(),
         AppRoutes.profileEdit: (context) => MyPageAddressEditScreen(),
-        AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreen(),
+        AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreenWrapper(),
+        AppRoutes.nicknameEdit: (context) => MyPageNicknameEditScreenWrapper(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
         AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
@@ -153,7 +148,7 @@ class DamDietApp extends StatelessWidget {
                 builder: (_) => ProductsScreenWrapper( productQuery: query,)
         );
 
-          case AppRoutes.myOrderDetail: // ✅ 주문 상세 라우트 추가!
+          case AppRoutes.myOrderDetail: 
             final orderId = settings.arguments as String;
             return MaterialPageRoute(
               builder: (_) => MyPageMyOrderDetailsScreenWrapper(orderId: orderId),
