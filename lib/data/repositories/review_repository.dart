@@ -55,4 +55,25 @@ class ReviewRepository {
       rethrow;
     }
   }
+
+  Future<void> createReview({
+    required String productId,
+    required String orderId,
+    required String content,
+    required double rating,
+    required List<XFile> images,
+  }) async {
+    try {
+      await _datasource.createReview(
+        productId: productId,
+        orderId: orderId,
+        content: content,
+        rating: rating,
+        images: images,
+      );
+    } catch (e) {
+      print('ReviewRepository - createReview 오류: $e');
+      rethrow;
+    }
+  }
 }
