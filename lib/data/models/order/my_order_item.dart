@@ -1,3 +1,4 @@
+import 'package:damdiet/data/models/product/review_summary_product.dart';
 
 class MyOrderItem {
   final int subtotalAmount;
@@ -63,4 +64,13 @@ class OrderProduct {
       thumbnailImageUrl: json['thumbnailImageUrl'] as String? ?? '',
     );
   }
+
+  ReviewSummaryProduct toReviewSummaryProduct() {
+    return ReviewSummaryProduct(
+      id: this.id,
+      name: this.name,
+      thumbnailImageUrl: this.thumbnailImageUrl,
+    );
+  }
+
 }

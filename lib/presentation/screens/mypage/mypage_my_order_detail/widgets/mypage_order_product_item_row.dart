@@ -1,13 +1,18 @@
 import 'package:damdiet/data/models/order/my_order_item.dart';
+import 'package:damdiet/presentation/screens/review/review_write_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/routes/app_routes.dart';
-import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/order_item.dart';
 
 class MyPageOrderProductItemRow extends StatelessWidget {
   final OrderProduct item;
+  final String orderId;
 
-  const MyPageOrderProductItemRow({super.key, required this.item});
+  const MyPageOrderProductItemRow({
+    super.key,
+    required this.item,
+    required this.orderId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +45,16 @@ class MyPageOrderProductItemRow extends StatelessWidget {
               //if (!item.hasReview)
               if(true)
                 ElevatedButton(
-                  onPressed: () { Navigator.pushNamed(context, AppRoutes.reviewWrite); },
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context,
+                        AppRoutes.reviewWrite,
+                        arguments: ReviewWriteArguments(
+                          product: item.toReviewSummaryProduct(),
+                          orderId: orderId,
+                        ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     foregroundColor: Colors.white,

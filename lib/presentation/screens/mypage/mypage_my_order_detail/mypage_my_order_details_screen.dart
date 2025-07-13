@@ -4,7 +4,6 @@ import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/core/widgets/damdiet_appbar.dart';
 import 'package:damdiet/presentation/routes/app_routes.dart';
 
-import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/order_item.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_product_list_section.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_section.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widgets/mypage_order_info_row.dart';
@@ -86,7 +85,10 @@ class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen>
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 12),
 
-            MyPageOrderProductListSection(items: order.products),
+            MyPageOrderProductListSection(
+              items: order.products,
+              orderId: widget.orderId,
+            ),
 
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 16),
