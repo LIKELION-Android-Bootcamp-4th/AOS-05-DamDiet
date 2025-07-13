@@ -18,6 +18,7 @@ import '../../../core/widgets/bottom_nav_bar.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../data/models/product/product_query.dart';
 import '../../../data/repositories/product_repository.dart';
+import '../kcal_calculator/kcal_calculator_screen.dart';
 import '../mypage/mypage/mypage_screen.dart';
 import 'home_viewmodel.dart';
 import '../../routes/app_routes.dart';
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2;
   final List<Widget> _widgetOptions = <Widget>[
     SearchScreen(),
-    CommunityHomeScreen(),
+    KcalCalculatorScreenWrapper(),
     DamDietHomeScreen(),
     CartScreenWrapper(),
     MyPageScreen(),
