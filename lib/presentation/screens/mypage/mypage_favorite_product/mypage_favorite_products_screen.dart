@@ -1,4 +1,5 @@
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/mypage_favorite_products_viewmodel.dart';
+import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/widgets/favorite_empty_view.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_favorite_product/widgets/favorite_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,11 +24,13 @@ class MyPageFavoriteProductsScreen extends StatefulWidget {
   const MyPageFavoriteProductsScreen({super.key});
 
   @override
-  State<MyPageFavoriteProductsScreen> createState() => _MyPageFavoriteProductsScreenState();
+  State<MyPageFavoriteProductsScreen> createState() =>
+      _MyPageFavoriteProductsScreenState();
 }
 
-class _MyPageFavoriteProductsScreenState extends State<MyPageFavoriteProductsScreen> with WidgetsBindingObserver{
-
+class _MyPageFavoriteProductsScreenState
+    extends State<MyPageFavoriteProductsScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -49,7 +52,8 @@ class _MyPageFavoriteProductsScreenState extends State<MyPageFavoriteProductsScr
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) { //목록 새로고침
+    if (state == AppLifecycleState.resumed) {
+      //목록 새로고침
       context.read<MyPageFavoriteProductsViewModel>().fetchFavorites();
     }
   }
@@ -59,37 +63,37 @@ class _MyPageFavoriteProductsScreenState extends State<MyPageFavoriteProductsScr
     final viewModel = context.watch<MyPageFavoriteProductsViewModel>();
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamdietAppbar(
-        title: '찜한 상품',
-        showBackButton: true,
-      ),
+      appBar: DamdietAppbar(title: '찜한 상품', showBackButton: true),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: viewModel.isLoading
             ? const Center(child: CircularProgressIndicator())
+            : viewModel.favorites.isEmpty
+            ? const FavoriteEmptyView()
             : GridView.builder(
-          itemCount: viewModel.favorites.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 0.63,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-          ),
-          itemBuilder: (context, index) {
-            final favoriteProduct = viewModel.favorites[index];
-            return FavoriteListItem(
-              favoriteProduct: favoriteProduct,
-              // 찜 취소
-              onRemove: () => viewModel.unfavoriteProduct(favoriteProduct.entity.id),
-              // 상품 상세 이동
-              onTap: () => Navigator.pushNamed(
-                context,
-                AppRoutes.productDetail,
-                arguments: favoriteProduct.entity.id,
+                itemCount: viewModel.favorites.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.63,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                ),
+                itemBuilder: (context, index) {
+                  final favoriteProduct = viewModel.favorites[index];
+                  return FavoriteListItem(
+                    favoriteProduct: favoriteProduct,
+                    // 찜 취소
+                    onRemove: () =>
+                        viewModel.unfavoriteProduct(favoriteProduct.entity.id),
+                    // 상품 상세 이동
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.productDetail,
+                      arguments: favoriteProduct.entity.id,
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ),
     );
   }
