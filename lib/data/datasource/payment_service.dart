@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:damdiet/core/network/endpoint/cart_endpoints.dart';
 import 'package:damdiet/core/network/endpoint/order_endpoints.dart';
 import 'package:dio/dio.dart';
 
@@ -9,9 +10,7 @@ class PaymentService {
   final dio = ApiClient().dio;
 
   Future<Response> postOrder(List orders, String recipient,
-      String address, String phone) async {
-    var items = jsonEncode(orders);
-
+      String address, String phone, String payment) async {
     final response = await dio.post(
       OrderEndpoints.postOrders,
       data: {
@@ -20,7 +19,8 @@ class PaymentService {
           'recipient': recipient,
           'address': address,
           'phone': phone
-        }
+        },
+        'payment': payment
       }
     );
     if(response.statusCode == 201) {
@@ -32,5 +32,32 @@ class PaymentService {
       error: '결제 요청 실패: ${response.statusCode}',
     );
     }
+  }
+
+  Future<Response> postCartCheckout(List cartIds, String recipient,
+      String address, String phone, String payment) async {
+    final response = await dio.post(
+        CartEndpoints.cartCheckOut,
+        data: {
+          'shippingInfo': {
+            'recipient': recipient,
+            'address': address,
+            'phone': phone
+          },
+          'cartIds': cartIds,
+          'payment': payment
+        }
+    );
+    if(response.statusCode == 201) {
+      return response;
+    } else {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: '결제 요청 실패: ${response.statusCode}',
+      );
+    }
+
+
   }
 }

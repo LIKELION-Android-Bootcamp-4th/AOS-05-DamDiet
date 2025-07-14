@@ -1,5 +1,7 @@
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/presentation/screens/payment/payment_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PaymentCheckboxWidget extends StatefulWidget {
   const PaymentCheckboxWidget({super.key});
@@ -9,20 +11,18 @@ class PaymentCheckboxWidget extends StatefulWidget {
 }
 
 class _PaymentCheckboxWidgetState extends State<PaymentCheckboxWidget> {
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = context.watch<PaymentViewmodel>();
     return Padding(
       padding: EdgeInsets.only(left: 12.0),
       child: Row(
         children: [
           Checkbox(
-            value: _isChecked,
+            value: viewModel.isChecked,
             onChanged: (v) {
-              setState(() {
-                _isChecked = !_isChecked;
-              });
+              viewModel.clickCheckbox();
             }
           ),
           SizedBox(width: 14),

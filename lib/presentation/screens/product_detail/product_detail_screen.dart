@@ -242,7 +242,7 @@ class _ProductDetailContent extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     AppRoutes.payment,
-                    arguments: [[orderItem], [paymentItem]]
+                    arguments: [[orderItem], [paymentItem], null]
                   );
 
                 },

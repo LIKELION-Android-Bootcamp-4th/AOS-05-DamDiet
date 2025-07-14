@@ -1,4 +1,6 @@
+import 'package:damdiet/presentation/screens/payment/payment_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/constants/payment_constants.dart';
 import '../../../../core/widgets/category_outline_button.dart';
@@ -16,6 +18,7 @@ class _SelectPaymentWidgetState extends State<SelectPaymentWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = context.watch<PaymentViewmodel>();
     return OutlineChipGridGroup(
       labels: PaymentCategory.paymentCategories,
       values: PaymentCategory.paymentCategories,
@@ -24,6 +27,7 @@ class _SelectPaymentWidgetState extends State<SelectPaymentWidget> {
         setState(() {
           selectedPayment = value;
         });
+        viewModel.changePayment(value);
       },
     );
   }
