@@ -43,6 +43,7 @@ class CartOrderSummary extends StatelessWidget {
             onPressed: () {
               final List<OrderItem> orderItems = [];
               final List<PaymentItem> paymentItems = [];
+              final List<String> orderIds = [];
               for(int index = 0; index < viewModel.cart!.items.length; index++) {
                 var orderItem = OrderItem(
                   product: viewModel.cart!.items[index].product.id,
@@ -57,12 +58,14 @@ class CartOrderSummary extends StatelessWidget {
                 );
                 orderItems.add(orderItem);
                 paymentItems.add(paymentItem);
+                orderIds.add(viewModel.cart!.items[index].id);
+                debugPrint(viewModel.cart!.items[index].id);
               }
 
               Navigator.pushNamed(
                 context,
                 AppRoutes.payment,
-                arguments: [orderItems, paymentItems]
+                arguments: [orderItems, paymentItems, orderIds]
               );
             },
             style: ElevatedButton.styleFrom(

@@ -14,15 +14,18 @@ import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../data/models/payment/payment_item.dart';
 import '../../../data/models/request/order_request_dto.dart';
+import '../../routes/app_routes.dart';
 
 class PaymentScreenWrapper extends StatelessWidget {
   const PaymentScreenWrapper({super.key,
     required this.orderItems,
-    required this.paymentItems
+    required this.paymentItems,
+    required this.cartIds
   });
 
   final List<OrderItem> orderItems;
   final List<PaymentItem> paymentItems;
+  final List? cartIds;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class PaymentScreenWrapper extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => PaymentViewmodel(repo),
       builder: (context, child) {
-        return PaymentScreen(orderItems: orderItems, paymentItems: paymentItems);
+        return PaymentScreen(orderItems: orderItems, paymentItems: paymentItems, cartIds: cartIds);
       },
     );
   }
@@ -40,8 +43,9 @@ class PaymentScreenWrapper extends StatelessWidget {
 class PaymentScreen extends StatefulWidget {
   final List<OrderItem> orderItems;
   final List<PaymentItem> paymentItems;
+  final List? cartIds;
 
-  const PaymentScreen({super.key, required this.orderItems, required this.paymentItems});
+  const PaymentScreen({super.key, required this.orderItems, required this.paymentItems, required this.cartIds});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -250,23 +254,68 @@ class _PaymentScreenState extends State<PaymentScreen> {
               BottomCTAButton(
                 text: "주문하기",
                 onPressed: () async {
-                  if(await viewModel.doPayment(
+                  if(nameCtrl.text == '') {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("받는 사람을 입력하세요.")));
+                    return;
+                  }
+                  if(postCtrl.text == '') {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("우편주소를 입력하세요.")));
+                    return;
+                  }
+                  if(addressCtrl.text == '') {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("주소를 입력하세요.")));
+                    return;
+                  }
+                  if(phoneFirstCtrl.text == '' || phoneSecondCtrl.text == '' || phoneThirdCtrl.text == '') {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("전화번호 입력이 잘못되었습니다.")));
+                    return;
+                  }
+                  if(viewModel.selectedPayment == null) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("결제 수단을 선택해 주세요.")));
+                    return;
+                  }
+                  if(viewModel.isChecked == false) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("약관에 동의해야 결제가 가능합니다.")));
+                    return;
+                  }
+                  try {
+                    if(await viewModel.doPayment(
                       orderItem: widget.orderItems,
                       recipient: nameCtrl.text,
                       address: "${postCtrl.text} ${addressCtrl.text} ${addressDetailCtrl.text}",
-                      phone: "${phoneFirstCtrl.text}-${phoneSecondCtrl.text}-${phoneThirdCtrl.text}"
-                  )) {
+                      phone: "${phoneFirstCtrl.text}-${phoneSecondCtrl.text}-${phoneThirdCtrl.text}",
+                      cartIds: widget.cartIds
+                    )) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("주문이 완료되었습니다.")));
+                      Navigator.pushNamed(context, AppRoutes.home);
+                    }
+                    else {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")));
+                    }
+                  }
+                  catch(e) {
                     ScaffoldMessenger.of(
                       context,
-                    ).showSnackBar(SnackBar(content: Text("주문 성공")));
+                    ).showSnackBar(SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")));
+                    debugPrint("$e");
                   }
-                  else {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text("주문 실패")));
-                  }
-                  // Navigator.pop(context);
-                  //Navigator.pushNamed(context, AppRoutes.home);
+
                 },
               ),
               SizedBox(height: 24),

@@ -143,11 +143,12 @@ class DamDietApp extends StatelessWidget {
               );
 
           case AppRoutes.payment:
-              final arguments = settings.arguments as List<List<Object>>;
+              final arguments = settings.arguments as List<List<Object>?>;
               return MaterialPageRoute(
                 builder: (_) => PaymentScreenWrapper(
                   orderItems: arguments[0] as List<OrderItem>,
-                  paymentItems: arguments[1] as List<PaymentItem>
+                  paymentItems: arguments[1] as List<PaymentItem>,
+                  cartIds: arguments[2] as List<String>?
                 ),
               );
 
