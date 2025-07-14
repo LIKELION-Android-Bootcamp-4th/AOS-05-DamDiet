@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../data/repositories/nutrition_repository.dart';
-import '../../provider/nutrition_provider.dart';
 
 class KcalCalculatorScreenWrapper extends StatelessWidget {
   const KcalCalculatorScreenWrapper({super.key});

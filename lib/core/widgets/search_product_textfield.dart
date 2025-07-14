@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-import '../../presentation/provider/search_provider.dart';
 import '../../presentation/routes/app_routes.dart';
 
 class SearchProductTextField extends StatefulWidget {

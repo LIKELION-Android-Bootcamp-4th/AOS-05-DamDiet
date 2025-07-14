@@ -2,7 +2,6 @@ import 'package:damdiet/core/constants/category_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../presentation/provider/search_provider.dart';
 import '../theme/appcolor.dart';
 
 class CategoryOutlineButton extends StatelessWidget {
