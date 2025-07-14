@@ -50,9 +50,12 @@ class KcalNutritionDialog extends StatelessWidget {
               )
             ),
             SizedBox(height: 8),
-            Text(
-              '제조사: ${list.company}',
-              style: nutDetailTextStyle
+            Visibility(
+              visible: list.company != '',
+              child: Text(
+                  '제조사: ${list.company}',
+                  style: nutDetailTextStyle
+              ),
             ),
             SizedBox(height: 8),
             Visibility(
