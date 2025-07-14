@@ -125,6 +125,7 @@ class _ProductDetailContent extends StatelessWidget {
                       SingleChildScrollView(
                         child: ProductReviewsTab(
                           reviewList: viewModel.product.reviews ?? [],
+                          rating: viewModel.product.rating,
                         ),
                       ),
                     ],

@@ -18,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -38,30 +38,33 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset('assets/images/app_name.png',width: 120),
+              const SizedBox(height: 32),
+
               CustomTextField(
                 hintText: '이메일',
                 isPassword: false,
                 controller: _emailController,
-                onChanged: viewModel.setEmail
+                onChanged: viewModel.setEmail,
               ),
 
-              const SizedBox(height: 16,),
+              const SizedBox(height: 16),
 
               CustomTextField(
                 hintText: '비밀번호',
                 isPassword: true,
                 controller: _passwordController,
-                onChanged: viewModel.setPassword
+                onChanged: viewModel.setPassword,
               ),
 
-              const SizedBox(height: 28,),
+              const SizedBox(height: 28),
 
               if (viewModel.errorMessage.isNotEmpty)
                 Text(
                   viewModel.errorMessage,
                   style: const TextStyle(color: Colors.red),
                 ),
-              const SizedBox(height: 4,),
+              const SizedBox(height: 4),
 
               BottomCTAButton(
                 text: '로그인',
@@ -75,13 +78,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
 
               const SignUpPrompt(),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("뒤로 가기"),
-              ),
             ],
           ),
         ),
