@@ -17,13 +17,13 @@ class CartQuantityControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 76,
       height: 24,
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.gray100),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
@@ -34,12 +34,15 @@ class CartQuantityControl extends StatelessWidget {
               child: const Icon(Icons.remove, size: 16, color: AppColors.textSub),
             ),
           ),
-          Text(
-            '$quantity',
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textMain,
-              fontFamily: 'PretendardMedium',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Text(
+              '$quantity',
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.textMain,
+                fontFamily: 'PretendardMedium',
+              ),
             ),
           ),
           InkWell(

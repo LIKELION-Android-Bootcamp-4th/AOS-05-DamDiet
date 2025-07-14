@@ -6,6 +6,7 @@ import '../../../../core/widgets/bottom_cta_button.dart';
 import '../../../../core/widgets/damdiet_appbar.dart';
 import '../../../../data/repositories/mypage_repository.dart';
 import '../../auth/widgets/custom_textfield.dart';
+import '../../../provider/user_provider.dart';
 import 'mypage_nickname_edit_viewmodel.dart';
 
 class MyPageNicknameEditScreenWrapper extends StatelessWidget {
@@ -14,9 +15,11 @@ class MyPageNicknameEditScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repository = Provider.of<MyPageRepository>(context, listen: false);
+    final userProvider = context.read<UserProvider>();
+
 
     return ChangeNotifierProvider<NicknameEditViewModel>(
-      create: (_) => NicknameEditViewModel(repository),
+      create: (_) => NicknameEditViewModel(repository,userProvider),
       builder: (context, child) {
         return MyPageNicknameEditScreen();
       },

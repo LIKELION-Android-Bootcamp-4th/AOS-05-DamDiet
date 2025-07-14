@@ -31,5 +31,19 @@ class User {
       'address': address?.toJson(),
     };
   }
+
+  User copyWith({
+    String? id,
+    String? email,
+    String? nickName,
+    Address? address,
+  }) {
+    return User(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      nickName: nickName ?? this.nickName,
+      address: address ?? this.address,
+    );
+  }
 }
 
