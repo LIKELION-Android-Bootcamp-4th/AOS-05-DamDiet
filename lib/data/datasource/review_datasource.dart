@@ -1,4 +1,4 @@
-
+import 'dart:convert';
 import 'package:damdiet/core/network/api_client.dart';
 import 'package:damdiet/core/network/endpoint/mypage_endpoints.dart';
 import 'package:damdiet/core/network/endpoint/product_endpoints.dart';
@@ -56,7 +56,7 @@ class ReviewDatasource {
     final formData = FormData.fromMap({
       'rating': rating,
       'comment': content,
-      'keepImageIds': keepImageIds,
+      'keepImageIds': jsonEncode(keepImageIds),
     });
 
     for (var imageFile in newImages) {
