@@ -7,11 +7,18 @@ class PaymentViewmodel extends ChangeNotifier {
 
   PaymentViewmodel(this._repository);
 
+  bool _isChecked = false;
+  String? _selectedPayment;
+
+  bool get isChecked => _isChecked;
+  String? get selectedPayment => _selectedPayment;
+
   Future<bool> doPayment({
     required List<OrderItem> orderItem,
     required String recipient,
     required String address,
-    required String phone
+    required String phone,
+    List? cartIds,
   }) async {
     var items = [];
     for(int index = 0; index < orderItem.length; index++) {
@@ -21,12 +28,34 @@ class PaymentViewmodel extends ChangeNotifier {
         'unitPrice': orderItem[index].unitPrice
       });
     }
-    var bool = await _repository.postOrder(
+    if(cartIds != null) {
+      return await _repository.postCartCheckout(
+        cartIds: cartIds,
+        recipient: recipient,
+        address: address,
+        phone: phone,
+        payment: _selectedPayment!
+      );
+    }
+    else {
+      return await _repository.postOrder(
         orders: items,
         recipient: recipient,
         address: address,
-        phone: phone);
+        phone: phone,
+        payment: _selectedPayment!
+      );
+    }
+  }
+
+
+  clickCheckbox() {
+    _isChecked = !_isChecked;
     notifyListeners();
-    return bool;
+  }
+
+  changePayment(String? value) {
+    _selectedPayment = value;
+    notifyListeners();
   }
 }
