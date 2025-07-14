@@ -322,7 +322,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(SnackBar(content: Text("주문이 완료되었습니다.")));
-                      Navigator.pushNamed(context, AppRoutes.home);
+                      Navigator.pushNamed(context, AppRoutes.myOrders);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")),
