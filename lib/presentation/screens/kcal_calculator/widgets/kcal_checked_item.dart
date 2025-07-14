@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/theme/appcolor.dart';
-import '../../../provider/nutrition_provider.dart';
 
 class KcalCheckedItem extends StatelessWidget {
   const KcalCheckedItem(

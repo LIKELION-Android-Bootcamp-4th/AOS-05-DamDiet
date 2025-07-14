@@ -1,3 +1,4 @@
+import 'package:damdiet/core/widgets/underline_text.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_checked_list.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_listview_item.dart';
@@ -10,7 +11,6 @@ import 'package:provider/provider.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../data/repositories/nutrition_repository.dart';
-import '../../provider/nutrition_provider.dart';
 
 class KcalCalculatorScreenWrapper extends StatelessWidget {
   const KcalCalculatorScreenWrapper({super.key});
@@ -44,7 +44,7 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
       backgroundColor: Colors.white,
       appBar: DamdietAppbar(
         title: '칼로리계산기',
-        showBackButton: true,
+        showBackButton: false,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -136,9 +136,9 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    '계산된 칼로리 양은 ${viewModel.selectedCalSum} kcal 입니다.',
-                    style: TextStyle(
+                  UnderlineText(
+                    text:'계산된 칼로리 양은 ${viewModel.selectedCalSum} kcal 입니다.',
+                    textStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: 'PretendardSemiBold',
                       color: AppColors.textMain,
@@ -146,9 +146,7 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 24),
-              BottomCTAButton(text: '커뮤니티에 공유', onPressed: () {}),
-              SizedBox(height: 24),
+              SizedBox(height: 48),
 
             ],
           ),

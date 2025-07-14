@@ -57,8 +57,7 @@ class CartItemCard extends StatelessWidget {
                       child: Container(
                           width: 70, height: 70, color: AppColors.gray100,
                           child: CommonNetworkImage(
-                            //TODO 확인
-                            url: "https://dm.pulmuone.com/upload/img/202408/20240808s0SQaD1ri.jpg",
+                            url: item.product.thumbnailImage,
                             size: 70,
                           ),
                       ),
@@ -101,32 +100,6 @@ class CartItemCard extends StatelessWidget {
                     const SizedBox(width: 12),
                   ],
                 ),
-                if (item.product.options.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: CartOptionRow(
-                      optionName: item.product.options.entries
-                          .map((e) => '${e.key}: ${e.value}')
-                          .join(', '),
-                    ),
-                  ),
-                if (item.product.options.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: onOptionChange,
-                        icon: const Icon(Icons.add, size: 11),
-                        label: const Text('옵션 변경',style: TextStyle(fontSize: 12, color: AppColors.textSub, fontFamily: 'PretendardMedium')),
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          foregroundColor: AppColors.textSub,
-                          side: const BorderSide(color: AppColors.gray200),
-                        ),
-                      ),
-                    ),
-                  ),
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:damdiet/data/models/cart/cart_item.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/appcolor.dart';
@@ -19,7 +20,7 @@ class CartPriceInfo extends StatelessWidget {
         children: [
           if (hasDiscount)
             Text(
-              '${originalTotalPrice}원',
+              formatPrice(originalTotalPrice),
               style: const TextStyle(
                 fontSize: 12,
                 decoration: TextDecoration.lineThrough,
@@ -31,7 +32,7 @@ class CartPriceInfo extends StatelessWidget {
           const SizedBox(height: 4),
 
           Text(
-            '${item.totalPrice}원',
+            formatPrice(item.totalPrice),
             style: const TextStyle(
               fontSize: 14,
               color: AppColors.textMain,

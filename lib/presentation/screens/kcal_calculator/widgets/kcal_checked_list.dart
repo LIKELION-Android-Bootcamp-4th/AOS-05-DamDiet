@@ -2,7 +2,6 @@ import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_vie
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/nutrition_provider.dart';
 import 'kcal_checked_item.dart';
 
 class KcalCheckedList extends StatelessWidget {

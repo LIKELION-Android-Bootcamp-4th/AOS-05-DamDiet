@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,31 +36,35 @@ class CartOrderSummary extends StatelessWidget {
                   Text('$selectedItemCount건', style: const TextStyle(fontSize: 14, color: AppColors.textHint, fontFamily: 'PretendardMedium')),
                 ],
               ),
-              Text('$totalAmount원', style: const TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
+              Text(formatPrice(totalAmount), style: const TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
             ],
           ),
           const SizedBox(height: 16,),
           ElevatedButton(
             onPressed: () {
+              final selectedItems = viewModel.cart!.items
+                  .where((item) => viewModel.selectedItemIds.contains(item.id))
+                  .toList();
+
               final List<OrderItem> orderItems = [];
               final List<PaymentItem> paymentItems = [];
               final List<String> orderIds = [];
-              for(int index = 0; index < viewModel.cart!.items.length; index++) {
-                var orderItem = OrderItem(
-                  product: viewModel.cart!.items[index].product.id,
-                  quantity: viewModel.cart!.items[index].quantity,
-                  unitPrice: viewModel.cart!.items[index].product.unitPrice
-                );
-                var paymentItem = PaymentItem(
-                  name: viewModel.cart!.items[index].product.name,
-                  price: viewModel.cart!.items[index].product.unitPrice,
+
+              for (var item in selectedItems) {
+                orderItems.add(OrderItem(
+                  product: item.product.id,
+                  quantity: item.quantity,
+                  unitPrice: item.product.unitPrice,
+                ));
+
+                paymentItems.add(PaymentItem(
+                  name: item.product.name,
+                  price: item.product.unitPrice,
                   discount: 0,
-                  image: viewModel.cart!.items[index].product.thumbnailImage
-                );
-                orderItems.add(orderItem);
-                paymentItems.add(paymentItem);
-                orderIds.add(viewModel.cart!.items[index].id);
-                debugPrint(viewModel.cart!.items[index].id);
+                  image: item.product.thumbnailImage,
+                ));
+
+                orderIds.add(item.id);
               }
 
               Navigator.pushNamed(
