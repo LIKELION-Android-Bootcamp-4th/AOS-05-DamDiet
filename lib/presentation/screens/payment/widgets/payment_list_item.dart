@@ -3,13 +3,14 @@ import 'package:damdiet/data/models/payment/payment_item.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/appcolor.dart';
+import '../../../../core/utils/formatters.dart';
 import '../../../../data/models/request/order_request_dto.dart';
-
 
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
     super.key,
-    required this.paymentItem, required this.orderItem
+    required this.paymentItem,
+    required this.orderItem,
   });
 
   final PaymentItem paymentItem;
@@ -17,7 +18,8 @@ class PaymentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var discountedPrice = (paymentItem.price * (100 - paymentItem.discount) / 100).toInt();
+    var discountedPrice =
+        (paymentItem.price * (100 - paymentItem.discount) / 100).toInt();
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -46,8 +48,6 @@ class PaymentListItem extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-
-
                   ],
                 ),
                 SizedBox(height: 12),
@@ -64,7 +64,7 @@ class PaymentListItem extends StatelessWidget {
                     Visibility(
                       visible: paymentItem.discount != 0,
                       child: Text(
-                        "${paymentItem.price} 원",
+                        formatPrice(paymentItem.price),
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'PretendardBold',
@@ -99,20 +99,20 @@ class PaymentListItem extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'PretendardBold',
-                                  color: AppColors.textSub
+                                color: AppColors.textSub,
                               ),
                             ),
-                            SizedBox(width: 8,),
+                            SizedBox(width: 8),
                             Text(
-                              "${discountedPrice*orderItem.quantity}원",
+                              formatPrice(discountedPrice * orderItem.quantity),
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'PretendardBold',
-                                color: AppColors.textMain
+                                color: AppColors.textMain,
                               ),
                             ),
-                            ]
-                        )
+                          ],
+                        ),
                       ],
                     ),
                   ],

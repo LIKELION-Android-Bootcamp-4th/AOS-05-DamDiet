@@ -1,4 +1,5 @@
 import 'package:damdiet/core/theme/appcolor.dart';
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:damdiet/core/widgets/network_image.dart';
 import 'package:damdiet/core/widgets/underline_text.dart';
 import 'package:damdiet/data/models/product/product.dart';
@@ -99,7 +100,7 @@ class ProductListItem extends StatelessWidget {
                       Visibility(
                         visible: product.discount != 0,
                         child: Text(
-                          "${product.price} 원",
+                          "${formatPrice(product.price)} 원",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'PretendardBold',
@@ -128,7 +129,7 @@ class ProductListItem extends StatelessWidget {
 
                           SizedBox(width: 14),
                           Text(
-                            "$discountedPrice 원",
+                            "${formatPrice(discountedPrice)} 원",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'PretendardBold',

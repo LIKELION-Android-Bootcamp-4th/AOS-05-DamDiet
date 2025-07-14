@@ -10,6 +10,7 @@ import 'package:damdiet/presentation/screens/payment/widgets/select_payment._wid
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../core/widgets/product_list_item.dart';
@@ -215,7 +216,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               SizedBox(height: 12),
               PaymentSpaceBetweenWidget(
                 leftText: '주문상품',
-                rightText: '$productTotalPrice원',
+                rightText: formatPrice(productTotalPrice),
               ),
               SizedBox(height: 12),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '+3,000원'),
@@ -232,7 +233,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   ),
                   Text(
-                    '$paymentPrice원',
+                    formatPrice(paymentPrice),
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PretendardBold',
