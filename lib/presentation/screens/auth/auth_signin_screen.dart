@@ -75,13 +75,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
 
               const SignUpPrompt(),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("뒤로 가기"),
-              ),
             ],
           ),
         ),
