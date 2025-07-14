@@ -20,7 +20,6 @@ class DamdietAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
       scrolledUnderElevation: 0,

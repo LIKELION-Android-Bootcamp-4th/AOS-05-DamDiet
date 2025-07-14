@@ -1,20 +1,25 @@
+import 'package:damdiet/presentation/provider/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyPageHeader extends StatelessWidget {
   const MyPageHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
+    final nickname = userProvider.user?.nickName ?? '회원';
+
     return Stack(
       children: [
-        const Positioned(
+        Positioned(
           top: 40,
           left: 30,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '국밥천국님',
+                '$nickname님',
                 style: TextStyle(
                   fontSize: 24,
                   color: Colors.white,

@@ -21,7 +21,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_
 import 'package:damdiet/presentation/screens/mypage/mypage_nickname_edit/mypage_nickname_edit_screen.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/presentation/screens/splash/splash_screen.dart';
-import 'package:damdiet/presentation/screens/splash/splash_viewmodel.dart';
+import 'package:damdiet/presentation/provider/user_provider.dart';
 import 'package:damdiet/presentation/screens/auth/signin_viewmodel.dart';
 import 'package:damdiet/data/repositories/product_repository.dart';
 import 'package:damdiet/presentation/routes/app_routes.dart';
@@ -79,8 +79,6 @@ void main() {
           ProxyProvider<OrderDataSource, OrderRepository>(
             update: (_, datasource, __) => OrderRepository(datasource),
           ),
-
-
           ProxyProvider<MyPageDataSource, MyPageRepository>(
             update: (_, datasource, __) => MyPageRepository(datasource),
           ),
@@ -88,8 +86,13 @@ void main() {
             update: (_, datasource, __) => PaymentRepository(datasource),
           ),
 
+
+          ChangeNotifierProxyProvider<MyPageDataSource, UserProvider>(
+            create: (_) => UserProvider(MyPageDataSource(), FlutterSecureStorage()),
+            update: (_, datasource, __) => UserProvider(datasource, FlutterSecureStorage()),
+          ),
+
           // 앱 전역에서 사용하는 뷰모델 냅두기
-          ChangeNotifierProvider(create: (_) => SplashViewModel(FlutterSecureStorage())),
           ChangeNotifierProvider(create: (_) => SignInViewModel()),
           ChangeNotifierProvider(create: (_) => MypageViewModel(MyPageRepository((MyPageDataSource()))),),
 
