@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:damdiet/presentation/screens/cart/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,7 @@ class CartOrderSummary extends StatelessWidget {
                   Text('$selectedItemCount건', style: const TextStyle(fontSize: 14, color: AppColors.textHint, fontFamily: 'PretendardMedium')),
                 ],
               ),
-              Text('$totalAmount원', style: const TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
+              Text(formatPrice(totalAmount), style: const TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
             ],
           ),
           const SizedBox(height: 16,),
