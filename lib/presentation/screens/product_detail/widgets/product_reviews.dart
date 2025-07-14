@@ -6,9 +6,10 @@ import '../../../../core/widgets/network_image.dart';
 import '../../../../data/models/review/review.dart';
 
 class ProductReviewsTab extends StatelessWidget {
-  const ProductReviewsTab({super.key, required this.reviewList});
+  const ProductReviewsTab({super.key, required this.reviewList, required this.rating});
 
   final List<Review> reviewList;
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +63,7 @@ class ProductReviewsTab extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Text(
-                          //TODO 오류 수정되면 서버에서 받아온 값으로 수정
-                          '5.0',
+                          rating.toString(),
                           style: TextStyle(
                             fontSize: 24,
                             fontFamily: 'PretendardBold',

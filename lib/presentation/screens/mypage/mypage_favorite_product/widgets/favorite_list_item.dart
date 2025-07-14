@@ -71,15 +71,17 @@ class FavoriteListItem extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
-                '30%', // TODO: 실제 할인율 데이터로
-                style: TextStyle(
-                    fontFamily: 'PretendardBold',
-                    fontSize: 14,
-                    color: AppColors.errorRed
-                ),
-              ),
+              // TODO: 실제 할인율 데이터 안옴
+              // const Text(
+              //   '30%',
+              //   style: TextStyle(
+              //       fontFamily: 'PretendardBold',
+              //       fontSize: 14,
+              //       color: AppColors.errorRed
+              //   ),
+              // ),
               const SizedBox(width: 4),
               Text(
                 '${favoriteProduct.entity.price} 원',
