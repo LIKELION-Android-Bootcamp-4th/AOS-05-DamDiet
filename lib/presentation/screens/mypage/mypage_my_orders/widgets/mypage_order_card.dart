@@ -23,7 +23,7 @@ class MyPageOrderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MyPageOrderCardHeader(orderDate: order.createdAt, orderId: order.id),
+            MyPageOrderCardHeader(orderDate: order.createdAt, orderId: order.id, status: order.status,),
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 16),
             ListView.separated(

@@ -1,4 +1,3 @@
-import 'package:damdiet/models/ProductNutrition.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/kcal_calculator_viewmodel.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_checked_list.dart';
 import 'package:damdiet/presentation/screens/kcal_calculator/widgets/kcal_listview_item.dart';

@@ -10,6 +10,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage_my_order_detail/widge
 import 'package:provider/provider.dart';
 
 import '../../../../core/utils/extract_date.dart';
+import '../../../../core/utils/translateOrderStatus.dart';
 import '../../../../data/repositories/order_repository.dart';
 import 'order_detail_viewmodel.dart';
 
@@ -77,10 +78,14 @@ class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen>
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: Text(extractDate(order.createdAt), style: const TextStyle(
-                  color: AppColors.textMain,
-                  fontSize: 12,
-                  fontFamily: 'PretendardSemiBold')),
+              child:
+              Row(
+                  children: [
+                    Text(extractDate(order.createdAt), style: const TextStyle(fontSize: 12,color: AppColors.textMain, fontFamily: 'PretendardSemiBold')),
+                    const SizedBox(width: 8,),
+                    Text((translateOrderStatus(order.status)), style: const TextStyle(fontSize: 12,color: AppColors.errorRed, fontFamily: 'PretendardSemiBold')),
+                  ]
+              ),
             ),
             const Divider(color: AppColors.gray100, height: 1),
             const SizedBox(height: 12),

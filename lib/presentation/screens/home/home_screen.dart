@@ -18,6 +18,7 @@ import '../../../core/widgets/bottom_nav_bar.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../data/models/product/product_query.dart';
 import '../../../data/repositories/product_repository.dart';
+import '../kcal_calculator/kcal_calculator_screen.dart';
 import '../mypage/mypage/mypage_screen.dart';
 import 'home_viewmodel.dart';
 import '../../routes/app_routes.dart';
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2;
   final List<Widget> _widgetOptions = <Widget>[
     SearchScreen(),
-    CommunityHomeScreen(),
+    KcalCalculatorScreenWrapper(),
     DamDietHomeScreen(),
     CartScreenWrapper(),
     MyPageScreen(),
@@ -108,76 +109,41 @@ class _DamDietHomeScreenContent extends StatelessWidget {
           icon: Icon(Icons.search),
         ),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              HomeBanner(),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            HomeBanner(),
 
-              NoticeBanner(),
+            //NoticeBanner(),
 
-              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+            CategoryList(onCategorySelected: (category){
+              final query = ProductQuery(category: category);
+              Navigator.pushNamed(
+                context,
+                AppRoutes.products,
+                arguments: query,
+              );
+            }),
 
-              CategoryList(onCategorySelected: (category){
-                final query = ProductQuery(category: category);
-                Navigator.pushNamed(
-                  context,
-                  AppRoutes.products,
-                  arguments: query,
-                );
-              }),
+            Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+            ProductList(title: "따끈따끈! 신제품", productList: viewModel.latestProducts),
 
-              ProductList(title: "따끈따끈! 신제품", productList: viewModel.latestProducts),
+            Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-              Divider(height: 6, color: AppColors.gray100, thickness: 6),
+            ProductList(
+              title: "다른 고객님들이 많이 본 상품",
+              productList: viewModel.popularProducts,
+            ),
 
-              ProductList(
-                title: "다른 고객님들이 많이 본 상품",
-                productList: viewModel.popularProducts,
-              ),
+            Divider(height: 6, color: AppColors.gray100, thickness: 6),
 
-              Divider(height: 6, color: AppColors.gray100, thickness: 6),
-
-              ProductList(
-                title: "판매량 높은 상품",
-                productList: viewModel.salesProducts,
-              ),
-
-              Divider(height: 6, color: AppColors.gray100, thickness: 6),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.productDetail);
-                },
-                child: Text(
-                  "제품 상세",
-                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.products);
-                },
-                child: Text(
-                  "제품 목록?",
-                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-                ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.signIn);
-                },
-                child: Text(
-                  "로그인",
-                  style: TextStyle(fontFamily: 'PretendardBold', fontSize: 20),
-                ),
-              ),
-            ],
-          ),
+            ProductList(
+              title: "판매량 높은 상품",
+              productList: viewModel.salesProducts,
+            ),
+          ],
         ),
       ),
     );

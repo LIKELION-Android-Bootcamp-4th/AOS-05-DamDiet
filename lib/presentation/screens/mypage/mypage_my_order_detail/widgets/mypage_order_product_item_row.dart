@@ -41,9 +41,7 @@ class MyPageOrderProductItemRow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              //TODO API 요청
-              //if (!item.hasReview)
-              if(true)
+              if(item.isReviewed == false)
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(
