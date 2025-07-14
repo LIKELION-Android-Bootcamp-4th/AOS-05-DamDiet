@@ -27,9 +27,7 @@ class DamdietAppbar extends StatelessWidget implements PreferredSizeWidget {
           ? Padding(
         padding: const EdgeInsets.only(left: 16),
         child: Image.asset(
-          'assets/images/damdiet_logo_9.png',
-          width: 36,
-          height: 36,
+          'assets/images/app_name.png',
         ),
       )
           : (showBackButton
