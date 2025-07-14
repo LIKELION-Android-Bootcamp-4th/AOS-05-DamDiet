@@ -44,6 +44,7 @@ class OrderProduct {
   final int unitPrice;
   final int totalPrice;
   final String thumbnailImageUrl;
+  final bool isReviewed;
 
   OrderProduct({
     required this.id,
@@ -52,6 +53,7 @@ class OrderProduct {
     required this.unitPrice,
     required this.totalPrice,
     required this.thumbnailImageUrl,
+    this.isReviewed = false,
   });
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) {
@@ -62,6 +64,7 @@ class OrderProduct {
       unitPrice: json['unitPrice'] as int,
       totalPrice: json['totalPrice'] as int,
       thumbnailImageUrl: json['thumbnailImageUrl'] as String? ?? '',
+      isReviewed: (json['review'] != null)? true : false,
     );
   }
 
