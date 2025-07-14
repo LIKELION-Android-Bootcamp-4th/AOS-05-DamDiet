@@ -44,6 +44,7 @@ class _KcalCalculatorScreenState extends State<KcalCalculatorScreen> {
       backgroundColor: Colors.white,
       appBar: DamdietAppbar(
         title: '칼로리계산기',
+        showBackButton: false,
       ),
       body: SingleChildScrollView(
         child: Container(
