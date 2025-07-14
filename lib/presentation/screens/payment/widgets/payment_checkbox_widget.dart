@@ -23,7 +23,8 @@ class _PaymentCheckboxWidgetState extends State<PaymentCheckboxWidget> {
             value: viewModel.isChecked,
             onChanged: (v) {
               viewModel.clickCheckbox();
-            }
+            },
+            activeColor: AppColors.primaryColor
           ),
           SizedBox(width: 14),
           Text(

@@ -1,3 +1,4 @@
+import 'package:damdiet/core/widgets/network_image.dart';
 import 'package:damdiet/data/models/payment/payment_item.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +9,11 @@ import '../../../../data/models/request/order_request_dto.dart';
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
     super.key,
-    required this.paymentItem
+    required this.paymentItem, required this.orderItem
   });
 
   final PaymentItem paymentItem;
+  final OrderItem orderItem;
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +24,7 @@ class PaymentListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            paymentItem.image,
-            width: 100,
-            height: 100,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return SizedBox(
-                width: 100,
-                height: 100,
-                child: Center(child: CircularProgressIndicator()),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return SizedBox(
-                width: 100,
-                height: 100,
-                child: Center(child: Icon(Icons.error)),
-              );
-            },
-          ),
+          CommonNetworkImage(url: paymentItem.image, size: 100),
           SizedBox(width: 14),
 
           Expanded(
@@ -109,13 +92,27 @@ class PaymentListItem extends StatelessWidget {
                         ),
 
                         SizedBox(width: 14),
-                        Text(
-                          "$discountedPrice원",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'PretendardBold',
-                          ),
-                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "${orderItem.quantity}개",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'PretendardBold',
+                                  color: AppColors.textSub
+                              ),
+                            ),
+                            SizedBox(width: 8,),
+                            Text(
+                              "${discountedPrice*orderItem.quantity}원",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'PretendardBold',
+                                color: AppColors.textMain
+                              ),
+                            ),
+                            ]
+                        )
                       ],
                     ),
                   ],

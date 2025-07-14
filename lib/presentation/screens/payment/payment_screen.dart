@@ -11,16 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
+import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../data/models/payment/payment_item.dart';
 import '../../../data/models/request/order_request_dto.dart';
 import '../../routes/app_routes.dart';
 
 class PaymentScreenWrapper extends StatelessWidget {
-  const PaymentScreenWrapper({super.key,
+  const PaymentScreenWrapper({
+    super.key,
     required this.orderItems,
     required this.paymentItems,
-    required this.cartIds
+    required this.cartIds,
   });
 
   final List<OrderItem> orderItems;
@@ -33,19 +35,27 @@ class PaymentScreenWrapper extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => PaymentViewmodel(repo),
       builder: (context, child) {
-        return PaymentScreen(orderItems: orderItems, paymentItems: paymentItems, cartIds: cartIds);
+        return PaymentScreen(
+          orderItems: orderItems,
+          paymentItems: paymentItems,
+          cartIds: cartIds,
+        );
       },
     );
   }
 }
-
 
 class PaymentScreen extends StatefulWidget {
   final List<OrderItem> orderItems;
   final List<PaymentItem> paymentItems;
   final List? cartIds;
 
-  const PaymentScreen({super.key, required this.orderItems, required this.paymentItems, required this.cartIds});
+  const PaymentScreen({
+    super.key,
+    required this.orderItems,
+    required this.paymentItems,
+    required this.cartIds,
+  });
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -63,22 +73,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     int productTotalPrice = 0;
-    for(int n = 0; n < widget.orderItems.length; n++) {
-      productTotalPrice += (widget.orderItems[n].unitPrice * widget.orderItems[n].quantity);
+    for (int n = 0; n < widget.orderItems.length; n++) {
+      productTotalPrice +=
+          (widget.orderItems[n].unitPrice * widget.orderItems[n].quantity);
     }
     int paymentPrice = productTotalPrice + 3000;
     var viewModel = context.watch<PaymentViewmodel>();
 
-    // debugPrint("👍👍${widget.orderItems[1].product}");
-
     return Scaffold(
+      appBar: DamdietAppbar(title: '주문/결제', showBackButton: true),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "배송지",
                 style: TextStyle(
                   fontSize: 16,
@@ -86,7 +97,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   SizedBox(
@@ -100,10 +111,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                   ),
-                  PaymentTextField(controller: nameCtrl)
+                  PaymentTextField(controller: nameCtrl),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   SizedBox(
@@ -117,16 +128,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                   ),
-                  PaymentTextField(flex: 2, hintText: '우편주소', controller: postCtrl),
-                  SizedBox(width: 10),
+                  PaymentTextField(
+                    flex: 2,
+                    hintText: '우편주소',
+                    controller: postCtrl,
+                  ),
+                  const SizedBox(width: 10),
                   Expanded(
                     flex: 1,
-                    child: BottomCTAButton(
-                      text: "주소검색",
-                      onPressed: () {
-
-                      },
-                    ),
+                    child: BottomCTAButton(text: "주소검색", onPressed: () {}),
                   ),
                 ],
               ),
@@ -141,7 +151,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField(controller: addressDetailCtrl)
+                  PaymentTextField(controller: addressDetailCtrl),
                 ],
               ),
               SizedBox(height: 8),
@@ -176,19 +186,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
-              SizedBox(
-                height: 300,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return PaymentListItem(paymentItem: widget.paymentItems[index]);
-                  },
-                  itemCount: widget.paymentItems.length,
 
-                ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return PaymentListItem(
+                    paymentItem: widget.paymentItems[index],
+                    orderItem: widget.orderItems[index],
+                  );
+                },
+                itemCount: widget.paymentItems.length,
               ),
 
-
               Divider(thickness: 6, color: AppColors.gray100),
+              SizedBox(height: 8),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '3,000 원'),
               Divider(thickness: 1, color: AppColors.textSub),
               SizedBox(height: 20),
@@ -201,7 +213,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               SizedBox(height: 12),
-              PaymentSpaceBetweenWidget(leftText: '주문상품', rightText: '$productTotalPrice원'),
+              PaymentSpaceBetweenWidget(
+                leftText: '주문상품',
+                rightText: '$productTotalPrice원',
+              ),
               SizedBox(height: 12),
               PaymentSpaceBetweenWidget(leftText: '배송비', rightText: '+3,000원'),
               SizedBox(height: 36),
@@ -246,76 +261,78 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: AppColors.textMain,
                 ),
               ),
+              SizedBox(height: 12),
               SelectPaymentWidget(),
               Divider(thickness: 1, color: AppColors.textSub),
-              SizedBox(height: 24),
+              SizedBox(height: 4),
               PaymentCheckboxWidget(),
-              SizedBox(height: 36),
+              SizedBox(height: 12),
               BottomCTAButton(
                 text: "주문하기",
                 onPressed: () async {
-                  if(nameCtrl.text == '') {
+                  if (nameCtrl.text == '') {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text("받는 사람을 입력하세요.")));
                     return;
                   }
-                  if(postCtrl.text == '') {
+                  if (postCtrl.text == '') {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text("우편주소를 입력하세요.")));
                     return;
                   }
-                  if(addressCtrl.text == '') {
+                  if (addressCtrl.text == '') {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text("주소를 입력하세요.")));
                     return;
                   }
-                  if(phoneFirstCtrl.text == '' || phoneSecondCtrl.text == '' || phoneThirdCtrl.text == '') {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text("전화번호 입력이 잘못되었습니다.")));
+                  if (phoneFirstCtrl.text == '' ||
+                      phoneSecondCtrl.text == '' ||
+                      phoneThirdCtrl.text == '') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("전화번호 입력이 잘못되었습니다.")),
+                    );
                     return;
                   }
-                  if(viewModel.selectedPayment == null) {
+                  if (viewModel.selectedPayment == null) {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text("결제 수단을 선택해 주세요.")));
                     return;
                   }
-                  if(viewModel.isChecked == false) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text("약관에 동의해야 결제가 가능합니다.")));
+                  if (viewModel.isChecked == false) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("약관에 동의해야 결제가 가능합니다.")),
+                    );
                     return;
                   }
                   try {
-                    if(await viewModel.doPayment(
+                    if (await viewModel.doPayment(
                       orderItem: widget.orderItems,
                       recipient: nameCtrl.text,
-                      address: "${postCtrl.text} ${addressCtrl.text} ${addressDetailCtrl.text}",
-                      phone: "${phoneFirstCtrl.text}-${phoneSecondCtrl.text}-${phoneThirdCtrl.text}",
-                      cartIds: widget.cartIds
+                      address:
+                          "${postCtrl.text} ${addressCtrl.text} ${addressDetailCtrl.text}",
+                      phone:
+                          "${phoneFirstCtrl.text}-${phoneSecondCtrl.text}-${phoneThirdCtrl.text}",
+                      cartIds: widget.cartIds,
                     )) {
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(SnackBar(content: Text("주문이 완료되었습니다.")));
                       Navigator.pushNamed(context, AppRoutes.home);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")),
+                      );
                     }
-                    else {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")));
-                    }
-                  }
-                  catch(e) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")),
+                    );
                     debugPrint("$e");
                   }
-
                 },
               ),
               SizedBox(height: 24),
