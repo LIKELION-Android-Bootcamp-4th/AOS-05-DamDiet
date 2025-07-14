@@ -1,3 +1,4 @@
+import 'package:damdiet/core/widgets/network_image.dart';
 import 'package:damdiet/data/models/order/my_order_item.dart';
 import 'package:damdiet/presentation/screens/review/review_write_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +22,9 @@ class MyPageOrderProductItemRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            child: Container(
-              width: 70, height: 70, color: AppColors.gray100,
-              child: const Icon(Icons.image, color: Colors.grey, size: 30),
-            ),
+            child: CommonNetworkImage(url: item.thumbnailImageUrl, size: 70)
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: 10),
           Expanded(
             child: Text.rich(
               TextSpan(

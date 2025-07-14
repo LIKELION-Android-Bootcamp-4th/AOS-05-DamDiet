@@ -2,6 +2,7 @@ import 'package:damdiet/core/widgets/bottom_cta_button.dart';
 import 'package:damdiet/data/datasource/review_datasource.dart';
 import 'package:damdiet/data/models/product/review_summary_product.dart';
 import 'package:damdiet/data/repositories/review_repository.dart';
+import 'package:damdiet/presentation/routes/app_routes.dart';
 import 'package:damdiet/presentation/screens/review/review_write_viewmodel.dart';
 import 'package:damdiet/presentation/screens/review/widgets/review_photo_section.dart';
 import 'package:damdiet/presentation/screens/review/widgets/review_product_info.dart';
@@ -137,7 +138,11 @@ class _ReviewWriteScreenState extends State<ReviewWriteScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('리뷰가 등록되었습니다.')),
                 );
-                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(
+                  context,
+                  AppRoutes.myOrderDetail, // 👉 다시 돌아갈 주문 상세 화면 route 이름
+                  arguments: viewModel.orderId, // 👉 필요하다면 주문 ID 전달
+                );
               } else if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('리뷰 등록에 실패했습니다.')),
