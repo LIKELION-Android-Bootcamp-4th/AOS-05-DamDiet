@@ -1,10 +1,13 @@
 import 'package:damdiet/core/theme/appcolor.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:kpostal/kpostal.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
+import '../../../data/models/auth/address.dart';
+import '../../provider/user_provider.dart';
 import '../auth/widgets/custom_textfield.dart';
 
 class MyPageAddressEditScreen extends StatefulWidget {
@@ -23,17 +26,23 @@ class _MyPageAddressEditScreenState extends State<MyPageAddressEditScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      var viewModel = context.read<MypageViewModel>();
-      viewModel.getDeliAddress();
+      final userProvider = context.read<UserProvider>();
+      final address = userProvider.user?.address;
+
+
+      if (address != null) {
+        zipCodeController.text = address.zipCode ?? '';
+        addressController.text = address.address1 ?? '';
+        addressDetailController.text = address.address2 ?? '';
+      }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
     var viewModel = context.watch<MypageViewModel>();
-    zipCodeController.text = viewModel.zipCode;
-    addressController.text = viewModel.address;
-    addressDetailController.text = viewModel.addressDetail;
+
 
     return Scaffold(
       appBar: DamdietAppbar(
@@ -55,18 +64,35 @@ class _MyPageAddressEditScreenState extends State<MyPageAddressEditScreen> {
                       hintText: '우편번호',
                       isPassword: false,
                       controller: zipCodeController,
+                      readOnly: true,
                     ),
                   ),
                   const SizedBox(width: 8), // 간격
                   Expanded(
                     flex: 1,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => KpostalView(
+                              useLocalServer: false,
+                              callback: (Kpostal result) {
+                                setState(() {
+                                  zipCodeController.text = result.postCode;
+                                  addressController.text = result.address;
+                                  addressDetailController.text = '';
+                                });
+                              },
+                            ),
+                          ),
+                        );
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8), // ← radius
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: const Text(
@@ -81,7 +107,8 @@ class _MyPageAddressEditScreenState extends State<MyPageAddressEditScreen> {
               CustomTextField(
                 hintText: '주소',
                 isPassword: false,
-                controller: addressController
+                controller: addressController,
+                readOnly: true,
               ),
               SizedBox(height: 16,),
               CustomTextField(
@@ -119,6 +146,12 @@ class _MyPageAddressEditScreenState extends State<MyPageAddressEditScreen> {
                  address: addressController.text,
                  addressDetail: addressDetailController.text
               )) {
+                final userProvider = context.read<UserProvider>();
+                userProvider.updateAddress(Address(
+                  zipCode: zipCodeController.text,
+                  address1: addressController.text,
+                  address2: addressDetailController.text,
+                ));
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text('기본 배송지가 변경되었습니다.')));

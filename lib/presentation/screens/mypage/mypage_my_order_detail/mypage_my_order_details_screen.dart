@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
@@ -124,7 +125,29 @@ class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('상품 금액', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-                        Text('${order.totalAmount}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
+                        Text(formatPrice(order.subtotalAmount), style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('배송비', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
+                        Text('+ ${formatPrice(order.shippingCost)}', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('총 결제 금액', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
+                        Text(formatPrice(order.totalAmount), style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold')
                         ),
                       ],
                     ),
@@ -135,8 +158,7 @@ class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('결제 방법', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-                        //TODO payment 추가
-                        const Text('토스페이', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
+                        Text(order.payment, style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
                       ],
                     ),
                   ),

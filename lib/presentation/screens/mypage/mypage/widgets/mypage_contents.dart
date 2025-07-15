@@ -35,18 +35,9 @@ class MyPageContents extends StatelessWidget {
               MyPageListTile('주문목록', () {
                 Navigator.pushNamed(context, AppRoutes.myOrders);
               }),
-              const Divider(indent: 16, endIndent: 16, color: AppColors.gray100),
-              const SizedBox(height: 16),
 
-              const MyPageSectionTitle('커뮤니티'),
-              MyPageListTile('내 커뮤니티 관리', () {
-                Navigator.pushNamed(context, AppRoutes.myCommunity);
-              }),
-              MyPageListTile('칼로리 계산기', () {
-                Navigator.pushNamed(context, AppRoutes.kcalCalculator);
-              }),
               const Divider(indent: 16, endIndent: 16, color: AppColors.gray100),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
               const MyPageSectionTitle('내 정보 관리'),
               MyPageListTile('배송지 변경', () {

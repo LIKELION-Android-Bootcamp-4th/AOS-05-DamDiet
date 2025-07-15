@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../data/datasource/mypage_datasource.dart';
+import '../../data/models/auth/address.dart';
 import '../../data/models/auth/user.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -46,5 +47,12 @@ class UserProvider extends ChangeNotifier {
   void updateNickname(String nickname) {
     _user = _user?.copyWith(nickName: nickname);
     notifyListeners();
+  }
+
+  void updateAddress(Address newAddress) {
+    if (_user != null) {
+      _user = _user!.copyWith(address: newAddress);
+      notifyListeners();
+    }
   }
 }

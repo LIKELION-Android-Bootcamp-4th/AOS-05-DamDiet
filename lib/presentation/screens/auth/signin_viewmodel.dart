@@ -37,7 +37,7 @@ class SignInViewModel extends ChangeNotifier{
     notifyListeners();
 
     try {
-      await _repository.signIn(email, password);
+      await _repository.signIn(email.trim(), password.trim());
       // 성공 시
       _isLoading = false;
       notifyListeners();

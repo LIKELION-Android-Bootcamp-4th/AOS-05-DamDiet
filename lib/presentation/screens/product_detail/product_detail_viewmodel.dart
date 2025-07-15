@@ -33,7 +33,7 @@ class ProductDetailViewmodel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  int _quantity = 0;
+  int _quantity = 1;
   int get quantity => _quantity;
 
   void increaseQuantity() {

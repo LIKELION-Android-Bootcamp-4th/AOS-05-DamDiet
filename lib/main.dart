@@ -114,6 +114,9 @@ class DamDietApp extends StatelessWidget {
       title: 'DamDiet',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+        ),
       ),
       initialRoute: AppRoutes.splash,
       routes: {

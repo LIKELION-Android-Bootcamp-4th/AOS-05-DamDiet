@@ -12,6 +12,7 @@ import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/bottom_nav_bar.dart';
@@ -32,6 +33,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2;
+  DateTime? _lastBackPressed;
+
   final List<Widget> _widgetOptions = <Widget>[
     SearchScreen(),
     KcalCalculatorScreenWrapper(),
@@ -47,29 +50,51 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: PageTransitionSwitcher(
-        duration: Duration(milliseconds: 1000),
-        transitionBuilder:
-            (
-              Widget child,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) {
-              return FadeThroughTransition(
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                child: child,
-              );
-            },
-        child: _widgetOptions[_selectedIndex],
-      ),
-      bottomNavigationBar: DamDietBottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (_selectedIndex == 2) {
+          DateTime nowTime = DateTime.now();
+          if (_lastBackPressed == null ||
+              nowTime.difference(_lastBackPressed!) > const Duration(seconds: 2)) {
+            _lastBackPressed = nowTime;
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('2초안에 한 번 더 누르면 종료됩니다.')),
+            );          } else {
+            SystemNavigator.pop();
+          }
+        }
+        else{
+          setState(() {
+            _selectedIndex = 2;
+          });
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: PageTransitionSwitcher(
+          duration: Duration(milliseconds: 1000),
+          transitionBuilder:
+              (
+                Widget child,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+              ) {
+                return FadeThroughTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+          child: _widgetOptions[_selectedIndex],
+        ),
+        bottomNavigationBar: DamDietBottomNavBar(
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onItemTapped,
+        ),
       ),
     );
   }
