@@ -100,7 +100,7 @@ class ProductListItem extends StatelessWidget {
                       Visibility(
                         visible: product.discount != 0,
                         child: Text(
-                          "${formatPrice(product.price)} 원",
+                          formatPrice(product.price),
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'PretendardBold',
@@ -129,7 +129,7 @@ class ProductListItem extends StatelessWidget {
 
                           SizedBox(width: 14),
                           Text(
-                            "${formatPrice(discountedPrice)} 원",
+                            formatPrice(discountedPrice),
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'PretendardBold',
