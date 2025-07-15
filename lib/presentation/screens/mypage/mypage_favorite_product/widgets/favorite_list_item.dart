@@ -69,30 +69,6 @@ class FavoriteListItem extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              // TODO: 실제 할인율 데이터 안옴
-              // const Text(
-              //   '30%',
-              //   style: TextStyle(
-              //       fontFamily: 'PretendardBold',
-              //       fontSize: 14,
-              //       color: AppColors.errorRed
-              //   ),
-              // ),
-              const SizedBox(width: 4),
-              Text(
-                '${favoriteProduct.entity.price} 원',
-                style: TextStyle(
-                  fontFamily: 'PretendardMedium',
-                  fontSize: 14,
-                  color: Colors.grey[800],
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
