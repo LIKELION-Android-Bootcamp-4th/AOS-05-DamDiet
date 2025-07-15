@@ -31,13 +31,30 @@ class _HomeBannerState extends State<HomeBanner> {
           CarouselSlider(
             items: imageList
                 .map(
-                  (item) => Image.network(
-                    item,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                )
-                .toList(),
+                  (item) => GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          backgroundColor: Colors.transparent,
+                          child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: InteractiveViewer(
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      item,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                  )).toList(),
             carouselController: _controller,
             options: CarouselOptions(
               height: 230,
