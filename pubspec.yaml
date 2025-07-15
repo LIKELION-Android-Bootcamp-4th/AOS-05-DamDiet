@@ -47,6 +47,7 @@ dependencies:
   carousel_slider: ^5.1.1
   fluttertoast: ^8.2.12
   flutter_native_splash: ^2.4.6
+  kpostal: ^1.1.0
 
 flutter_native_splash:
   color: "#F48138" #

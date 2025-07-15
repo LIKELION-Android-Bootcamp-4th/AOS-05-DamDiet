@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
+  final bool readOnly;
 
   const CustomTextField({
     super.key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.controller,
     this.onChanged,
+    this.readOnly = false,
   });
 
   @override
@@ -37,12 +39,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
     }
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
       obscureText: widget.isPassword ? _obscureText : false,
+      readOnly: widget.readOnly,
       decoration: InputDecoration(
+        filled: widget.readOnly,
+        fillColor: widget.readOnly ? AppColors.gray100 : null,
         border: const OutlineInputBorder(),
         hintText: widget.hintText,
         hintStyle: TextStyle(
@@ -60,37 +66,37 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         suffixIcon: widget.isPassword
             ? IconButton(
-          icon: Icon(
-            _obscureText ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
-            size: 20,
-          ),
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        )
-            : (_controller.text.isNotEmpty
-            ? IconButton(
-          icon: const Icon(
-            Icons.cancel,
-            color: AppColors.primaryColor,
-            size: 20,
-          ),
-          onPressed: () {
-            _controller.clear();
-            widget.onChanged?.call('');
-            setState(() {});
-          },
-        )
-            : null),
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
+            : (!widget.readOnly && _controller.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(
+                        Icons.cancel,
+                        color: AppColors.primaryColor,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        _controller.clear();
+                        widget.onChanged?.call('');
+                        setState(() {});
+                      },
+                    )
+                  : null),
       ),
       cursorColor: AppColors.primaryColor,
       onChanged: (value) {
         widget.onChanged?.call(value);
         setState(() {});
-      }
+      },
     );
   }
 }

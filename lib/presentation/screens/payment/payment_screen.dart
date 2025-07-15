@@ -8,6 +8,7 @@ import 'package:damdiet/presentation/screens/payment/widgets/payment_checkbox_wi
 import 'package:damdiet/presentation/screens/payment/widgets/payment_spacebetween_widget.dart';
 import 'package:damdiet/presentation/screens/payment/widgets/select_payment._widget.dart';
 import 'package:flutter/material.dart';
+import 'package:kpostal/kpostal.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/utils/formatters.dart';
@@ -16,6 +17,7 @@ import '../../../core/widgets/damdiet_appbar.dart';
 import '../../../core/widgets/product_list_item.dart';
 import '../../../data/models/payment/payment_item.dart';
 import '../../../data/models/request/order_request_dto.dart';
+import '../../provider/user_provider.dart';
 import '../../routes/app_routes.dart';
 
 class PaymentScreenWrapper extends StatelessWidget {
@@ -90,13 +92,49 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "배송지",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'PretendardSemiBold',
-                  color: AppColors.textMain,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "배송지",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PretendardSemiBold',
+                      color: AppColors.textMain,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      final userProvider = context.read<UserProvider>();
+                      final address = userProvider.user?.address;
+
+                      if (address != null) {
+                        setState(() {
+                          postCtrl.text = address.zipCode ?? '';
+                          addressCtrl.text = address.address1 ?? '';
+                          addressDetailCtrl.text = address.address2 ?? '';
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('기본 배송지가 없습니다.')),
+                        );
+                      }
+                    },
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                      splashFactory: NoSplash.splashFactory,
+                    ),
+                    child: const Text(
+                      "기본 배송지 불러오기",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: AppColors.primaryColor,
+                        decorationColor: AppColors.primaryColor,
+                        decorationThickness: 1,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 8),
               Row(
@@ -133,11 +171,28 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     flex: 2,
                     hintText: '우편주소',
                     controller: postCtrl,
+                    readOnly: true,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     flex: 1,
-                    child: BottomCTAButton(text: "주소검색", onPressed: () {}),
+                    child: BottomCTAButton(text: "주소검색", onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => KpostalView(
+                            useLocalServer: false,
+                            callback: (Kpostal result) {
+                              setState(() {
+                                postCtrl.text = result.postCode;
+                                addressCtrl.text = result.address;
+                                addressDetailCtrl.text = '';
+                              });
+                            },
+                          ),
+                        ),
+                      );
+                    },),
                   ),
                 ],
               ),
@@ -145,14 +200,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField(hintText: '상세주소', controller: addressCtrl),
+                  PaymentTextField(hintText: '주소', controller: addressCtrl, readOnly: true,),
                 ],
               ),
               SizedBox(height: 8),
               Row(
                 children: [
                   SizedBox(width: 64),
-                  PaymentTextField(controller: addressDetailCtrl),
+                  PaymentTextField(hintText: '상세 주소',controller: addressDetailCtrl),
                 ],
               ),
               SizedBox(height: 8),
@@ -322,7 +377,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(SnackBar(content: Text("주문이 완료되었습니다.")));
-                      Navigator.pushNamed(context, AppRoutes.myOrders);
+                      Navigator.pushReplacementNamed(context, AppRoutes.myOrders);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("주문 요청중 오류가 발생했습니다.")),
