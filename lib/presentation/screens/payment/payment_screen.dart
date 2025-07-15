@@ -77,8 +77,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     int productTotalPrice = 0;
     for (int n = 0; n < widget.orderItems.length; n++) {
-      productTotalPrice +=
-          (widget.orderItems[n].unitPrice * widget.orderItems[n].quantity);
+      final unitPrice = widget.orderItems[n].unitPrice;
+      final quantity = widget.orderItems[n].quantity;
+      final discount = widget.paymentItems[n].discount;
+      final discountRate = 1 - (discount / 100);
+      productTotalPrice += (unitPrice * quantity * discountRate).round();
     }
     int paymentPrice = productTotalPrice + 3000;
     var viewModel = context.watch<PaymentViewmodel>();
