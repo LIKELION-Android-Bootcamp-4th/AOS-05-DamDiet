@@ -12,6 +12,7 @@ class MyOrderDetail {
   final ShippingInfo shippingInfo;
   final List<StatusHistory> statusHistory;
   final List<OrderProduct> products;
+  final String payment;
 
   MyOrderDetail({
     required this.id,
@@ -25,6 +26,7 @@ class MyOrderDetail {
     required this.shippingInfo,
     required this.statusHistory,
     required this.products,
+    required this.payment,
   });
 
   factory MyOrderDetail.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class MyOrderDetail {
           ?.map((e) => OrderProduct.fromJson(e))
           .toList() ??
           [],
+      payment: json['memo'],
     );
   }
 }

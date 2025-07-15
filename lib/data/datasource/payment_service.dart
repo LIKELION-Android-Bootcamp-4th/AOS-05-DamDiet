@@ -20,7 +20,7 @@ class PaymentService {
           'address': address,
           'phone': phone
         },
-        'payment': payment
+        'memo': payment
       }
     );
     if(response.statusCode == 201) {
