@@ -60,7 +60,7 @@ class CartOrderSummary extends StatelessWidget {
                 paymentItems.add(PaymentItem(
                   name: item.product.name,
                   price: item.product.unitPrice,
-                  discount: 0,
+                  discount: item.product.discount,
                   image: item.product.thumbnailImage,
                 ));
 

@@ -64,7 +64,7 @@ class PaymentListItem extends StatelessWidget {
                     Visibility(
                       visible: paymentItem.discount != 0,
                       child: Text(
-                        formatPrice(paymentItem.price),
+                        formatPrice(paymentItem.price*orderItem.quantity),
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'PretendardBold',
