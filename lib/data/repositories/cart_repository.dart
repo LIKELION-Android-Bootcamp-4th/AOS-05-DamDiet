@@ -1,6 +1,8 @@
 import 'package:damdiet/data/datasource/cart_datasource.dart';
 import 'package:damdiet/data/models/cart/cart.dart';
 
+import '../models/cart/discount.dart';
+
 class CartRepository {
   final CartDatasource _datasource;
 
@@ -14,13 +16,13 @@ class CartRepository {
     required String productId,
     required int quantity,
     required int unitPrice,
-    required Map<String, dynamic> options,
+    required Discount discount,
   }) async {
     await _datasource.addToCart(
       productId: productId,
       quantity: quantity,
       unitPrice: unitPrice,
-      options: options,
+      discount: discount,
     );
   }
 
