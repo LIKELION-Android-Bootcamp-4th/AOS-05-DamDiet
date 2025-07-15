@@ -5,6 +5,7 @@ import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/mypage_my_
 import 'package:damdiet/presentation/screens/mypage/mypage_my_reviews/widgets/mypage_review_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../core/theme/appcolor.dart';
 import '../../../../core/widgets/damdiet_appbar.dart';
 
 class MyPageMyReviewsScreenWithProvider extends StatelessWidget {
@@ -76,7 +77,20 @@ class _MyPageMyReviewsScreenState extends State<MyPageMyReviewsScreen> with Widg
     }
 
     if (viewModel.reviews.isEmpty) {
-      return const Center(child: Text('작성한 리뷰가 없습니다.'));
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/empty_image.png',width: 100,height: 100,),
+            SizedBox(height: 16),
+            Text('아직 작성한 리뷰가 없어요!', style: TextStyle(fontSize: 14, fontFamily: 'PretendardSemiBold', color: AppColors.textMain)),
+            SizedBox(height: 8),
+            Text('마음에 드는 상품을 주문하고\n리뷰를 작성해주세요!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: AppColors.textSub, height: 1.5, fontFamily: 'PretendardSemiBold')),
+          ],
+        ),
+      );
     }
 
     return ListView.builder(

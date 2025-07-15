@@ -23,5 +23,6 @@ class CartItem {
       totalPrice: json['totalPrice'],
       createdAt: DateTime.parse(json['createdAt']),
     );
+
   }
 }

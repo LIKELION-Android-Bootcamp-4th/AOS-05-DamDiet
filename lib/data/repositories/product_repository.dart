@@ -32,7 +32,8 @@ class ProductRepository {
   Future<bool> toggleFavorite({required String id}) async {
     final response = await _datasource.toggleFavorite(id: id);
     if (response.statusCode == 200) {
-      final isFavorite = response.data['message']['result']['isLiked'] as bool;
+      final msg = response.data['message']['message'] as String;
+      final isFavorite = msg.contains('추가');
       return isFavorite;
     }
     throw Exception(response.statusMessage);

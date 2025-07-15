@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../../core/network/api_client.dart';
 import '../../core/network/endpoint/cart_endpoints.dart';
 import '../models/cart/cart.dart';
+import '../models/cart/discount.dart';
 
 class CartDatasource {
   final dio = ApiClient().dio;
@@ -23,14 +24,13 @@ class CartDatasource {
     required String productId,
     required int quantity,
     required int unitPrice,
-    required Map<String, dynamic> options,
+    required Discount discount,
   }) async {
     final response = await dio.post(CartEndpoints.postCart, data: {
       'productId': productId,
       'quantity': quantity,
       'unitPrice': unitPrice,
-      'options': options,
-      'discount': null,
+      'discount': discount.toJson(),
     });
 
     if (response.statusCode != 201 && response.statusCode != 200) {

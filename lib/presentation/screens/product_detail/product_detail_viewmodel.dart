@@ -1,3 +1,4 @@
+import 'package:damdiet/data/models/cart/discount.dart';
 import 'package:damdiet/data/models/product/product.dart';
 import 'package:flutter/material.dart';
 
@@ -92,11 +93,13 @@ class ProductDetailViewmodel extends ChangeNotifier {
     }
 
     try {
+      final discount = Discount(type: 'percent', value: _product.discount);
+
       await _repository.postCart(cartRequest: CartRequest(
         productId: _product.id,
         quantity: _quantity,
         unitPrice: _product.price,
-        discount: _product.discount,
+        discount: discount,
       ));
       notifyListeners();
     } catch (e) {
