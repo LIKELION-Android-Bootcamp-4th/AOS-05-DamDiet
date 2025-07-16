@@ -229,9 +229,7 @@ class _ProductDetailContent extends StatelessWidget {
                   final orderItem = OrderItem(
                     product: viewModel.product.id,
                     quantity: viewModel.quantity,
-                    unitPrice: hasDiscount
-                        ? (viewModel.product.price * (1 - viewModel.product.discount / 100)).round()
-                        : viewModel.product.price
+                    unitPrice: viewModel.product.price
                   );
                   final paymentItem = PaymentItem(
                       name: viewModel.product.name,

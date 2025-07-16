@@ -138,11 +138,12 @@ class _ReviewWriteScreenState extends State<ReviewWriteScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('리뷰가 등록되었습니다.')),
                 );
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamedAndRemoveUntil(
                   context,
-                  AppRoutes.myOrderDetail, // 👉 다시 돌아갈 주문 상세 화면 route 이름
-                  arguments: viewModel.orderId, // 👉 필요하다면 주문 ID 전달
+                  AppRoutes.home,
+                      (route) => false,
                 );
+                Navigator.pushNamed(context, AppRoutes.myOrders, arguments:viewModel.orderId );
               } else if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('리뷰 등록에 실패했습니다.')),

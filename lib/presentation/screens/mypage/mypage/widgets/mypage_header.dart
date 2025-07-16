@@ -39,10 +39,11 @@ class MyPageHeader extends StatelessWidget {
         ),
         Positioned(
           right: 30,
+          top: 30,
           child: Image.asset(
-            'assets/images/damdiet_logo_4.png',
-            width: 150,
-            height: 150,
+            'assets/images/empty_image.png',
+            width: 100,
+            height: 100,
           ),
         ),
       ],
