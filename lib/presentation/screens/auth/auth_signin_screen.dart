@@ -72,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   final isSuccess = await viewModel.signIn();
 
                   if (isSuccess && mounted) {
-                    Navigator.pushReplacementNamed(context, AppRoutes.home);
+                    Navigator.pushReplacementNamed(context, AppRoutes.splash);
                   }
                 },
               ),

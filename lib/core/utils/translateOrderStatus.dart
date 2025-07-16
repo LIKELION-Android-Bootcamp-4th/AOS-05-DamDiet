@@ -8,6 +8,8 @@ String translateOrderStatus(String status) {
       return '주문 상품 준비 중';
     case 'shipped':
       return '배송 시작';
+    case 'delivered':
+      return '배송 완료';
     case 'cancelled':
       return '재고 부족으로 인한 취소';
     case 'refunded':
