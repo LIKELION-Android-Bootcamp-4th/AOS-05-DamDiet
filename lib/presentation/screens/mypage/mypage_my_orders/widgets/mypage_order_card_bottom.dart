@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
 import '../../../../../data/models/order/my_order_item.dart';
@@ -20,7 +21,7 @@ class MyPageOrderCardBottom extends StatelessWidget {
           ],
         ),
         Text(
-          '${order.totalAmount}원',
+          formatPrice(order.totalAmount),
           style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardBold'),
         ),
       ],

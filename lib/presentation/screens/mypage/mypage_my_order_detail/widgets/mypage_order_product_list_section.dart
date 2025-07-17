@@ -16,25 +16,23 @@ class MyPageOrderProductListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return MyPageOrderProductItemRow(
-              item: items[index],
-              orderId: orderId,
-          );
-        },
-        separatorBuilder: (context, index) =>
-        const Column(
-          children: [
-            SizedBox(height: 12),
-            Divider(height: 1, color: AppColors.gray100),
-            SizedBox(height: 12),
-          ],
-        ),
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return MyPageOrderProductItemRow(
+            item: items[index],
+            orderId: orderId,
+        );
+      },
+      separatorBuilder: (context, index) =>
+      const Column(
+        children: [
+          SizedBox(height: 12),
+          Divider(height: 1, color: AppColors.gray100),
+          SizedBox(height: 12),
+        ],
       ),
     );
   }

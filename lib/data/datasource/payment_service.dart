@@ -45,7 +45,8 @@ class PaymentService {
             'phone': phone
           },
           'cartIds': cartIds,
-          'payment': payment
+          'memo': payment,
+          'shippingCost': 3000,
         }
     );
     if(response.statusCode == 201) {

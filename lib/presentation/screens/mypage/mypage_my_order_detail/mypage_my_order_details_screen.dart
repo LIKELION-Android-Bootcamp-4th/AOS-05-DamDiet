@@ -158,7 +158,8 @@ class _MyPageMyOrderDetailsScreenState extends State<MyPageMyOrderDetailsScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('결제 방법', style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
-                        Text(order.payment, style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
+                        Text(  order.payment.replaceAll(RegExp(r'\s*\(.*\)'), '').trim(),
+                             style: TextStyle(color: AppColors.textSub, fontSize: 12, fontFamily: 'PretendardMedium')),
                       ],
                     ),
                   ),

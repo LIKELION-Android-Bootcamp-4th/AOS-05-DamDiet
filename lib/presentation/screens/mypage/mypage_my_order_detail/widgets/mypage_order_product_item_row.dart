@@ -1,3 +1,4 @@
+import 'package:damdiet/core/utils/formatters.dart';
 import 'package:damdiet/core/widgets/network_image.dart';
 import 'package:damdiet/data/models/order/my_order_item.dart';
 import 'package:damdiet/presentation/screens/review/review_write_screen.dart';
@@ -68,7 +69,7 @@ class MyPageOrderProductItemRow extends StatelessWidget {
                 TextSpan(style: const TextStyle(color: AppColors.textHint, fontSize: 12, fontFamily: 'PretendardMedium'),
                     children: [
                       TextSpan(text: '${item.quantity}개  '),
-                      TextSpan(text: '${item.totalPrice}원', style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium'),
+                      TextSpan(text: formatPrice(item.totalPrice), style: const TextStyle(color: AppColors.textMain, fontSize: 14, fontFamily: 'PretendardMedium'),
                       ),
                     ]
                 ),
