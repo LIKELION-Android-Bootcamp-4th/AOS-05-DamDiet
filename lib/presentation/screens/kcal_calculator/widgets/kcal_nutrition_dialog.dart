@@ -106,7 +106,10 @@ class KcalNutritionDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: Navigator.of(context).pop,
+          onPressed: () {
+            Navigator.pop(context);
+            FocusScope.of(context).unfocus();
+          },
           child: Text(
             '닫기',
             style: TextStyle(
