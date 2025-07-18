@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/bottom_cta_button.dart';
 import '../../../core/widgets/damdiet_appbar.dart';
-import '../../../core/widgets/product_list_item.dart';
 import '../../../data/models/payment/payment_item.dart';
 import '../../../data/models/request/order_request_dto.dart';
 import '../../provider/user_provider.dart';

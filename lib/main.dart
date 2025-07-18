@@ -12,8 +12,6 @@ import 'package:damdiet/data/repositories/mypage_repository.dart';
 import 'package:damdiet/data/repositories/nutrition_repository.dart';
 import 'package:damdiet/data/repositories/payment_repository.dart';
 import 'package:damdiet/data/repositories/review_repository.dart';
-import 'package:damdiet/presentation/screens/community/community_detail_screen.dart';
-import 'package:damdiet/presentation/screens/community/community_write_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage/mypage_viewmodel.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_address_edit_screen.dart';
 import 'package:damdiet/presentation/screens/mypage/mypage_my_orders/mypage_my_orders_screen.dart';
@@ -120,18 +118,11 @@ class DamDietApp extends StatelessWidget {
       ),
       initialRoute: AppRoutes.splash,
       routes: {
-        AppRoutes.splash: (context) => SplashScreen(),
-        AppRoutes.home: (context) => HomeScreen(),
-        AppRoutes.search: (context) => SearchScreen(),
         AppRoutes.kcalCalculator: (context) => KcalCalculatorScreenWrapper(),
-        AppRoutes.comDetail: (context) => CommunityDetailScreen(),
-        AppRoutes.comWrite: (context) => CommunityWriteScreen(),
-        AppRoutes.profileEdit: (context) => MyPageAddressEditScreen(),
         AppRoutes.passwordEdit: (context) => MyPagePasswordEditScreenWrapper(),
         AppRoutes.nicknameEdit: (context) => MyPageNicknameEditScreenWrapper(),
         AppRoutes.favoriteProduct: (context) => MyPageFavoriteProductsScreenWrapper(),
         AppRoutes.myReview: (context) => MyPageMyReviewsScreen(),
-        AppRoutes.myCommunity: (context) => MyPageMyCommunityScreen(),
         AppRoutes.myOrders: (context) => MyPageMyOrdersScreenWrapper(),
         AppRoutes.cart: (context) => CartScreenWrapper(),
         AppRoutes.reviewWrite: (context) => ReviewWriteScreenWithProvider(),

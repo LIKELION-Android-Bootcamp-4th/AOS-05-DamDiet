@@ -7,10 +7,7 @@ class AppRoutes {
   static const String products = "/search/products";
   static const String productDetail = "/search/products/detail";
 
-  static const String community = "/community";
   static const String kcalCalculator = "/community/calculator";
-  static const String comDetail = "/community/detail";
-  static const String comWrite = "/community/write";
 
   static const String cart = "/cart";
 
