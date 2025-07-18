@@ -1,12 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:damdiet/presentation/screens/cart/cart_screen.dart';
-import 'package:damdiet/presentation/screens/community/community_home_screen.dart';
 import 'package:damdiet/presentation/screens/home/widgets/category_list.dart';
-
-import 'package:damdiet/presentation/screens/home/widgets/category_list_item.dart';
-
 import 'package:damdiet/presentation/screens/home/widgets/home_banner.dart';
-import 'package:damdiet/presentation/screens/home/widgets/notice_banner.dart';
 import 'package:damdiet/presentation/screens/home/widgets/product_list.dart';
 import 'package:damdiet/presentation/screens/search/search_screen.dart';
 import 'package:damdiet/core/theme/appcolor.dart';
@@ -139,8 +134,6 @@ class _DamDietHomeScreenContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             HomeBanner(),
-
-            //NoticeBanner(),
 
             CategoryList(onCategorySelected: (category){
               final query = ProductQuery(category: category);
