@@ -83,6 +83,7 @@
 
 ```
 
+  <br>
 
 # 사용 기술 및 라이브러리
 
@@ -110,6 +111,9 @@
 | `intl` | 숫자 포맷 처리 | `0.18.0` |
 | `animations` | 화면 전환 애니메이션 | `2.0.8` |
 | `flutter_svg` | svg 이미지 파일 처리 | `2.2.0` |
+
+
+  <br>
 
 # 기능 정리
 ### 🙋‍♂️ 가입
@@ -173,4 +177,4 @@
 | 팀장 | 부팀장 | 최고의 팀원 |
 | --- | --- | --- |
 | <img src="https://github.com/see-ho.png" width="150px"/> | <img src="https://github.com/ChoiHyeonSu0.png" width="150px"/> | <img src="https://github.com/xogns950.png" width="150px"/> |
-| <a href="https://github.com/seeho">이소희 | <a href="https://github.com/ChoiHyeonSu0">  최현수 | <a href="https://github.com/xogns950">  강태훈 |
+| <a href="https://github.com/see-ho">이소희 | <a href="https://github.com/ChoiHyeonSu0">  최현수 | <a href="https://github.com/xogns950">  강태훈 |
